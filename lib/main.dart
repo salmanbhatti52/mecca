@@ -15,18 +15,13 @@ void main() async {
   await Future.delayed(const Duration(seconds: 5));
   WidgetsFlutterBinding.ensureInitialized();
   await FlutterDownloader.initialize(debug: true, ignoreSsl: true);
+  runApp(MyApp()); // Wrap your app);
   // runApp(
   //   DevicePreview(
-  //     enabled: !kReleaseMode,
-  //     builder: (context) => MyApp(), // Wrap your app
+  //     enabled: true,
+  //     builder: (context) => MyApp(),
   //   ),
   // );
-  runApp(
-    DevicePreview(
-      enabled: true,
-      builder: (context) => MyApp(),
-    ),
-  );
 }
 
 class MyApp extends StatefulWidget {
