@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:MeccaIslamicCenter/CustomSplash.dart';
 import 'package:device_preview/device_preview.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart' as foundation;
 import 'package:flutter/material.dart';
 import 'package:flutter_downloader/flutter_downloader.dart';
@@ -57,36 +56,22 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return Sizer(builder: (context, orientation, deviceType) {
-      if (isIos) {
-        return CupertinoApp(
-          useInheritedMediaQuery: true,
-          locale: DevicePreview.locale(context),
-          builder: DevicePreview.appBuilder,
-          title: 'MeccaIslamicCentre',
-          debugShowCheckedModeBanner: false,
-          // theme: CupertinoThemeData(
-          //     barBackgroundColor: CupertinoColors.extraLightBackgroundGray,
-          //     primaryColor: CupertinoColors.destructiveRed),
-          home: CustomSplash(),
-        );
-      } else {
-        return MaterialApp(
-          useInheritedMediaQuery: true,
-          locale: DevicePreview.locale(context),
-          builder: DevicePreview.appBuilder,
-          title: 'MeccaIslamicCentre',
-          debugShowCheckedModeBanner: false,
-          home: CustomSplash(),
-          // home: AnimatedSplashScreen(
-          //   duration: 3000,
-          //   splash: 'assets/images/Splash.png',
-          //   nextScreen: OnBoardingScreens(),
-          //   splashTransition: SplashTransition.fadeTransition,
-          //   //pageTransitionType: PageTransitionType.scale,
-          //   //backgroundColor: Colors.blue,
-          // ),
-        );
-      }
+      return MaterialApp(
+        useInheritedMediaQuery: true,
+        locale: DevicePreview.locale(context),
+        builder: DevicePreview.appBuilder,
+        title: 'MeccaIslamicCentre',
+        debugShowCheckedModeBanner: false,
+        home: CustomSplash(),
+        // home: AnimatedSplashScreen(
+        //   duration: 3000,
+        //   splash: 'assets/images/Splash.png',
+        //   nextScreen: OnBoardingScreens(),
+        //   splashTransition: SplashTransition.fadeTransition,
+        //   //pageTransitionType: PageTransitionType.scale,
+        //   //backgroundColor: Colors.blue,
+        // ),
+      );
     });
   }
 }
