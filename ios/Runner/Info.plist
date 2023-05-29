@@ -29,6 +29,10 @@
 		<key>UILaunchStoryboardName</key>
 		<string>LaunchScreen</string>
 		<key>UIMainStoryboardFile</key>
+		<string>NSPhotoLibraryUsageDescription</string>
+		<key>allow permission to download file</key>
+		<string>NSAppleMusicUsageDescription</string>
+		<key>allow permission to download file</key>
 		<string>Main</string>
 		<key>UISupportedInterfaceOrientations</key>
 		<array>

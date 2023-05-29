@@ -1,4 +1,6 @@
 import 'package:MeccaIslamicCenter/after_login_screens/ProfileChangingsScreens/UpdatePasswordAfterLogIn.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart' as foundation;
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -50,90 +52,135 @@ class _BottomNavigationBarScreensState
     });
   }
 
+  bool get isIos =>
+      foundation.defaultTargetPlatform == foundation.TargetPlatform.iOS;
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () async {
-        if (_currentIndex == 0) {
-          return true;
-        } else {
-          setState(() {
-            _currentIndex = 0;
-          });
-        }
-        return false;
-      },
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        home: Scaffold(
-          key: key,
-          body: _pages[_currentIndex],
-          bottomNavigationBar: Container(
-            decoration: const BoxDecoration(
-              borderRadius: BorderRadius.vertical(
-                top: Radius.circular(
-                  20,
-                ),
-              ),
+    if (isIos) {
+      return CupertinoTabScaffold(
+          tabBar: CupertinoTabBar(items: [
+            BottomNavigationBarItem(
+              icon: SvgPicture.asset('assets/icons/home.svg'),
+              activeIcon: SvgPicture.asset('assets/icons/home_green.svg'),
+              label: 'Home',
             ),
-            height: 8.h,
-            child: ClipRRect(
-              borderRadius: const BorderRadius.vertical(
-                top: Radius.circular(
-                  20,
+            BottomNavigationBarItem(
+              icon: SvgPicture.asset('assets/icons/search.svg'),
+              activeIcon: SvgPicture.asset('assets/icons/search_green.svg'),
+              label: 'Browse',
+            ),
+            BottomNavigationBarItem(
+              icon: SvgPicture.asset('assets/icons/bookmark.svg'),
+              activeIcon: SvgPicture.asset('assets/icons/bookmark_green.svg'),
+              label: 'Bookmark',
+            ),
+            BottomNavigationBarItem(
+              icon: SvgPicture.asset('assets/icons/profile_grey.svg'),
+              activeIcon: SvgPicture.asset('assets/icons/profile_green.svg'),
+              label: 'Profile',
+            ),
+          ]),
+          tabBuilder: (context, index) {
+            switch (index) {
+              case 0:
+                return HomePage();
+                break;
+              case 1:
+                return Browse();
+                break;
+              case 2:
+                return BookMark();
+                break;
+              default:
+                return UpdatePassword();
+                break;
+            }
+          });
+    } else {
+      return WillPopScope(
+        onWillPop: () async {
+          if (_currentIndex == 0) {
+            return true;
+          } else {
+            setState(() {
+              _currentIndex = 0;
+            });
+          }
+          return false;
+        },
+        child: MaterialApp(
+          debugShowCheckedModeBanner: false,
+          home: Scaffold(
+            key: key,
+            body: _pages[_currentIndex],
+            bottomNavigationBar: Container(
+              decoration: const BoxDecoration(
+                borderRadius: BorderRadius.vertical(
+                  top: Radius.circular(
+                    20,
+                  ),
                 ),
               ),
-              child: BottomNavigationBar(
-                elevation: 1.0,
-                items: [
-                  BottomNavigationBarItem(
-                    icon: SvgPicture.asset('assets/icons/home.svg'),
-                    activeIcon: SvgPicture.asset('assets/icons/home_green.svg'),
-                    label: 'Home',
+              height: 8.h,
+              child: ClipRRect(
+                borderRadius: const BorderRadius.vertical(
+                  top: Radius.circular(
+                    20,
                   ),
-                  BottomNavigationBarItem(
-                    icon: SvgPicture.asset('assets/icons/search.svg'),
-                    activeIcon:
-                        SvgPicture.asset('assets/icons/search_green.svg'),
-                    label: 'Browse',
-                  ),
-                  BottomNavigationBarItem(
-                    icon: SvgPicture.asset('assets/icons/bookmark.svg'),
-                    activeIcon:
-                        SvgPicture.asset('assets/icons/bookmark_green.svg'),
-                    label: 'Bookmark',
-                  ),
-                  BottomNavigationBarItem(
-                    icon: SvgPicture.asset('assets/icons/profile_grey.svg'),
-                    activeIcon:
-                        SvgPicture.asset('assets/icons/profile_green.svg'),
-                    label: 'Profile',
-                  ),
-                ],
-                currentIndex: _currentIndex,
-                onTap: onTap,
-                type: BottomNavigationBarType.fixed,
-                backgroundColor: Colors.white,
-                showUnselectedLabels: true,
-                showSelectedLabels: true,
-                iconSize: 18,
-                selectedItemColor: const Color(0xff00B900),
-                unselectedItemColor: const Color(
-                  0xffADADAD,
                 ),
-                selectedLabelStyle: GoogleFonts.outfit(
-                  fontWeight: FontWeight.w500,
-                  fontSize: 12,
-                ),
-                unselectedLabelStyle: GoogleFonts.outfit(
-                  fontWeight: FontWeight.w500,
-                  fontSize: 12,
+                child: BottomNavigationBar(
+                  elevation: 1.0,
+                  items: [
+                    BottomNavigationBarItem(
+                      icon: SvgPicture.asset('assets/icons/home.svg'),
+                      activeIcon:
+                          SvgPicture.asset('assets/icons/home_green.svg'),
+                      label: 'Home',
+                    ),
+                    BottomNavigationBarItem(
+                      icon: SvgPicture.asset('assets/icons/search.svg'),
+                      activeIcon:
+                          SvgPicture.asset('assets/icons/search_green.svg'),
+                      label: 'Browse',
+                    ),
+                    BottomNavigationBarItem(
+                      icon: SvgPicture.asset('assets/icons/bookmark.svg'),
+                      activeIcon:
+                          SvgPicture.asset('assets/icons/bookmark_green.svg'),
+                      label: 'Bookmark',
+                    ),
+                    BottomNavigationBarItem(
+                      icon: SvgPicture.asset('assets/icons/profile_grey.svg'),
+                      activeIcon:
+                          SvgPicture.asset('assets/icons/profile_green.svg'),
+                      label: 'Profile',
+                    ),
+                  ],
+                  currentIndex: _currentIndex,
+                  onTap: onTap,
+                  type: BottomNavigationBarType.fixed,
+                  backgroundColor: Colors.white,
+                  showUnselectedLabels: true,
+                  showSelectedLabels: true,
+                  iconSize: 18,
+                  selectedItemColor: const Color(0xff00B900),
+                  unselectedItemColor: const Color(
+                    0xffADADAD,
+                  ),
+                  selectedLabelStyle: GoogleFonts.outfit(
+                    fontWeight: FontWeight.w500,
+                    fontSize: 12,
+                  ),
+                  unselectedLabelStyle: GoogleFonts.outfit(
+                    fontWeight: FontWeight.w500,
+                    fontSize: 12,
+                  ),
                 ),
               ),
             ),
           ),
         ),
-      ),
-    );
+      );
+    }
   }
 }
