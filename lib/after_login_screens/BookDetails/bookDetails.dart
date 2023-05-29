@@ -4,12 +4,12 @@ import 'package:MeccaIslamicCenter/APIModels/book_download_model.dart';
 import 'package:MeccaIslamicCenter/APIModels/popular_books_model.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:dio/dio.dart';
-import 'package:external_path/external_path.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get_it/get_it.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:secure_shared_preferences/secure_shared_pref.dart';
 
@@ -578,8 +578,11 @@ class _BookDetailsState extends State<BookDetails> {
     setState(() {
       isDownloading = true;
     });
-    var path = await ExternalPath.getExternalStoragePublicDirectory(
-        ExternalPath.DIRECTORY_DOWNLOADS);
+    // var path = await ExternalPath.getExternalStoragePublicDirectory(
+    //     ExternalPath.DIRECTORY_DOWNLOADS);
+    var path = Platform.isAndroid
+        ? await getExternalStorageDirectory()
+        : await getApplicationSupportDirectory();
     print("asdsad " + path.toString());
 
     Map downloadData = {"books_id": id};
