@@ -59,6 +59,11 @@ class _MyAppState extends State<MyApp> {
     return Sizer(builder: (context, orientation, deviceType) {
       if (isIos) {
         return CupertinoApp(
+          useInheritedMediaQuery: true,
+          locale: DevicePreview.locale(context),
+          builder: DevicePreview.appBuilder,
+          title: 'MeccaIslamicCentre',
+          debugShowCheckedModeBanner: false,
           // theme: CupertinoThemeData(
           //     barBackgroundColor: CupertinoColors.extraLightBackgroundGray,
           //     primaryColor: CupertinoColors.destructiveRed),
