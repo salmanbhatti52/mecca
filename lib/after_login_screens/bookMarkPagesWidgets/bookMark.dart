@@ -303,7 +303,7 @@ class _BookMarkState extends State<BookMark> {
                                                   .pages
                                                   .toString(),
                                           path: _popularFoundBooks![index]
-                                              .book_url,
+                                              .book_url!,
                                         ),
                                       ),
                                     ),

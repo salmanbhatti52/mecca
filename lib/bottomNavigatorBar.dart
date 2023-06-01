@@ -84,16 +84,15 @@ class _BottomNavigationBarScreensState
             switch (index) {
               case 0:
                 return HomePage();
-                break;
+
               case 1:
                 return Browse();
-                break;
+
               case 2:
                 return BookMark();
-                break;
+
               default:
                 return UpdatePassword();
-                break;
             }
           });
     } else {

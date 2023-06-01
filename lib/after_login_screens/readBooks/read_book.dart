@@ -1,9 +1,12 @@
 import 'dart:io';
 
+import 'package:MeccaIslamicCenter/Utilities/showToast.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_pdfview/flutter_pdfview.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 import 'package:path/path.dart';
@@ -11,9 +14,9 @@ import 'package:path_provider/path_provider.dart';
 
 class ReadBook extends StatefulWidget {
   final String popularBooksGetModel;
-  String? path;
+  final String path;
 
-  ReadBook({Key? key, required this.popularBooksGetModel, this.path})
+  ReadBook({Key? key, required this.popularBooksGetModel, required this.path})
       : super(key: key);
 
   @override
@@ -79,7 +82,7 @@ class _ReadBookState extends State<ReadBook> {
   //   return file;
   // }
   int? pages = 1;
-  int? currentPage = 1;
+  int? currentPage = 0;
   bool isReady = false;
   String errorMessage = '';
 
@@ -176,43 +179,69 @@ class _ReadBookState extends State<ReadBook> {
                                     height: 20,
                                   ),
                                   SizedBox(
-                                    width: 40,
+                                    width: 70,
                                     height: 50,
-                                    child: TextField(
-                                      onChanged: (val) {
-                                        setState(() {
-                                          pdfViewController
-                                              .setPage(int.parse(val));
-                                          print('page jump ' +
-                                              currentPage.toString());
-                                        });
-                                        Navigator.of(context).pop();
-                                      },
-                                      keyboardType: TextInputType.number,
-                                      cursorColor: const Color(
-                                        0xffE8B55B,
-                                      ),
-                                      style: GoogleFonts.poppins(
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w400,
-                                        color: const Color(
-                                          0xff5B4214,
+                                    child: Center(
+                                      child: TextField(
+                                        inputFormatters: [
+                                          LengthLimitingTextInputFormatter(
+                                            7,
+                                          ),
+                                        ],
+                                        maxLength:
+                                            widget.popularBooksGetModel.length,
+                                        // onChanged: (val) {
+                                        //   setState(() {
+                                        //     pdfViewController
+                                        //         .setPage(int.parse(val));
+                                        //     print('page jump ' +
+                                        //         currentPage.toString());
+                                        //   });
+                                        //   //Navigator.of(context).pop();
+                                        // },
+                                        onSubmitted: (val) {
+                                          if (int.parse(val) >
+                                              int.parse(widget
+                                                  .popularBooksGetModel)) {
+                                            showToastError('oo BHai kidhar? ',
+                                                FToast().init(context));
+                                          } else {
+                                            setState(() {
+                                              pdfViewController
+                                                  .setPage(int.parse(val));
+                                              print('page jump ' +
+                                                  currentPage.toString());
+                                            });
+                                            Navigator.of(context).pop();
+                                          }
+                                        },
+                                        keyboardType: TextInputType.number,
+                                        cursorColor: const Color(
+                                          0xffE8B55B,
                                         ),
-                                      ),
-                                      decoration: const InputDecoration(
-                                        border: OutlineInputBorder(
-                                          borderSide: BorderSide(
-                                            color: Color(
-                                              0xffE8B55B,
-                                            ),
+                                        style: GoogleFonts.poppins(
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.w400,
+                                          color: const Color(
+                                            0xff5B4214,
                                           ),
                                         ),
-                                        fillColor: Colors.white60,
-                                        filled: true,
-                                        focusedBorder: OutlineInputBorder(
-                                          borderSide: BorderSide(
-                                            color: Color(
-                                              0xffE8B55B,
+                                        decoration: const InputDecoration(
+                                          counterText: '',
+                                          border: OutlineInputBorder(
+                                            borderSide: BorderSide(
+                                              color: Color(
+                                                0xffE8B55B,
+                                              ),
+                                            ),
+                                          ),
+                                          fillColor: Colors.white60,
+                                          filled: true,
+                                          focusedBorder: OutlineInputBorder(
+                                            borderSide: BorderSide(
+                                              color: Color(
+                                                0xffE8B55B,
+                                              ),
                                             ),
                                           ),
                                         ),
@@ -229,7 +258,42 @@ class _ReadBookState extends State<ReadBook> {
                     child: Row(
                       children: [
                         Container(
-                          width: 21,
+                          width: currentPage!.bitLength == 0
+                              ? 24
+                              : currentPage!.bitLength == 1
+                                  ? 24
+                                  : currentPage!.bitLength == 2
+                                      ? 24
+                                      : currentPage!.bitLength == 3
+                                          ? 24
+                                          : currentPage!.bitLength == 4
+                                              ? 24
+                                              : currentPage!.bitLength == 5
+                                                  ? 25
+                                                  : currentPage!.bitLength == 6
+                                                      ? 26
+                                                      : currentPage!
+                                                                  .bitLength ==
+                                                              7
+                                                          ? 26
+                                                          : currentPage!
+                                                                      .bitLength ==
+                                                                  8
+                                                              ? 27
+                                                              : currentPage!
+                                                                          .bitLength ==
+                                                                      9
+                                                                  ? 28
+                                                                  : currentPage!
+                                                                              .bitLength ==
+                                                                          10
+                                                                      ? 29
+                                                                      : currentPage!.bitLength ==
+                                                                              11
+                                                                          ? 30
+                                                                          : currentPage!.bitLength == 12
+                                                                              ? 31
+                                                                              : null,
                           height: 21,
                           decoration: BoxDecoration(
                             color: const Color(
