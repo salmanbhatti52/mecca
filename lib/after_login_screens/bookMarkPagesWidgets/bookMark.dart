@@ -2,11 +2,13 @@ import 'package:MeccaIslamicCenter/APIModels/API_Response.dart';
 import 'package:MeccaIslamicCenter/APIModels/all_bookmarked_books.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get_it/get_it.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:secure_shared_preferences/secure_shared_pref.dart';
 
 import '../../Services/API_Services.dart';
+import '../../Utilities/showToast.dart';
 import '../../before_login_screens/login_screens.dart';
 import '../readBooks/read_book.dart';
 import 'bookMarkFirstPageWidget.dart';
@@ -310,8 +312,17 @@ class _BookMarkState extends State<BookMark> {
                                     child: SizedBox(
                                       height: 330,
                                       child: BookMarkFirstPageWidget(
+                                        function: () {
+                                          bookMark(
+                                              context,
+                                              _popularFoundBooks![index]
+                                                  .books_id
+                                                  .toString());
+                                          setState(() {});
+                                        },
                                         allBooksBookMarked:
                                             _popularFoundBooks![index],
+                                        isRemoving: isRemoving,
                                       ),
                                     ),
                                   );
@@ -321,6 +332,40 @@ class _BookMarkState extends State<BookMark> {
               ),
             ),
     );
+  }
+
+  late APIResponse _responseRemoveBookMark;
+  bool isRemoving = false;
+  bookMark(BuildContext context, String id) async {
+    setState(() {
+      isRemoving = true;
+    });
+    Map addData = {
+      "users_customers_id": userID.toString(),
+      "books_id": id,
+    };
+    _responseRemoveBookMark = await service.removeBookMark(addData);
+    if (_responseRemoveBookMark.status!.toLowerCase() == 'success') {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text(
+            "Book removed from bookmarks successfully",
+          ),
+        ),
+      );
+      setState(() {
+        _popularFoundBooks!
+            .removeWhere((element) => element.books_id!.toString() == id);
+      });
+    } else {
+      showToastError(
+        _responseRemoveBookMark.message,
+        FToast().init(context),
+      );
+    }
+    setState(() {
+      isRemoving = false;
+    });
   }
 
   logout(BuildContext context) async {

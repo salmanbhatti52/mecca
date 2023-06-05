@@ -148,8 +148,8 @@ class _ReadBookState extends State<ReadBook> {
                             ),
                           ),
                           child: SizedBox(
-                            width: 343,
-                            height: 200,
+                            width: 300,
+                            height: 180,
                             child: Padding(
                               padding: const EdgeInsets.symmetric(
                                 horizontal: 16.0,
@@ -158,16 +158,16 @@ class _ReadBookState extends State<ReadBook> {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Container(
-                                    height: 60,
-                                    width: 150,
+                                    height: 80,
+                                    width: 220,
                                     // color: Colors.red,
                                     child: AutoSizeText(
                                       textAlign: TextAlign.center,
                                       maxLines: 2,
-                                      minFontSize: 12,
+                                      minFontSize: 20,
                                       'Enter the page number you want to go to',
                                       style: GoogleFonts.poppins(
-                                        fontSize: 14,
+                                        fontSize: 20,
                                         fontWeight: FontWeight.w500,
                                         color: const Color(
                                           0xff5B4214,
@@ -176,7 +176,7 @@ class _ReadBookState extends State<ReadBook> {
                                     ),
                                   ),
                                   const SizedBox(
-                                    height: 20,
+                                    height: 15,
                                   ),
                                   SizedBox(
                                     width: 70,

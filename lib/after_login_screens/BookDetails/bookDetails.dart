@@ -10,6 +10,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get_it/get_it.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:percent_indicator/percent_indicator.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:secure_shared_preferences/secure_shared_pref.dart';
 
@@ -294,28 +295,142 @@ class _BookDetailsState extends State<BookDetails> {
                                           context,
                                           widget.popularBooksGetModel.books_id
                                               .toString()),
-                                      child: SvgPicture.asset(
-                                          'assets/buttons/bookmark_button.svg'),
+                                      child: Container(
+                                        padding: const EdgeInsets.symmetric(
+                                          horizontal: 8,
+                                          vertical: 6,
+                                        ),
+                                        width: 106,
+                                        height: 30,
+                                        decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(
+                                            15,
+                                          ),
+                                          color: const Color(0xffF7F7F7),
+                                        ),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceAround,
+                                          children: [
+                                            widget.popularBooksGetModel
+                                                        .bookmarked!
+                                                        .toLowerCase() ==
+                                                    'yes'
+                                                ? SvgPicture.asset(
+                                                    'assets/buttons/save.svg',
+                                                    colorFilter:
+                                                        const ColorFilter.mode(
+                                                            Color(
+                                                              0xff00B900,
+                                                            ),
+                                                            BlendMode.srcIn),
+                                                    // fit: BoxFit.scaleDown,
+                                                  )
+                                                : SvgPicture.asset(
+                                                    'assets/buttons/save.svg',
+                                                    colorFilter:
+                                                        const ColorFilter.mode(
+                                                            Color(
+                                                              0xff6C6C6C,
+                                                            ),
+                                                            BlendMode.srcIn),
+                                                    // fit: BoxFit.scaleDown,
+                                                  ),
+                                            Text(
+                                              'Bookmark',
+                                              style: GoogleFonts.poppins(
+                                                  fontSize: 13,
+                                                  fontWeight: FontWeight.w400,
+                                                  color:
+                                                      const Color(0xff6C6C6C)),
+                                            )
+                                          ],
+                                        ),
+                                      ),
                                     ),
                               SizedBox(
                                 height: isBookMarkDone ? 14 : 10,
                               ),
                               isDownloading
-                                  ? const Center(
-                                      child: CircularProgressIndicator(
-                                        color: Color(
-                                          0xffE8B55B,
+                                  ? const SizedBox(
+                                      child: Center(
+                                        child: CircularProgressIndicator(
+                                          color: Color(0xffE8B55B),
                                         ),
                                       ),
                                     )
-                                  : GestureDetector(
-                                      onTap: () => _listenForPermissionStatus(
-                                          context,
-                                          widget.popularBooksGetModel.books_id
-                                              .toString()),
-                                      child: SvgPicture.asset(
-                                          'assets/buttons/download.svg'),
-                                    ),
+                                  : isDownloadStarts
+                                      ? LinearPercentIndicator(
+                                          width: 200.0,
+                                          lineHeight: 18.0,
+                                          percent: percent,
+                                          center: Text(
+                                            "Downloading...(${percent * 100} %)",
+                                            style: GoogleFonts.urbanist(
+                                              fontSize: 12,
+                                              color: const Color(
+                                                0xff5B4214,
+                                              ),
+                                              fontWeight: FontWeight.w400,
+                                            ),
+                                          ),
+                                          barRadius: const Radius.circular(10),
+                                          backgroundColor: Colors.grey,
+                                          progressColor:
+                                              const Color(0xffE8B55B),
+                                        )
+                                      : GestureDetector(
+                                          onTap: () {
+                                            print('object download');
+                                            print('object download' +
+                                                isDownloadStarts.toString());
+                                            _listenForPermissionStatus(
+                                                context,
+                                                widget.popularBooksGetModel
+                                                    .books_id
+                                                    .toString());
+                                          },
+                                          child: Container(
+                                            padding: const EdgeInsets.symmetric(
+                                              horizontal: 8,
+                                              vertical: 6,
+                                            ),
+                                            width: 106,
+                                            height: 30,
+                                            decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(
+                                                15,
+                                              ),
+                                              color: const Color(0xffF7F7F7),
+                                            ),
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.spaceAround,
+                                              children: [
+                                                SvgPicture.asset(
+                                                  'assets/icons/download.svg',
+                                                  colorFilter:
+                                                      const ColorFilter.mode(
+                                                          Color(
+                                                            0xff6C6C6C,
+                                                          ),
+                                                          BlendMode.srcIn),
+                                                  // fit: BoxFit.scaleDown,
+                                                ),
+                                                Text(
+                                                  'Download',
+                                                  style: GoogleFonts.poppins(
+                                                      fontSize: 13,
+                                                      fontWeight:
+                                                          FontWeight.w400,
+                                                      color: const Color(
+                                                          0xff6C6C6C)),
+                                                )
+                                              ],
+                                            ),
+                                          ),
+                                        ),
                             ],
                           ),
                         ],
@@ -541,6 +656,9 @@ class _BookDetailsState extends State<BookDetails> {
   }
 
   Future download2(Dio dio, String url, String savePath) async {
+    setState(() {
+      isDownloadStarts = true;
+    });
     //get pdf from link
     Response response = await dio.get(
       url,
@@ -554,6 +672,11 @@ class _BookDetailsState extends State<BookDetails> {
           }),
     );
 
+    setState(() {
+      isDownloading = false;
+      isDownloadStarts = false;
+    });
+    showToastSuccess('Book Downloaded Successfully', FToast().init(context));
     //write in download folder
     File file = File(savePath);
     var raf = file.openSync(mode: FileMode.write);
@@ -562,14 +685,23 @@ class _BookDetailsState extends State<BookDetails> {
   }
 
 //progress bar
+  bool isDownloadStarts = false;
+  String progressPercentage = '';
+  double percent = 0.0;
   showDownloadProgress(received, total) {
+    percent = 0.0;
     if (total != -1) {
-      print((received / total * 100).toStringAsFixed(0) + "%");
-    } else {
       setState(() {
-        isDownloading = false;
+        percent = (((received / total * 100).toInt()).toDouble() / 100);
       });
-      showToastError('Book Downloaded Successfully', FToast().init(context));
+      progressPercentage = (received / total * 100).toStringAsFixed(0) + "%";
+
+      print("asas " +
+          progressPercentage.toString() +
+          " TOT " +
+          total.toString() +
+          "  PER  " +
+          percent.toString());
     }
   }
 
@@ -583,26 +715,26 @@ class _BookDetailsState extends State<BookDetails> {
     var path = Platform.isAndroid
         ? await getExternalStorageDirectory()
         : await getApplicationSupportDirectory();
-    print("asdsad " + path.toString());
 
-    Map downloadData = {"books_id": id};
+    Map downloadData = {
+      "users_customers_id": userID.toString(),
+      "books_id": id,
+    };
     _responseDownload = await service.bookDownload(downloadData);
-    print('implemented 123');
+
     if (_responseDownload.status!.toLowerCase() == 'success') {
-      print('object ' + _responseDownload.data!.book_url!.toString());
       showToastSuccess(
         'Download has been started',
         FToast().init(context),
       );
       String fullPathName =
           "$path/${_responseDownload.data!.title!.trim()}.pdf";
-      print('object1212 ' + fullPathName.toString());
+
       download2(
           dio,
           'https://mecca.eigix.net/public/${_responseDownload.data!.book_url}',
           fullPathName);
     } else {
-      print('object ' + _responseDownload.message.toString());
       showToastError(_responseDownload.message, FToast().init(context));
     }
     setState(() {

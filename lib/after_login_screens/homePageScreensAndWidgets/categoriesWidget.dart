@@ -23,7 +23,7 @@ class _CategoriesWidgetState extends State<CategoriesWidget> {
           20,
         ),
         gradient: widget.categoryGetModel.isCategorySelected!
-            ? LinearGradient(
+            ? const LinearGradient(
                 colors: [
                   Color(
                     0xffF7E683,
@@ -33,7 +33,7 @@ class _CategoriesWidgetState extends State<CategoriesWidget> {
                   ),
                 ],
               )
-            : LinearGradient(
+            : const LinearGradient(
                 colors: [
                   Color(
                     0xffF7F7F7,

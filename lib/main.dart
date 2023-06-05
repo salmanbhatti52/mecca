@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:MeccaIslamicCenter/CustomSplash.dart';
-import 'package:device_preview/device_preview.dart';
 import 'package:flutter/foundation.dart' as foundation;
 import 'package:flutter/material.dart';
 import 'package:flutter_downloader/flutter_downloader.dart';
@@ -16,7 +15,7 @@ void main() async {
   await Future.delayed(const Duration(seconds: 5));
   // WidgetsFlutterBinding.ensureInitialized();
   await FlutterDownloader.initialize(debug: true, ignoreSsl: true);
-  runApp(MyApp()); // Wrap your app);
+  runApp(const MyApp()); // Wrap your app);
   // runApp(
   //   DevicePreview(
   //     enabled: true,
@@ -56,10 +55,10 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return Sizer(builder: (context, orientation, deviceType) {
-      return MaterialApp(
+      return const MaterialApp(
         useInheritedMediaQuery: true,
-        locale: DevicePreview.locale(context),
-        builder: DevicePreview.appBuilder,
+        // locale: DevicePreview.locale(context),
+        // builder: DevicePreview.appBuilder,
         title: 'MeccaIslamicCentre',
         debugShowCheckedModeBanner: false,
         home: CustomSplash(),

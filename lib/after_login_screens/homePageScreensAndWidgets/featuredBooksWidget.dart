@@ -1,11 +1,7 @@
-import 'package:MeccaIslamicCenter/APIModels/API_Response.dart';
-import 'package:MeccaIslamicCenter/APIModels/book_view.dart';
 import 'package:MeccaIslamicCenter/APIModels/popular_books_model.dart';
-import 'package:MeccaIslamicCenter/Utilities/showToast.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get_it/get_it.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:secure_shared_preferences/secure_shared_pref.dart';
@@ -13,8 +9,14 @@ import 'package:secure_shared_preferences/secure_shared_pref.dart';
 import '../../Services/API_Services.dart';
 
 class FeaturedBooksWidget extends StatefulWidget {
+  final VoidCallback function;
   final PoplarBooksModel popularBooksGetModel;
-  const FeaturedBooksWidget({Key? key, required this.popularBooksGetModel})
+  final bool isAdding;
+  const FeaturedBooksWidget(
+      {Key? key,
+      required this.popularBooksGetModel,
+      required this.function,
+      required this.isAdding})
       : super(key: key);
 
   @override
@@ -104,7 +106,7 @@ class _FeaturedBooksWidgetState extends State<FeaturedBooksWidget> {
                 ),
                 Padding(
                   padding: const EdgeInsets.all(4.0),
-                  child: isAdding
+                  child: widget.isAdding
                       ? const SizedBox(
                           width: 20,
                           height: 25,
@@ -114,8 +116,9 @@ class _FeaturedBooksWidgetState extends State<FeaturedBooksWidget> {
                           ),
                         )
                       : GestureDetector(
-                          onTap: () => featuredBookBookmark(context,
-                              widget.popularBooksGetModel.books_id!.toString()),
+                          onTap: widget.function,
+                          // featuredBookBookmark(context,
+                          // widget.popularBooksGetModel.books_id!.toString()),
                           child: SizedBox(
                             height: 20,
                             width: 20,
@@ -257,39 +260,5 @@ class _FeaturedBooksWidgetState extends State<FeaturedBooksWidget> {
         ),
       ),
     );
-  }
-
-  late APIResponse<BookViewModel> _responseAddBookMark;
-  bool isAdding = false;
-  featuredBookBookmark(BuildContext context, String id) async {
-    setState(() {
-      isAdding = true;
-    });
-    Map addData = {
-      "users_customers_id": userID.toString(),
-      "books_id": id,
-    };
-    _responseAddBookMark = await service.addBookMark(addData);
-    if (_responseAddBookMark.status!.toLowerCase() == 'success') {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text(
-            "Book added to bookmarks successfully",
-          ),
-        ),
-      );
-    } else {
-      print('objectHERE ' +
-          _responseAddBookMark.status.toString() +
-          " " +
-          _responseAddBookMark.message.toString());
-      showToastError(
-        _responseAddBookMark.message,
-        FToast().init(context),
-      );
-    }
-    setState(() {
-      isAdding = false;
-    });
   }
 }

@@ -83,16 +83,16 @@ class _BottomNavigationBarScreensState
           tabBuilder: (context, index) {
             switch (index) {
               case 0:
-                return HomePage();
+                return const HomePage();
 
               case 1:
-                return Browse();
+                return const Browse();
 
               case 2:
-                return BookMark();
+                return const BookMark();
 
               default:
-                return UpdatePassword();
+                return const UpdatePassword();
             }
           });
     } else {

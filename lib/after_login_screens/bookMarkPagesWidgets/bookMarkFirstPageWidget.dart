@@ -2,20 +2,19 @@ import 'package:MeccaIslamicCenter/APIModels/all_bookmarked_books.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:fluttertoast/fluttertoast.dart';
-import 'package:get_it/get_it.dart';
+
 import 'package:google_fonts/google_fonts.dart';
 import 'package:secure_shared_preferences/secure_shared_pref.dart';
 
-import '../../APIModels/API_Response.dart';
-import '../../Services/API_Services.dart';
-import '../../Utilities/showToast.dart';
-
 class BookMarkFirstPageWidget extends StatefulWidget {
   final AllBooksBookMarked allBooksBookMarked;
+  final VoidCallback function;
+  final bool isRemoving;
   const BookMarkFirstPageWidget({
     Key? key,
     required this.allBooksBookMarked,
+    required this.function,
+    required this.isRemoving,
   }) : super(key: key);
 
   @override
@@ -106,22 +105,21 @@ class _BookMarkFirstPageWidgetState extends State<BookMarkFirstPageWidget> {
                 ),
                 Padding(
                   padding: const EdgeInsets.all(4.0),
-                  child: isAdding
-                      ? const SizedBox(
-                          width: 20,
-                          height: 25,
-                          child: CircularProgressIndicator(
-                            color: Color(0xffE8B55B),
-                            strokeWidth: 0.9,
-                          ),
-                        )
-                      : GestureDetector(
-                          onTap: () => bookMark(context,
-                              widget.allBooksBookMarked.books_id.toString()),
-                          child: SizedBox(
-                              height: 20,
-                              width: 20,
-                              child: SvgPicture.asset(
+                  child: GestureDetector(
+                    onTap: widget.function,
+                    child: SizedBox(
+                        height: 20,
+                        width: 20,
+                        child: widget.isRemoving
+                            ? const SizedBox(
+                                width: 20,
+                                height: 25,
+                                child: CircularProgressIndicator(
+                                  color: Color(0xffE8B55B),
+                                  strokeWidth: 0.9,
+                                ),
+                              )
+                            : SvgPicture.asset(
                                 'assets/buttons/save.svg',
                                 colorFilter: const ColorFilter.mode(
                                     Color(
@@ -130,7 +128,7 @@ class _BookMarkFirstPageWidgetState extends State<BookMarkFirstPageWidget> {
                                     BlendMode.srcIn),
                                 // fit: BoxFit.scaleDown,
                               )),
-                        ),
+                  ),
                 ),
               ],
             ),
@@ -263,36 +261,5 @@ class _BookMarkFirstPageWidgetState extends State<BookMarkFirstPageWidget> {
         ),
       ),
     );
-  }
-
-  ApiServices get service => GetIt.I<ApiServices>();
-  late APIResponse _responseRemoveBookMark;
-  bool isAdding = false;
-  bookMark(BuildContext context, String id) async {
-    setState(() {
-      isAdding = true;
-    });
-    Map addData = {
-      "users_customers_id": userID.toString(),
-      "books_id": id,
-    };
-    _responseRemoveBookMark = await service.removeBookMark(addData);
-    if (_responseRemoveBookMark.status!.toLowerCase() == 'success') {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text(
-            "Book removed from bookmarks successfully",
-          ),
-        ),
-      );
-    } else {
-      showToastError(
-        _responseRemoveBookMark.message,
-        FToast().init(context),
-      );
-    }
-    setState(() {
-      isAdding = false;
-    });
   }
 }

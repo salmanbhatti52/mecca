@@ -72,7 +72,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
               MediaQuery.of(context).size.width,
               30,
             ),
-            child: SizedBox(),
+            child: const SizedBox(),
           ),
         ),
         body: SafeArea(

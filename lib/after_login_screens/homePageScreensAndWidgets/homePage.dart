@@ -10,6 +10,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:secure_shared_preferences/secure_shared_pref.dart';
 
 import '../../APIModels/API_Response.dart';
+import '../../APIModels/book_view.dart';
 import '../../APIModels/category_model_get.dart';
 import '../../Services/API_Services.dart';
 import '../../Utilities/showToast.dart';
@@ -82,6 +83,82 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
+  /// Bookmark Method
+
+  late APIResponse<BookViewModel> _responseAddBookMark;
+  bool isAdding = false;
+  bool isBookMarked = false;
+
+  featuredBookBookmark(BuildContext context, String id) async {
+    setState(() {
+      isAdding = true;
+      isBookMarked = true;
+    });
+    Map addData = {
+      "users_customers_id": userID.toString(),
+      "books_id": id,
+    };
+    _responseAddBookMark = await service.addBookMark(addData);
+    if (_responseAddBookMark.status!.toLowerCase() == 'success') {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text(
+            "Book added to bookmarks successfully",
+          ),
+        ),
+      );
+      initPopularBooks(false, -1);
+    } else {
+      print('objectHERE ' +
+          _responseAddBookMark.status.toString() +
+          " " +
+          _responseAddBookMark.message.toString());
+      showToastError(
+        _responseAddBookMark.message,
+        FToast().init(context),
+      );
+    }
+    setState(() {
+      isAdding = false;
+      isBookMarked = false;
+    });
+  }
+
+  /// bookmark method ended here
+
+  /// bookmark method for top books starts
+  late APIResponse<BookViewModel> _responseAddBookMarkInTopBooks;
+  bool isAddingInTopBooks = false;
+  topBooksBookmark(BuildContext context, String id) async {
+    setState(() {
+      isAddingInTopBooks = true;
+    });
+    Map addData = {
+      "users_customers_id": userID.toString(),
+      "books_id": id,
+    };
+    _responseAddBookMarkInTopBooks = await service.addBookMark(addData);
+    if (_responseAddBookMarkInTopBooks.status!.toLowerCase() == 'success') {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text(
+            "Book added to bookmarks successfully",
+          ),
+        ),
+      );
+      initTopBooksBasedOnDownloads();
+    } else {
+      showToastError(
+        _responseAddBookMarkInTopBooks.message,
+        FToast().init(context),
+      );
+    }
+    setState(() {
+      isAddingInTopBooks = false;
+    });
+  }
+
+  /// bookmark method for top books ends here
   List<PoplarBooksModel> _popularFoundBooks = [];
   late APIResponse<List<PoplarBooksModel>> _responsePopularBooks;
   List<PoplarBooksModel>? popularBooksData;
@@ -380,7 +457,7 @@ class _HomePageState extends State<HomePage> {
                               0xffE8B55B,
                             ),
                             decoration: InputDecoration(
-                              contentPadding: EdgeInsets.only(
+                              contentPadding: const EdgeInsets.only(
                                 top: 13,
                                 bottom: 13,
                               ),
@@ -857,9 +934,17 @@ class _HomePageState extends State<HomePage> {
                                                     );
                                                   },
                                                   child: FeaturedBooksWidget(
+                                                    function: () =>
+                                                        featuredBookBookmark(
+                                                            context,
+                                                            _popularFoundBooks[
+                                                                    index]
+                                                                .books_id
+                                                                .toString()),
                                                     popularBooksGetModel:
                                                         _popularFoundBooks[
                                                             index],
+                                                    isAdding: isAdding,
                                                   ),
                                                 ),
                                               );
@@ -921,9 +1006,18 @@ class _HomePageState extends State<HomePage> {
                                                 child:
                                                     topBooksData![index] != null
                                                         ? TopBooksWidget(
-                                                            popularBooksGetModel:
+                                                            popularBooksGetModelTop:
                                                                 topBooksData![
                                                                     index],
+                                                            function: () =>
+                                                                topBooksBookmark(
+                                                                    context,
+                                                                    _popularFoundBooks[
+                                                                            index]
+                                                                        .books_id
+                                                                        .toString()),
+                                                            isAddingInTopBooks:
+                                                                isAddingInTopBooks,
                                                           )
                                                         : const Center(
                                                             child: Text(

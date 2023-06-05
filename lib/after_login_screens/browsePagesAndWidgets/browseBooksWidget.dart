@@ -5,6 +5,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get_it/get_it.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:secure_shared_preferences/secure_shared_pref.dart';
 
 import '../../APIModels/API_Response.dart';
 import '../../APIModels/book_view.dart';
@@ -21,6 +22,24 @@ class BrowseBooksWidget extends StatefulWidget {
 }
 
 class _BrowseBooksWidgetState extends State<BrowseBooksWidget> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    init();
+  }
+
+  late SecureSharedPref secureSharedPref;
+  int userID = -1;
+  init() async {
+    secureSharedPref = await SecureSharedPref.getInstance();
+    userID = (await secureSharedPref.getInt('userID')) ?? -1;
+
+    print(
+      'id collected successfully on top widget ' + userID.toString(),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -93,7 +112,10 @@ class _BrowseBooksWidgetState extends State<BrowseBooksWidget> {
                           ),
                         )
                       : GestureDetector(
-                          onTap: () => browseBookBookmark(context),
+                          onTap: () => browseBookBookmark(
+                              context,
+                              widget.popularBooksGetModel!.books_id!
+                                  .toString()),
                           child: SizedBox(
                             height: 20,
                             width: 20,
@@ -249,13 +271,13 @@ class _BrowseBooksWidgetState extends State<BrowseBooksWidget> {
   ApiServices get service => GetIt.I<ApiServices>();
   late APIResponse<BookViewModel> _responseAddBookMark;
   bool isAdding = false;
-  browseBookBookmark(BuildContext context) async {
+  browseBookBookmark(BuildContext context, String bookID) async {
     setState(() {
       isAdding = true;
     });
     Map addData = {
-      "users_customers_id": "41",
-      "books_id": "1",
+      "users_customers_id": userID.toString(),
+      "books_id": bookID,
     };
     _responseAddBookMark = await service.addBookMark(addData);
     if (_responseAddBookMark.status!.toLowerCase() == 'success') {

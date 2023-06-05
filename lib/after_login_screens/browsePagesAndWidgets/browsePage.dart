@@ -228,7 +228,7 @@ class _BrowseState extends State<Browse> {
                               0xffE8B55B,
                             ),
                             decoration: InputDecoration(
-                              contentPadding: EdgeInsets.only(
+                              contentPadding: const EdgeInsets.only(
                                 top: 13,
                                 bottom: 13,
                               ),
