@@ -381,9 +381,6 @@ class _BookDetailsState extends State<BookDetails> {
                                         )
                                       : GestureDetector(
                                           onTap: () {
-                                            print('object download');
-                                            print('object download' +
-                                                isDownloadStarts.toString());
                                             _listenForPermissionStatus(
                                                 context,
                                                 widget.popularBooksGetModel
@@ -572,24 +569,11 @@ class _BookDetailsState extends State<BookDetails> {
                                     crossAxisSpacing: 19.0,
                                     mainAxisSpacing: 24.0),
                             itemBuilder: (BuildContext context, int index) {
-                              return Container(
+                              return SizedBox(
                                 height: 310,
-                                child: GestureDetector(
-                                    onTap: () {
-                                      // Navigator.of(context,
-                                      //         rootNavigator: false)
-                                      //     .push(
-                                      //   MaterialPageRoute(
-                                      //     builder: (context) => BookDetails(
-                                      //       popularBooksGetModel:
-                                      //           relatedBooksList![index],
-                                      //     ),
-                                      //   ),
-                                      // );
-                                    },
-                                    child: BookDetailsWidget(
-                                        relatedBooksModel:
-                                            relatedBooksList![index])),
+                                child: BookDetailsWidget(
+                                    relatedBooksModel:
+                                        relatedBooksList![index]),
                               );
                             },
                           ),
@@ -650,7 +634,7 @@ class _BookDetailsState extends State<BookDetails> {
       await openAppSettings();
     } else {
       // Do stuff that require permission here
-      print('object hereeeeeeeee');
+
       downloadBook(context, id);
     }
   }
@@ -695,13 +679,6 @@ class _BookDetailsState extends State<BookDetails> {
         percent = (((received / total * 100).toInt()).toDouble() / 100);
       });
       progressPercentage = (received / total * 100).toStringAsFixed(0) + "%";
-
-      print("asas " +
-          progressPercentage.toString() +
-          " TOT " +
-          total.toString() +
-          "  PER  " +
-          percent.toString());
     }
   }
 
