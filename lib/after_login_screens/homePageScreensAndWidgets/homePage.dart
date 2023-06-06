@@ -291,28 +291,6 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
-  // bool isSearching = false;
-  // late APIResponse<List<AllBooksBookMarked>> _responseSearchBooks;
-  // List<AllBooksBookMarked>? searchList;
-  // searchBooksMethod(BuildContext context) async {
-  //   print('search method provoked!');
-  //   setState(() {
-  //     isSearching = true;
-  //   });
-  //   Map searchData = {
-  //     "search_query": "Imam" // seach by category.name,author.name or book.title
-  //   };
-  //   _responseSearchBooks = await service.searchBooks(searchData);
-  //   searchList = [];
-  //   if (_responseSearchBooks.status!.toLowerCase() == 'success') {
-  //     print('search is started successfully');
-  //     searchList = _responseSearchBooks.data;
-  //   } else {
-  //     print('search is cancelled ');
-  //     showToastError(_responseSearchBooks.message, FToast().init(context));
-  //   }
-  // }
-
   @override
   void dispose() {
     // TODO: implement dispose

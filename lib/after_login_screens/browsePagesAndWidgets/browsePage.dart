@@ -8,6 +8,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:secure_shared_preferences/secure_shared_pref.dart';
 
 import '../../APIModels/API_Response.dart';
+import '../../APIModels/book_view.dart';
 import '../../Services/API_Services.dart';
 import '../../Utilities/showToast.dart';
 import '../../before_login_screens/login_screens.dart';
@@ -115,6 +116,37 @@ class _BrowseState extends State<Browse> {
     // Refresh the UI
     setState(() {
       _popularFoundBooks = results;
+    });
+  }
+
+  late APIResponse<BookViewModel> _responseAddBookMark;
+  bool isAdding = false;
+  browseBookBookmark(BuildContext context, String bookID) async {
+    setState(() {
+      isAdding = true;
+    });
+    Map addData = {
+      "users_customers_id": userID.toString(),
+      "books_id": bookID,
+    };
+    _responseAddBookMark = await service.addBookMark(addData);
+    if (_responseAddBookMark.status!.toLowerCase() == 'success') {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text(
+            "Book added to bookmarks successfully",
+          ),
+        ),
+      );
+      initPopularBooks(false, -1);
+    } else {
+      showToastError(
+        _responseAddBookMark.message,
+        FToast().init(context),
+      );
+    }
+    setState(() {
+      isAdding = false;
     });
   }
 
@@ -602,6 +634,13 @@ class _BrowseState extends State<Browse> {
                                   child: BrowseBooksWidget(
                                     popularBooksGetModel:
                                         _popularFoundBooks[index],
+                                    function: () => browseBookBookmark(
+                                      context,
+                                      _popularFoundBooks[index]
+                                          .books_id
+                                          .toString(),
+                                    ),
+                                    isAdding: isAdding,
                                   ),
                                 ),
                               );

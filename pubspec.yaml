@@ -38,7 +38,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   flutter_svg: ^2.0.5
   auto_size_text: ^3.0.0
-  google_fonts: ^4.0.4
+  google_fonts: ^5.0.0
   flutter_otp_text_field: ^1.1.1
   get_it: ^7.5.0
   http:
@@ -88,18 +88,6 @@ flutter_launcher_icons :
     generate : true
     image_path : "assets/images/app_icon.png"
 
-
-
-
-
-
-flutter_native_splash :
-  image : assets/images/Splash.png
-  android : true
-  android12 : true
-  ios : true
-  android_12 :
-    image : assets/images/Splash.png
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
