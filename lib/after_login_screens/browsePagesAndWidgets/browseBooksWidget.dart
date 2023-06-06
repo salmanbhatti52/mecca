@@ -2,18 +2,19 @@ import 'package:MeccaIslamicCenter/APIModels/popular_books_model.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:get_it/get_it.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:secure_shared_preferences/secure_shared_pref.dart';
 
+import '../../APIModels/API_Response.dart';
+import '../../APIModels/book_view.dart';
+import '../../Services/API_Services.dart';
+import '../../Utilities/showToast.dart';
+
 class BrowseBooksWidget extends StatefulWidget {
   final PoplarBooksModel popularBooksGetModel;
-  final VoidCallback function;
-  final bool isAdding;
-  const BrowseBooksWidget(
-      {Key? key,
-      required this.popularBooksGetModel,
-      required this.function,
-      required this.isAdding})
+  const BrowseBooksWidget({Key? key, required this.popularBooksGetModel})
       : super(key: key);
 
   @override
@@ -101,7 +102,7 @@ class _BrowseBooksWidgetState extends State<BrowseBooksWidget> {
                 ),
                 Padding(
                   padding: const EdgeInsets.all(4.0),
-                  child: widget.isAdding
+                  child: isAdding
                       ? const SizedBox(
                           width: 20,
                           height: 25,
@@ -111,7 +112,10 @@ class _BrowseBooksWidgetState extends State<BrowseBooksWidget> {
                           ),
                         )
                       : GestureDetector(
-                          onTap: widget.function,
+                          onTap: () => browseBookBookmark(
+                              context,
+                              widget.popularBooksGetModel!.books_id!
+                                  .toString()),
                           child: SizedBox(
                             height: 20,
                             width: 20,
@@ -262,5 +266,36 @@ class _BrowseBooksWidgetState extends State<BrowseBooksWidget> {
         ),
       ),
     );
+  }
+
+  ApiServices get service => GetIt.I<ApiServices>();
+  late APIResponse<BookViewModel> _responseAddBookMark;
+  bool isAdding = false;
+  browseBookBookmark(BuildContext context, String bookID) async {
+    setState(() {
+      isAdding = true;
+    });
+    Map addData = {
+      "users_customers_id": userID.toString(),
+      "books_id": bookID,
+    };
+    _responseAddBookMark = await service.addBookMark(addData);
+    if (_responseAddBookMark.status!.toLowerCase() == 'success') {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text(
+            "Book added to bookmarks successfully",
+          ),
+        ),
+      );
+    } else {
+      showToastError(
+        _responseAddBookMark.message,
+        FToast().init(context),
+      );
+    }
+    setState(() {
+      isAdding = false;
+    });
   }
 }

@@ -156,7 +156,6 @@ class _ReadBookState extends State<ReadBook> {
                               ),
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
                                   Container(
                                     height: 80,
@@ -184,7 +183,6 @@ class _ReadBookState extends State<ReadBook> {
                                     height: 50,
                                     child: Center(
                                       child: TextField(
-                                        textAlign: TextAlign.center,
                                         inputFormatters: [
                                           LengthLimitingTextInputFormatter(
                                             7,
@@ -205,8 +203,7 @@ class _ReadBookState extends State<ReadBook> {
                                           if (int.parse(val) >
                                               int.parse(widget
                                                   .popularBooksGetModel)) {
-                                            showToastError(
-                                                'this page number does not exist!',
+                                            showToastError('oo BHai kidhar? ',
                                                 FToast().init(context));
                                           } else {
                                             setState(() {

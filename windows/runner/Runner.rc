@@ -90,12 +90,12 @@ BEGIN
         BLOCK "040904e4"
         BEGIN
             VALUE "CompanyName", "com.example" "\0"
-            VALUE "FileDescription", "mecca_islmaic_center" "\0"
+            VALUE "FileDescription", "testing" "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
-            VALUE "InternalName", "mecca_islmaic_center" "\0"
+            VALUE "InternalName", "testing" "\0"
             VALUE "LegalCopyright", "Copyright (C) 2023 com.example. All rights reserved." "\0"
-            VALUE "OriginalFilename", "mecca_islmaic_center.exe" "\0"
-            VALUE "ProductName", "mecca_islmaic_center" "\0"
+            VALUE "OriginalFilename", "testing.exe" "\0"
+            VALUE "ProductName", "testing" "\0"
             VALUE "ProductVersion", VERSION_AS_STRING "\0"
         END
     END
