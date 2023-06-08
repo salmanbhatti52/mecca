@@ -1,5 +1,6 @@
 import 'package:MeccaIslamicCenter/APIModels/category_model_get.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class CategoriesWidget extends StatefulWidget {
@@ -15,12 +16,12 @@ class _CategoriesWidgetState extends State<CategoriesWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 8),
-      width: 78,
-      height: 30,
+      padding: EdgeInsets.symmetric(horizontal: 8.w),
+      width: 78.w,
+      height: 30.h,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(
-          20,
+          20.r,
         ),
         gradient: widget.categoryGetModel.isCategorySelected!
             ? const LinearGradient(
@@ -48,7 +49,7 @@ class _CategoriesWidgetState extends State<CategoriesWidget> {
         child: Text(
           widget.categoryGetModel.name!,
           style: GoogleFonts.poppins(
-            fontSize: 12,
+            fontSize: 12.sp,
             fontWeight: FontWeight.w400,
             color: const Color(
               0xff5B4214,

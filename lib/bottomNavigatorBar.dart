@@ -4,7 +4,6 @@ import 'package:flutter/foundation.dart' as foundation;
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:sizer/sizer.dart';
 
 import 'after_login_screens/bookMarkPagesWidgets/bookMark.dart';
 import 'after_login_screens/browsePagesAndWidgets/browsePage.dart';
@@ -58,42 +57,37 @@ class _BottomNavigationBarScreensState
   Widget build(BuildContext context) {
     if (isIos) {
       return CupertinoTabScaffold(
-          tabBar: CupertinoTabBar(items: [
-            BottomNavigationBarItem(
-              icon: SvgPicture.asset('assets/icons/home.svg'),
-              activeIcon: SvgPicture.asset('assets/icons/home_green.svg'),
-              label: 'Home',
-            ),
-            BottomNavigationBarItem(
-              icon: SvgPicture.asset('assets/icons/search.svg'),
-              activeIcon: SvgPicture.asset('assets/icons/search_green.svg'),
-              label: 'Browse',
-            ),
-            BottomNavigationBarItem(
-              icon: SvgPicture.asset('assets/icons/bookmark.svg'),
-              activeIcon: SvgPicture.asset('assets/icons/bookmark_green.svg'),
-              label: 'Bookmark',
-            ),
-            BottomNavigationBarItem(
-              icon: SvgPicture.asset('assets/icons/profile_grey.svg'),
-              activeIcon: SvgPicture.asset('assets/icons/profile_green.svg'),
-              label: 'Profile',
-            ),
-          ]),
+          tabBar: CupertinoTabBar(
+            items: [
+              BottomNavigationBarItem(
+                icon: SvgPicture.asset('assets/icons/home.svg'),
+                activeIcon: SvgPicture.asset('assets/icons/home_green.svg'),
+                label: 'Home',
+              ),
+              BottomNavigationBarItem(
+                icon: SvgPicture.asset('assets/icons/search.svg'),
+                activeIcon: SvgPicture.asset('assets/icons/search_green.svg'),
+                label: 'Browse',
+              ),
+              BottomNavigationBarItem(
+                icon: SvgPicture.asset('assets/icons/bookmark.svg'),
+                activeIcon: SvgPicture.asset('assets/icons/bookmark_green.svg'),
+                label: 'Bookmark',
+              ),
+              BottomNavigationBarItem(
+                icon: SvgPicture.asset('assets/icons/profile_grey.svg'),
+                activeIcon: SvgPicture.asset('assets/icons/profile_green.svg'),
+                label: 'Profile',
+              ),
+            ],
+            onTap: onTap,
+          ),
           tabBuilder: (context, index) {
-            switch (index) {
-              case 0:
-                return const HomePage();
-
-              case 1:
-                return const Browse();
-
-              case 2:
-                return const BookMark();
-
-              default:
-                return const UpdatePassword();
-            }
+            return CupertinoTabView(
+              builder: (context) {
+                return _pages[_currentIndex];
+              },
+            );
           });
     } else {
       return WillPopScope(
@@ -120,7 +114,7 @@ class _BottomNavigationBarScreensState
                   ),
                 ),
               ),
-              height: 8.h,
+              height: 75,
               child: ClipRRect(
                 borderRadius: const BorderRadius.vertical(
                   top: Radius.circular(

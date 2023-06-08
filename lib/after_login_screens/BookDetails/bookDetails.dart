@@ -5,6 +5,7 @@ import 'package:MeccaIslamicCenter/APIModels/popular_books_model.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get_it/get_it.dart';
@@ -40,13 +41,13 @@ class _BookDetailsState extends State<BookDetails> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    initRelatedBooks();
+    initRelatedBooks(widget.popularBooksGetModel.books_id!.toString());
   }
 
   bool isRelatedBooksLoading = false;
   late APIResponse<List<RelatedBooksModel>> _responseRelatedBooks;
   List<RelatedBooksModel>? relatedBooksList;
-  initRelatedBooks() async {
+  initRelatedBooks(String id) async {
     setState(() {
       isRelatedBooksLoading = true;
     });
@@ -58,13 +59,14 @@ class _BookDetailsState extends State<BookDetails> {
     );
     Map relatedData = {
       "users_customers_id": userID.toString(),
-      "books_id": "16",
+      "books_id": id,
     };
     _responseRelatedBooks = await service.relatedBooks(relatedData);
     relatedBooksList = [];
     if (_responseRelatedBooks.status!.toLowerCase() == 'success') {
       relatedBooksList = _responseRelatedBooks.data;
     } else {
+      print('error aa raha hai  ' + _responseRelatedBooks.status.toString());
       showToastError(
         _responseRelatedBooks.message,
         FToast().init(context),
@@ -75,6 +77,43 @@ class _BookDetailsState extends State<BookDetails> {
     });
   }
 
+  // bookmark method starts here
+  int currentIndex = -1;
+  late APIResponse<BookViewModel> _responseAddRelatedBooks;
+  bool isAdding = false;
+  featuredBookBookmark(BuildContext context, String id, int index) async {
+    setState(() {
+      isAdding = true;
+      currentIndex = index;
+    });
+    Map addData = {
+      "users_customers_id": userID.toString(),
+      "books_id": id,
+    };
+    _responseAddRelatedBooks = await service.addBookMark(addData);
+    if (_responseAddRelatedBooks.status!.toLowerCase() == 'success') {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text(
+            "Book added to bookmarks successfully",
+          ),
+        ),
+      );
+      initRelatedBooks(widget.popularBooksGetModel.books_id!.toString());
+    } else {
+      print('error in small bookmark  ' +
+          _responseAddRelatedBooks.status.toString());
+      showToastError(
+        _responseAddRelatedBooks.message,
+        FToast().init(context),
+      );
+    }
+    setState(() {
+      isAdding = false;
+    });
+  }
+  // bookmark method end here
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -83,7 +122,7 @@ class _BookDetailsState extends State<BookDetails> {
         appBar: PreferredSize(
           preferredSize: Size(
             MediaQuery.of(context).size.width,
-            70,
+            70.w,
           ),
           child: Container(
             decoration: const BoxDecoration(
@@ -105,11 +144,11 @@ class _BookDetailsState extends State<BookDetails> {
               ),
             ),
             child: Padding(
-              padding: const EdgeInsets.only(
-                top: 53.0,
-                bottom: 10,
-                left: 24,
-                right: 85,
+              padding: EdgeInsets.only(
+                top: 53.0.h,
+                bottom: 10.h,
+                left: 24.w,
+                right: 85.w,
               ),
               child: Row(
                 children: [
@@ -120,14 +159,14 @@ class _BookDetailsState extends State<BookDetails> {
                       fit: BoxFit.scaleDown,
                     ),
                   ),
-                  const SizedBox(
-                    width: 69,
+                  SizedBox(
+                    width: 69.w,
                   ),
                   Text(
                     'Book Details',
                     style: GoogleFonts.poppins(
                       fontWeight: FontWeight.w500,
-                      fontSize: 28,
+                      fontSize: 28.sp,
                       color: const Color(
                         0xff5B4214,
                       ),
@@ -147,21 +186,21 @@ class _BookDetailsState extends State<BookDetails> {
               color: const Color(0xffE8B55B),
               child: SingleChildScrollView(
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
+                  //crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Container(
-                      padding: const EdgeInsets.only(left: 16, right: 8),
+                      margin: EdgeInsets.symmetric(horizontal: 20.w),
                       // color: Colors.blueGrey,
-                      width: MediaQuery.of(context).size.width,
-                      height: 230,
+                      width: MediaQuery.of(context).size.width.w,
+                      height: 230.w,
                       child: Row(
                         children: [
                           SizedBox(
-                            width: 134,
-                            height: 213,
+                            width: 134.w,
+                            height: 213.w,
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(
-                                12,
+                                12.r,
                               ),
                               child: Image.network(
                                 'https://mecca.eigix.net/public/${widget.popularBooksGetModel.cover}',
@@ -196,20 +235,20 @@ class _BookDetailsState extends State<BookDetails> {
                               ),
                             ),
                           ),
-                          const SizedBox(
-                            width: 11,
+                          SizedBox(
+                            width: 11.w,
                           ),
                           Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               SizedBox(
-                                width: 190,
-                                height: 48,
+                                width: 190.w,
+                                height: 48.w,
                                 child: AutoSizeText(
                                   widget.popularBooksGetModel.title ?? '',
                                   style: GoogleFonts.poppins(
-                                    fontSize: 16,
+                                    fontSize: 16.sp,
                                     fontWeight: FontWeight.w400,
                                     color: const Color(
                                       0xff5B4214,
@@ -217,8 +256,8 @@ class _BookDetailsState extends State<BookDetails> {
                                   ),
                                 ),
                               ),
-                              const SizedBox(
-                                height: 10,
+                              SizedBox(
+                                height: 10.h,
                               ),
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.start,
@@ -226,20 +265,20 @@ class _BookDetailsState extends State<BookDetails> {
                                   Text(
                                     'Author',
                                     style: GoogleFonts.poppins(
-                                      fontSize: 12,
+                                      fontSize: 12.sp,
                                       fontWeight: FontWeight.w500,
                                       color: const Color(
                                         0xff5B4214,
                                       ),
                                     ),
                                   ),
-                                  const SizedBox(
-                                    width: 10,
+                                  SizedBox(
+                                    width: 10.h,
                                   ),
                                   AutoSizeText(
                                     widget.popularBooksGetModel.author!.name!,
                                     style: GoogleFonts.poppins(
-                                      fontSize: 12,
+                                      fontSize: 12.sp,
                                       fontWeight: FontWeight.w400,
                                       color: const Color(
                                         0xff6C6C6C,
@@ -248,8 +287,8 @@ class _BookDetailsState extends State<BookDetails> {
                                   )
                                 ],
                               ),
-                              const SizedBox(
-                                height: 10,
+                              SizedBox(
+                                height: 10.h,
                               ),
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.start,
@@ -257,20 +296,20 @@ class _BookDetailsState extends State<BookDetails> {
                                   Text(
                                     'Pages',
                                     style: GoogleFonts.poppins(
-                                      fontSize: 12,
+                                      fontSize: 12.sp,
                                       fontWeight: FontWeight.w500,
                                       color: const Color(
                                         0xff5B4214,
                                       ),
                                     ),
                                   ),
-                                  const SizedBox(
-                                    width: 13,
+                                  SizedBox(
+                                    width: 13.w,
                                   ),
                                   AutoSizeText(
                                     '${widget.popularBooksGetModel.pages!}',
                                     style: GoogleFonts.poppins(
-                                      fontSize: 12,
+                                      fontSize: 12.sp,
                                       fontWeight: FontWeight.w400,
                                       color: const Color(
                                         0xff6C6C6C,
@@ -279,8 +318,8 @@ class _BookDetailsState extends State<BookDetails> {
                                   )
                                 ],
                               ),
-                              const SizedBox(
-                                height: 17,
+                              SizedBox(
+                                height: 17.h,
                               ),
                               isBookMarkDone
                                   ? const Center(
@@ -296,15 +335,15 @@ class _BookDetailsState extends State<BookDetails> {
                                           widget.popularBooksGetModel.books_id
                                               .toString()),
                                       child: Container(
-                                        padding: const EdgeInsets.symmetric(
-                                          horizontal: 8,
-                                          vertical: 6,
+                                        padding: EdgeInsets.symmetric(
+                                          horizontal: 8.w,
+                                          vertical: 6.h,
                                         ),
-                                        width: 106,
-                                        height: 30,
+                                        width: 106.w,
+                                        height: 30.w,
                                         decoration: BoxDecoration(
                                           borderRadius: BorderRadius.circular(
-                                            15,
+                                            15.r,
                                           ),
                                           color: const Color(0xffF7F7F7),
                                         ),
@@ -318,6 +357,8 @@ class _BookDetailsState extends State<BookDetails> {
                                                     'yes'
                                                 ? SvgPicture.asset(
                                                     'assets/buttons/save.svg',
+                                                    width: 16.w, height: 16.h,
+                                                    fit: BoxFit.cover,
                                                     colorFilter:
                                                         const ColorFilter.mode(
                                                             Color(
@@ -328,6 +369,8 @@ class _BookDetailsState extends State<BookDetails> {
                                                   )
                                                 : SvgPicture.asset(
                                                     'assets/buttons/save.svg',
+                                                    width: 16.w, height: 16.h,
+                                                    fit: BoxFit.cover,
                                                     colorFilter:
                                                         const ColorFilter.mode(
                                                             Color(
@@ -339,7 +382,7 @@ class _BookDetailsState extends State<BookDetails> {
                                             Text(
                                               'Bookmark',
                                               style: GoogleFonts.poppins(
-                                                  fontSize: 13,
+                                                  fontSize: 13.sp,
                                                   fontWeight: FontWeight.w400,
                                                   color:
                                                       const Color(0xff6C6C6C)),
@@ -349,7 +392,7 @@ class _BookDetailsState extends State<BookDetails> {
                                       ),
                                     ),
                               SizedBox(
-                                height: isBookMarkDone ? 14 : 10,
+                                height: isBookMarkDone ? 14.h : 10.h,
                               ),
                               isDownloading
                                   ? const SizedBox(
@@ -361,20 +404,20 @@ class _BookDetailsState extends State<BookDetails> {
                                     )
                                   : isDownloadStarts
                                       ? LinearPercentIndicator(
-                                          width: 200.0,
-                                          lineHeight: 18.0,
+                                          width: 200.0.w,
+                                          lineHeight: 18.0.w,
                                           percent: percent,
                                           center: Text(
                                             "Downloading...(${percent * 100} %)",
                                             style: GoogleFonts.urbanist(
-                                              fontSize: 12,
+                                              fontSize: 12.sp,
                                               color: const Color(
                                                 0xff5B4214,
                                               ),
                                               fontWeight: FontWeight.w400,
                                             ),
                                           ),
-                                          barRadius: const Radius.circular(10),
+                                          barRadius: Radius.circular(10.r),
                                           backgroundColor: Colors.grey,
                                           progressColor:
                                               const Color(0xffE8B55B),
@@ -388,16 +431,16 @@ class _BookDetailsState extends State<BookDetails> {
                                                     .toString());
                                           },
                                           child: Container(
-                                            padding: const EdgeInsets.symmetric(
-                                              horizontal: 8,
-                                              vertical: 6,
+                                            padding: EdgeInsets.symmetric(
+                                              horizontal: 8.w,
+                                              vertical: 6.h,
                                             ),
-                                            width: 106,
-                                            height: 30,
+                                            width: 106.w,
+                                            height: 30.w,
                                             decoration: BoxDecoration(
                                               borderRadius:
                                                   BorderRadius.circular(
-                                                15,
+                                                15.r,
                                               ),
                                               color: const Color(0xffF7F7F7),
                                             ),
@@ -407,6 +450,8 @@ class _BookDetailsState extends State<BookDetails> {
                                               children: [
                                                 SvgPicture.asset(
                                                   'assets/icons/download.svg',
+                                                  width: 16.w, height: 16.h,
+                                                  fit: BoxFit.cover,
                                                   colorFilter:
                                                       const ColorFilter.mode(
                                                           Color(
@@ -418,7 +463,7 @@ class _BookDetailsState extends State<BookDetails> {
                                                 Text(
                                                   'Download',
                                                   style: GoogleFonts.poppins(
-                                                      fontSize: 13,
+                                                      fontSize: 13.sp,
                                                       fontWeight:
                                                           FontWeight.w400,
                                                       color: const Color(
@@ -433,13 +478,14 @@ class _BookDetailsState extends State<BookDetails> {
                         ],
                       ),
                     ),
-                    const SizedBox(
-                      height: 25,
+                    SizedBox(
+                      height: 25.h,
                     ),
                     isReading
                         ? Container(
-                            width: 337,
-                            height: 63,
+                            margin: EdgeInsets.symmetric(horizontal: 26.w),
+                            width: double.infinity,
+                            height: 63.h,
                             decoration: BoxDecoration(
                               gradient: const LinearGradient(
                                 colors: [
@@ -452,7 +498,7 @@ class _BookDetailsState extends State<BookDetails> {
                                 ],
                               ),
                               borderRadius: BorderRadius.circular(
-                                12,
+                                12.r,
                               ),
                             ),
                             child: Center(
@@ -462,15 +508,15 @@ class _BookDetailsState extends State<BookDetails> {
                                   Text(
                                     'PLEASE WAIT',
                                     style: GoogleFonts.poppins(
-                                      fontSize: 18,
+                                      fontSize: 18.sp,
                                       fontWeight: FontWeight.w500,
                                       color: const Color(
                                         0xff5B4214,
                                       ),
                                     ),
                                   ),
-                                  const SizedBox(
-                                    width: 5,
+                                  SizedBox(
+                                    width: 5.w,
                                   ),
                                   const CircularProgressIndicator(
                                     color: Color(
@@ -482,8 +528,9 @@ class _BookDetailsState extends State<BookDetails> {
                             ),
                           )
                         : Container(
-                            width: 337,
-                            height: 63,
+                            margin: EdgeInsets.symmetric(horizontal: 26.w),
+                            width: double.infinity,
+                            height: 63.h,
                             decoration: BoxDecoration(
                               gradient: const LinearGradient(
                                 colors: [
@@ -496,13 +543,13 @@ class _BookDetailsState extends State<BookDetails> {
                                 ],
                               ),
                               borderRadius: BorderRadius.circular(
-                                12,
+                                12.r,
                               ),
                             ),
                             child: Center(
                               child: SizedBox(
-                                width: 237,
-                                height: 37,
+                                width: double.infinity,
+                                height: 37.h,
                                 child: MaterialButton(
                                   focusColor: const Color(0xffF7E683),
                                   splashColor: const Color(0xffF7E683),
@@ -513,7 +560,7 @@ class _BookDetailsState extends State<BookDetails> {
                                   child: Text(
                                     'READ NOW',
                                     style: GoogleFonts.poppins(
-                                      fontSize: 18,
+                                      fontSize: 18.sp,
                                       fontWeight: FontWeight.w500,
                                       color: const Color(
                                         0xff5B4214,
@@ -524,18 +571,18 @@ class _BookDetailsState extends State<BookDetails> {
                               ),
                             ),
                           ),
-                    const SizedBox(
-                      height: 20,
+                    SizedBox(
+                      height: 20.h,
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(left: 16.0),
+                      padding: EdgeInsets.only(left: 16.0.w),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           Text(
                             'Related Books',
                             style: GoogleFonts.poppins(
-                              fontSize: 18,
+                              fontSize: 18.sp,
                               fontWeight: FontWeight.w500,
                               color: const Color(
                                 0xff000000,
@@ -545,8 +592,8 @@ class _BookDetailsState extends State<BookDetails> {
                         ],
                       ),
                     ),
-                    const SizedBox(
-                      height: 17,
+                    SizedBox(
+                      height: 17.h,
                     ),
                     isRelatedBooksLoading
                         ? const Center(
@@ -555,25 +602,34 @@ class _BookDetailsState extends State<BookDetails> {
                             ),
                           )
                         : GridView.builder(
-                            padding: const EdgeInsets.only(
-                              left: 16,
-                              right: 16,
+                            padding: EdgeInsets.only(
+                              left: 16.w,
+                              right: 16.w,
                             ),
                             shrinkWrap: true,
                             itemCount: relatedBooksList!.length,
                             physics: const BouncingScrollPhysics(),
                             gridDelegate:
-                                const SliverGridDelegateWithFixedCrossAxisCount(
+                                SliverGridDelegateWithFixedCrossAxisCount(
                                     childAspectRatio: 0.6,
                                     crossAxisCount: 2,
-                                    crossAxisSpacing: 19.0,
-                                    mainAxisSpacing: 24.0),
+                                    crossAxisSpacing: 19.0.w,
+                                    mainAxisSpacing: 24.0.h),
                             itemBuilder: (BuildContext context, int index) {
                               return SizedBox(
-                                height: 310,
+                                height: 310.h,
                                 child: BookDetailsWidget(
-                                    relatedBooksModel:
-                                        relatedBooksList![index]),
+                                  relatedBooksModel: relatedBooksList![index],
+                                  function: () => featuredBookBookmark(
+                                      context,
+                                      relatedBooksList![index]
+                                          .books_id!
+                                          .toString(),
+                                      index),
+                                  isAdding: isAdding,
+                                  index: index,
+                                  currentIndex: currentIndex,
+                                ),
                               );
                             },
                           ),
