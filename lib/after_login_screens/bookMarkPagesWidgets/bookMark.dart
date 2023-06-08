@@ -317,12 +317,15 @@ class _BookMarkState extends State<BookMark> {
                                               context,
                                               _popularFoundBooks![index]
                                                   .books_id
-                                                  .toString());
+                                                  .toString(),
+                                              index);
                                           setState(() {});
                                         },
                                         allBooksBookMarked:
                                             _popularFoundBooks![index],
                                         isRemoving: isRemoving,
+                                        index: index,
+                                        currentIndex: currentIndex,
                                       ),
                                     ),
                                   );
@@ -334,11 +337,13 @@ class _BookMarkState extends State<BookMark> {
     );
   }
 
+  int currentIndex = -1;
   late APIResponse _responseRemoveBookMark;
   bool isRemoving = false;
-  bookMark(BuildContext context, String id) async {
+  bookMark(BuildContext context, String id, int index) async {
     setState(() {
       isRemoving = true;
+      currentIndex = index;
     });
     Map addData = {
       "users_customers_id": userID.toString(),

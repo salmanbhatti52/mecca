@@ -2,7 +2,6 @@ import 'package:MeccaIslamicCenter/APIModels/all_bookmarked_books.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-
 import 'package:google_fonts/google_fonts.dart';
 import 'package:secure_shared_preferences/secure_shared_pref.dart';
 
@@ -10,11 +9,15 @@ class BookMarkFirstPageWidget extends StatefulWidget {
   final AllBooksBookMarked allBooksBookMarked;
   final VoidCallback function;
   final bool isRemoving;
+  final int index;
+  final int currentIndex;
   const BookMarkFirstPageWidget({
     Key? key,
     required this.allBooksBookMarked,
     required this.function,
     required this.isRemoving,
+    required this.index,
+    required this.currentIndex,
   }) : super(key: key);
 
   @override
@@ -106,29 +109,38 @@ class _BookMarkFirstPageWidgetState extends State<BookMarkFirstPageWidget> {
                 Padding(
                   padding: const EdgeInsets.all(4.0),
                   child: GestureDetector(
-                    onTap: widget.function,
-                    child: SizedBox(
-                        height: 20,
-                        width: 20,
-                        child: widget.isRemoving
-                            ? const SizedBox(
-                                width: 20,
-                                height: 25,
-                                child: CircularProgressIndicator(
-                                  color: Color(0xffE8B55B),
-                                  strokeWidth: 0.9,
-                                ),
-                              )
-                            : SvgPicture.asset(
-                                'assets/buttons/save.svg',
-                                colorFilter: const ColorFilter.mode(
-                                    Color(
-                                      0xff00B900,
-                                    ),
-                                    BlendMode.srcIn),
-                                // fit: BoxFit.scaleDown,
-                              )),
-                  ),
+                      onTap: widget.function,
+                      child: SizedBox(
+                          height: 20,
+                          width: 20,
+                          child: widget.currentIndex == widget.index
+                              ? widget.isRemoving
+                                  ? const SizedBox(
+                                      width: 20,
+                                      height: 25,
+                                      child: CircularProgressIndicator(
+                                        color: Color(0xffE8B55B),
+                                        strokeWidth: 0.9,
+                                      ),
+                                    )
+                                  : SvgPicture.asset(
+                                      'assets/buttons/save.svg',
+                                      colorFilter: const ColorFilter.mode(
+                                          Color(
+                                            0xff00B900,
+                                          ),
+                                          BlendMode.srcIn),
+                                      // fit: BoxFit.scaleDown,
+                                    )
+                              : SvgPicture.asset(
+                                  'assets/buttons/save.svg',
+                                  colorFilter: const ColorFilter.mode(
+                                      Color(
+                                        0xff00B900,
+                                      ),
+                                      BlendMode.srcIn),
+                                  // fit: BoxFit.scaleDown,
+                                ))),
                 ),
               ],
             ),

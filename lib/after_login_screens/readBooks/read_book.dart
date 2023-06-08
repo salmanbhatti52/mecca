@@ -183,6 +183,7 @@ class _ReadBookState extends State<ReadBook> {
                                     height: 50,
                                     child: Center(
                                       child: TextField(
+                                        textAlign: TextAlign.center,
                                         inputFormatters: [
                                           LengthLimitingTextInputFormatter(
                                             7,
@@ -203,7 +204,8 @@ class _ReadBookState extends State<ReadBook> {
                                           if (int.parse(val) >
                                               int.parse(widget
                                                   .popularBooksGetModel)) {
-                                            showToastError('oo BHai kidhar? ',
+                                            showToastError(
+                                                'the page you are trying to access does not exist',
                                                 FToast().init(context));
                                           } else {
                                             setState(() {

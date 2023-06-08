@@ -1,5 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get_it/get_it.dart';
@@ -27,22 +28,22 @@ class _BookDetailsWidgetState extends State<BookDetailsWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 165,
-      height: 310,
+      width: 165.w,
+      height: 310.w,
       decoration: BoxDecoration(
         color: const Color(
           0xffF7F7F7,
         ),
         // color: Colors.red,
         borderRadius: BorderRadius.circular(
-          10,
+          10.r,
         ),
       ),
       child: Padding(
-        padding: const EdgeInsets.only(
-          top: 5,
-          left: 5,
-          right: 5,
+        padding: EdgeInsets.only(
+          top: 5.h,
+          left: 5.w,
+          right: 5.w,
         ),
         child: Column(
           children: [
@@ -51,11 +52,11 @@ class _BookDetailsWidgetState extends State<BookDetailsWidget> {
               children: [
                 ClipRRect(
                   borderRadius: BorderRadius.circular(
-                    8,
+                    8.r,
                   ),
                   child: SizedBox(
-                    width: 146,
-                    height: 152,
+                    width: 146.w,
+                    height: 152.w,
                     child: Image.network(
                       'https://mecca.eigix.net/public/${widget.relatedBooksModel.cover}',
                       fit: BoxFit.cover,
@@ -87,9 +88,9 @@ class _BookDetailsWidgetState extends State<BookDetailsWidget> {
                 Padding(
                   padding: const EdgeInsets.all(4.0),
                   child: isAdding
-                      ? const SizedBox(
-                          width: 20,
-                          height: 25,
+                      ? SizedBox(
+                          width: 20.w,
+                          height: 25.h,
                           child: CircularProgressIndicator(
                             color: Color(0xffE8B55B),
                             strokeWidth: 0.9,
@@ -98,8 +99,8 @@ class _BookDetailsWidgetState extends State<BookDetailsWidget> {
                       : GestureDetector(
                           onTap: () => featuredBookBookmark(context),
                           child: SizedBox(
-                              height: 20,
-                              width: 20,
+                              height: 20.h,
+                              width: 20.w,
                               child: SvgPicture.asset(
                                 'assets/buttons/save.svg',
                                 // fit: BoxFit.scaleDown,
@@ -108,123 +109,115 @@ class _BookDetailsWidgetState extends State<BookDetailsWidget> {
                 ),
               ],
             ),
-            const SizedBox(
-              height: 10,
+            SizedBox(
+              height: 10.h,
             ),
-            Expanded(
-              child: ListView(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Container(
-                        // color: Colors.red,
-                        width: 110,
-                        height: 32,
-                        child: AutoSizeText(
-                          maxLines: 3,
-                          minFontSize: 9,
-                          widget.relatedBooksModel.title!,
-                          style: GoogleFonts.poppins(
-                            fontSize: 12,
-                            fontWeight: FontWeight.w400,
-                            color: const Color(
-                              0xff000000,
-                            ),
-                          ),
-                        ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Container(
+                  // color: Colors.red,
+                  width: 110.w,
+                  height: 32.h,
+                  child: AutoSizeText(
+                    maxLines: 3,
+                    minFontSize: 9,
+                    widget.relatedBooksModel.title!,
+                    style: GoogleFonts.poppins(
+                      fontSize: 12.sp,
+                      fontWeight: FontWeight.w400,
+                      color: const Color(
+                        0xff000000,
                       ),
-                    ],
-                  ),
-                  const SizedBox(
-                    height: 7,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      AutoSizeText(
-                        // maxLines: 2,
-                        // minFontSize: 10,
-                        'Author',
-                        style: GoogleFonts.poppins(
-                          fontSize: 8,
-                          fontWeight: FontWeight.w400,
-                          color: const Color(
-                            0xff316F94,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  // SizedBox(
-                  //   height: 3,
-                  // ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Container(
-                        // color: Colors.red,
-                        width: 120,
-                        height: 20,
-                        child: AutoSizeText(
-                          maxLines: 2,
-                          minFontSize: 10,
-                          widget.relatedBooksModel.author!.name!,
-                          style: GoogleFonts.poppins(
-                            fontSize: 10,
-                            fontWeight: FontWeight.w400,
-                            color: const Color(
-                              0xff5B4214,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(
-                    height: 1,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      AutoSizeText(
-                        // maxLines: 2,
-                        // minFontSize: 10,
-                        'Category',
-                        style: GoogleFonts.poppins(
-                          fontSize: 8,
-                          fontWeight: FontWeight.w400,
-                          color: const Color(
-                            0xff00B900,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  // SizedBox(
-                  //   height: 1,
-                  // ),
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 6.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        AutoSizeText(
-                          // maxLines: 2,
-                          // minFontSize: 10,
-                          widget.relatedBooksModel.category!.name!,
-                          style: GoogleFonts.poppins(
-                            fontSize: 10,
-                            fontWeight: FontWeight.w400,
-                            color: const Color(
-                              0xff5B4214,
-                            ),
-                          ),
-                        ),
-                      ],
                     ),
                   ),
-                ],
+                ),
+              ],
+            ),
+
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                AutoSizeText(
+                  // maxLines: 2,
+                  // minFontSize: 10,
+                  'Author',
+                  style: GoogleFonts.poppins(
+                    fontSize: 8.sp,
+                    fontWeight: FontWeight.w400,
+                    color: const Color(
+                      0xff316F94,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            // SizedBox(
+            //   height: 3,
+            // ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Container(
+                  // color: Colors.red,
+                  width: 120.w,
+                  height: 20.w,
+                  child: AutoSizeText(
+                    maxLines: 2,
+                    minFontSize: 10,
+                    widget.relatedBooksModel.author!.name!,
+                    style: GoogleFonts.poppins(
+                      fontSize: 10.sp,
+                      fontWeight: FontWeight.w400,
+                      color: const Color(
+                        0xff5B4214,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                AutoSizeText(
+                  // maxLines: 2,
+                  // minFontSize: 10,
+                  'Category',
+                  style: GoogleFonts.poppins(
+                    fontSize: 8.sp,
+                    fontWeight: FontWeight.w400,
+                    color: const Color(
+                      0xff00B900,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            // SizedBox(
+            //   height: 1,
+            // ),
+            Expanded(
+              child: Padding(
+                padding: EdgeInsets.only(bottom: 6.0.h),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    AutoSizeText(
+                      // maxLines: 2,
+                      // minFontSize: 10,
+                      widget.relatedBooksModel.category!.name!,
+                      style: GoogleFonts.poppins(
+                        fontSize: 10.sp,
+                        fontWeight: FontWeight.w400,
+                        color: const Color(
+                          0xff5B4214,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
           ],

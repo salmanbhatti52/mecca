@@ -1,5 +1,6 @@
 import 'package:MeccaIslamicCenter/Utilities/showToast.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get_it/get_it.dart';
@@ -75,10 +76,10 @@ class _UpdatePasswordState extends State<UpdatePassword> {
         appBar: PreferredSize(
           preferredSize: Size(
             MediaQuery.of(context).size.width,
-            70,
+            70.w,
           ),
           child: Container(
-            padding: const EdgeInsets.only(top: 25),
+            padding: EdgeInsets.only(top: 25.h),
             decoration: const BoxDecoration(
               gradient: LinearGradient(
                 tileMode: TileMode.mirror,
@@ -102,7 +103,7 @@ class _UpdatePasswordState extends State<UpdatePassword> {
                 'Profile',
                 style: GoogleFonts.poppins(
                   fontWeight: FontWeight.w500,
-                  fontSize: 28,
+                  fontSize: 28.sp,
                   color: const Color(
                     0xff5B4214,
                   ),
@@ -124,10 +125,10 @@ class _UpdatePasswordState extends State<UpdatePassword> {
                     color: const Color(0xffE8B55B),
                     child: SingleChildScrollView(
                       child: Padding(
-                        padding: const EdgeInsets.only(
-                          top: 28.0,
-                          left: 25,
-                          right: 25,
+                        padding: EdgeInsets.only(
+                          top: 28.0.h,
+                          left: 25.w,
+                          right: 25.w,
                         ),
                         child: Form(
                           key: _formKey,
@@ -139,12 +140,12 @@ class _UpdatePasswordState extends State<UpdatePassword> {
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
                                   SizedBox(
-                                    width: 160,
-                                    height: 30,
+                                    width: 160.w,
+                                    height: 30.w,
                                     child: Text(
                                       'Update Profile',
                                       style: GoogleFonts.poppins(
-                                        fontSize: 18,
+                                        fontSize: 18.sp,
                                         fontWeight: FontWeight.w500,
                                         color: const Color(
                                           0xff000000,
@@ -154,8 +155,8 @@ class _UpdatePasswordState extends State<UpdatePassword> {
                                   ),
                                 ],
                               ),
-                              const SizedBox(
-                                height: 16,
+                              SizedBox(
+                                height: 16.h,
                               ),
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.start,
@@ -163,7 +164,7 @@ class _UpdatePasswordState extends State<UpdatePassword> {
                                   Text(
                                     'Old Password',
                                     style: GoogleFonts.poppins(
-                                      fontSize: 16,
+                                      fontSize: 16.sp,
                                       fontWeight: FontWeight.w400,
                                       color: const Color(
                                         0xff000000,
@@ -172,15 +173,15 @@ class _UpdatePasswordState extends State<UpdatePassword> {
                                   ),
                                 ],
                               ),
-                              const SizedBox(
-                                height: 7,
+                              SizedBox(
+                                height: 7.h,
                               ),
                               Container(
-                                width: 337,
-                                height: 50,
+                                width: double.infinity,
+                                height: 50.h,
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(
-                                    12,
+                                    12.r,
                                   ),
                                   color: const Color(
                                     0xffF7F7F7,
@@ -201,7 +202,7 @@ class _UpdatePasswordState extends State<UpdatePassword> {
                                   autofocus: false,
                                   cursorColor: const Color(0xffE8B55B),
                                   style: GoogleFonts.poppins(
-                                    fontSize: 12,
+                                    fontSize: 12.sp,
                                     fontWeight: FontWeight.w400,
                                     color: Colors.black,
                                   ),
@@ -228,18 +229,22 @@ class _UpdatePasswordState extends State<UpdatePassword> {
                                     ),
                                     focusedBorder: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(
-                                        12,
+                                        12.r,
                                       ),
                                       borderSide: const BorderSide(
                                         color: Color(0xffE8B55B),
                                       ),
                                     ),
                                     border: InputBorder.none,
-                                    contentPadding: const EdgeInsets.only(
-                                        top: 18, bottom: 0.0),
+                                    contentPadding: EdgeInsets.only(
+                                      top: 17.h,
+                                      bottom: 7.h,
+                                      left: 19.w,
+                                      right: 19.w,
+                                    ),
                                     hintText: 'Enter Password here',
                                     hintStyle: GoogleFonts.poppins(
-                                      fontSize: 12,
+                                      fontSize: 12.sp,
                                       fontWeight: FontWeight.w400,
                                       color: const Color(
                                         0xff6C6C6C,
@@ -248,8 +253,8 @@ class _UpdatePasswordState extends State<UpdatePassword> {
                                   ),
                                 ),
                               ),
-                              const SizedBox(
-                                height: 25,
+                              SizedBox(
+                                height: 25.h,
                               ),
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.start,
@@ -257,7 +262,7 @@ class _UpdatePasswordState extends State<UpdatePassword> {
                                   Text(
                                     'New Password',
                                     style: GoogleFonts.poppins(
-                                      fontSize: 16,
+                                      fontSize: 16.sp,
                                       fontWeight: FontWeight.w400,
                                       color: const Color(
                                         0xff000000,
@@ -266,15 +271,15 @@ class _UpdatePasswordState extends State<UpdatePassword> {
                                   ),
                                 ],
                               ),
-                              const SizedBox(
-                                height: 7,
+                              SizedBox(
+                                height: 7.h,
                               ),
                               Container(
-                                width: 337,
-                                height: 50,
+                                width: double.infinity,
+                                height: 50.h,
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(
-                                    12,
+                                    12.r,
                                   ),
                                   color: const Color(
                                     0xffF7F7F7,
@@ -295,7 +300,7 @@ class _UpdatePasswordState extends State<UpdatePassword> {
                                   autofocus: false,
                                   cursorColor: const Color(0xffE8B55B),
                                   style: GoogleFonts.poppins(
-                                    fontSize: 12,
+                                    fontSize: 12.sp,
                                     fontWeight: FontWeight.w400,
                                     color: Colors.black,
                                   ),
@@ -322,18 +327,22 @@ class _UpdatePasswordState extends State<UpdatePassword> {
                                     ),
                                     focusedBorder: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(
-                                        12,
+                                        12.r,
                                       ),
                                       borderSide: const BorderSide(
                                         color: Color(0xffE8B55B),
                                       ),
                                     ),
                                     border: InputBorder.none,
-                                    contentPadding: const EdgeInsets.only(
-                                        top: 18, bottom: 0.0),
+                                    contentPadding: EdgeInsets.only(
+                                      top: 17.h,
+                                      bottom: 7.h,
+                                      left: 19.w,
+                                      right: 19.w,
+                                    ),
                                     hintText: 'Enter Password here',
                                     hintStyle: GoogleFonts.poppins(
-                                      fontSize: 12,
+                                      fontSize: 12.sp,
                                       fontWeight: FontWeight.w400,
                                       color: const Color(
                                         0xff6C6C6C,
@@ -342,8 +351,8 @@ class _UpdatePasswordState extends State<UpdatePassword> {
                                   ),
                                 ),
                               ),
-                              const SizedBox(
-                                height: 17,
+                              SizedBox(
+                                height: 17.h,
                               ),
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.start,
@@ -351,7 +360,7 @@ class _UpdatePasswordState extends State<UpdatePassword> {
                                   Text(
                                     'Confirm New Password',
                                     style: GoogleFonts.poppins(
-                                      fontSize: 16,
+                                      fontSize: 16.sp,
                                       fontWeight: FontWeight.w400,
                                       color: const Color(
                                         0xff000000,
@@ -360,15 +369,15 @@ class _UpdatePasswordState extends State<UpdatePassword> {
                                   ),
                                 ],
                               ),
-                              const SizedBox(
-                                height: 7,
+                              SizedBox(
+                                height: 7.h,
                               ),
                               Container(
-                                width: 337,
-                                height: 50,
+                                width: double.infinity,
+                                height: 50.h,
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(
-                                    12,
+                                    12.r,
                                   ),
                                   color: const Color(
                                     0xffF7F7F7,
@@ -392,7 +401,7 @@ class _UpdatePasswordState extends State<UpdatePassword> {
                                   autofocus: false,
                                   cursorColor: const Color(0xffE8B55B),
                                   style: GoogleFonts.poppins(
-                                    fontSize: 12,
+                                    fontSize: 12.sp,
                                     fontWeight: FontWeight.w400,
                                     color: Colors.black,
                                   ),
@@ -420,18 +429,22 @@ class _UpdatePasswordState extends State<UpdatePassword> {
                                     ),
                                     focusedBorder: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(
-                                        12,
+                                        12.r,
                                       ),
                                       borderSide: const BorderSide(
                                         color: Color(0xffE8B55B),
                                       ),
                                     ),
                                     border: InputBorder.none,
-                                    contentPadding: const EdgeInsets.only(
-                                        top: 18, bottom: 0.0),
+                                    contentPadding: EdgeInsets.only(
+                                      top: 17.h,
+                                      bottom: 7.h,
+                                      left: 19.w,
+                                      right: 19.w,
+                                    ),
                                     hintText: 'Enter Password here',
                                     hintStyle: GoogleFonts.poppins(
-                                      fontSize: 12,
+                                      fontSize: 12.sp,
                                       fontWeight: FontWeight.w400,
                                       color: const Color(
                                         0xff6C6C6C,
@@ -440,8 +453,8 @@ class _UpdatePasswordState extends State<UpdatePassword> {
                                   ),
                                 ),
                               ),
-                              const SizedBox(
-                                height: 30,
+                              SizedBox(
+                                height: 30.h,
                               ),
                               isUpdating
                                   ? const Center(
@@ -452,8 +465,8 @@ class _UpdatePasswordState extends State<UpdatePassword> {
                                       ),
                                     )
                                   : Container(
-                                      width: 337,
-                                      height: 63,
+                                      width: double.infinity,
+                                      height: 63.h,
                                       decoration: BoxDecoration(
                                         gradient: const LinearGradient(
                                           colors: [
@@ -466,13 +479,13 @@ class _UpdatePasswordState extends State<UpdatePassword> {
                                           ],
                                         ),
                                         borderRadius: BorderRadius.circular(
-                                          12,
+                                          12.r,
                                         ),
                                       ),
                                       child: Center(
                                         child: SizedBox(
-                                          width: 237,
-                                          height: 37,
+                                          width: 237.w,
+                                          height: 37.h,
                                           child: MaterialButton(
                                             focusColor: const Color(0xffF7E683),
                                             splashColor:
@@ -483,7 +496,7 @@ class _UpdatePasswordState extends State<UpdatePassword> {
                                             child: Text(
                                               'UPDATE',
                                               style: GoogleFonts.poppins(
-                                                fontSize: 18,
+                                                fontSize: 18.sp,
                                                 fontWeight: FontWeight.w500,
                                                 color: const Color(
                                                   0xff5B4214,
@@ -494,24 +507,24 @@ class _UpdatePasswordState extends State<UpdatePassword> {
                                         ),
                                       ),
                                     ),
-                              const SizedBox(
-                                height: 30,
+                              SizedBox(
+                                height: 30.h,
                               ),
                               Container(
-                                width: 337,
-                                height: 63,
+                                width: double.infinity,
+                                height: 63.h,
                                 decoration: BoxDecoration(
                                   color: const Color(
                                     0xffE96B6B,
                                   ),
                                   borderRadius: BorderRadius.circular(
-                                    12,
+                                    12.r,
                                   ),
                                 ),
                                 child: Center(
                                   child: SizedBox(
-                                    width: 237,
-                                    height: 37,
+                                    width: 237.w,
+                                    height: 37.h,
                                     child: MaterialButton(
                                       focusColor: const Color(0xffF7E683),
                                       splashColor: const Color(0xffF7E683),
@@ -526,19 +539,18 @@ class _UpdatePasswordState extends State<UpdatePassword> {
                                               shape: RoundedRectangleBorder(
                                                 borderRadius:
                                                     BorderRadius.circular(
-                                                  15,
+                                                  15.r,
                                                 ),
                                               ),
                                               child: SizedBox(
-                                                width: 338,
-                                                height: 345,
+                                                width: 338.w,
+                                                height: 345.h,
                                                 child: Padding(
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                    left: 24,
-                                                    right: 24,
-                                                    top: 28,
-                                                    bottom: 30,
+                                                  padding: EdgeInsets.only(
+                                                    left: 24.w,
+                                                    right: 24.w,
+                                                    top: 20.h,
+                                                    bottom: 15.h,
                                                   ),
                                                   child: Column(
                                                     crossAxisAlignment:
@@ -551,23 +563,35 @@ class _UpdatePasswordState extends State<UpdatePassword> {
                                                             GoogleFonts.poppins(
                                                           fontWeight:
                                                               FontWeight.w500,
-                                                          fontSize: 28,
+                                                          fontSize: 28.sp,
                                                           color: const Color(
                                                             0xff5B4214,
                                                           ),
                                                         ),
                                                       ),
-                                                      const SizedBox(
-                                                        height: 10,
+                                                      Spacer(),
+                                                      SizedBox(
+                                                        width: 216.w,
+                                                        height: 64.w,
+                                                        child: Text(
+                                                          textAlign:
+                                                              TextAlign.center,
+                                                          'Are you sure you want to     delete you account?',
+                                                          style: GoogleFonts
+                                                              .poppins(
+                                                            fontSize: 18.sp,
+                                                            fontWeight:
+                                                                FontWeight.w500,
+                                                            color: Color(
+                                                              0xff000000,
+                                                            ),
+                                                          ),
+                                                        ),
                                                       ),
-                                                      SvgPicture.asset(
-                                                          'assets/images/dlt_text.svg'),
-                                                      const SizedBox(
-                                                        height: 30,
-                                                      ),
+                                                      Spacer(),
                                                       Container(
-                                                        width: 282,
-                                                        height: 63,
+                                                        width: 282.w,
+                                                        height: 63.h,
                                                         decoration:
                                                             BoxDecoration(
                                                           gradient:
@@ -584,13 +608,13 @@ class _UpdatePasswordState extends State<UpdatePassword> {
                                                           borderRadius:
                                                               BorderRadius
                                                                   .circular(
-                                                            12,
+                                                            12.r,
                                                           ),
                                                         ),
                                                         child: Center(
                                                           child: SizedBox(
-                                                            width: 237,
-                                                            height: 37,
+                                                            width: 237.w,
+                                                            height: 37.h,
                                                             child:
                                                                 MaterialButton(
                                                               focusColor:
@@ -609,7 +633,8 @@ class _UpdatePasswordState extends State<UpdatePassword> {
                                                                 style:
                                                                     GoogleFonts
                                                                         .poppins(
-                                                                  fontSize: 18,
+                                                                  fontSize:
+                                                                      18.sp,
                                                                   fontWeight:
                                                                       FontWeight
                                                                           .w500,
@@ -623,13 +648,12 @@ class _UpdatePasswordState extends State<UpdatePassword> {
                                                           ),
                                                         ),
                                                       ),
-                                                      const SizedBox(
-                                                        height: 25,
-                                                      ),
+                                                      Spacer(),
                                                       isDeleting
                                                           ? Container(
-                                                              width: 282,
-                                                              height: 63,
+                                                              width: double
+                                                                  .infinity,
+                                                              height: 63.h,
                                                               decoration:
                                                                   BoxDecoration(
                                                                 color: const Color(
@@ -637,7 +661,7 @@ class _UpdatePasswordState extends State<UpdatePassword> {
                                                                 borderRadius:
                                                                     BorderRadius
                                                                         .circular(
-                                                                  12,
+                                                                  12.h,
                                                                 ),
                                                               ),
                                                               child: Center(
@@ -648,7 +672,7 @@ class _UpdatePasswordState extends State<UpdatePassword> {
                                                                       style: GoogleFonts
                                                                           .poppins(
                                                                         fontSize:
-                                                                            18,
+                                                                            18.sp,
                                                                         fontWeight:
                                                                             FontWeight.w500,
                                                                         color: Colors
@@ -664,8 +688,9 @@ class _UpdatePasswordState extends State<UpdatePassword> {
                                                               ),
                                                             )
                                                           : Container(
-                                                              width: 282,
-                                                              height: 63,
+                                                              width: double
+                                                                  .infinity,
+                                                              height: 63.h,
                                                               decoration:
                                                                   BoxDecoration(
                                                                 color: const Color(
@@ -673,13 +698,14 @@ class _UpdatePasswordState extends State<UpdatePassword> {
                                                                 borderRadius:
                                                                     BorderRadius
                                                                         .circular(
-                                                                  12,
+                                                                  12.r,
                                                                 ),
                                                               ),
                                                               child: Center(
                                                                 child: SizedBox(
-                                                                  width: 237,
-                                                                  height: 37,
+                                                                  width: double
+                                                                      .infinity,
+                                                                  height: 37.h,
                                                                   child:
                                                                       MaterialButton(
                                                                     focusColor:
@@ -699,7 +725,7 @@ class _UpdatePasswordState extends State<UpdatePassword> {
                                                                       style: GoogleFonts
                                                                           .poppins(
                                                                         fontSize:
-                                                                            18,
+                                                                            18.sp,
                                                                         fontWeight:
                                                                             FontWeight.w500,
                                                                         color: Colors
@@ -721,7 +747,7 @@ class _UpdatePasswordState extends State<UpdatePassword> {
                                       child: Text(
                                         'DELETE ACCOUNT',
                                         style: GoogleFonts.poppins(
-                                          fontSize: 18,
+                                          fontSize: 18.sp,
                                           fontWeight: FontWeight.w500,
                                           color: Colors.white,
                                         ),

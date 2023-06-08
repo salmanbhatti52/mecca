@@ -53,28 +53,16 @@ class _ForgetPasswordState extends State<ForgetPassword> {
               ),
             ),
           ),
-          title: Padding(
-            padding: EdgeInsets.only(top: 23.0.h),
-            child: Text(
-              'Forgot Password?',
-              style: GoogleFonts.poppins(
-                fontWeight: FontWeight.w500,
-                fontSize: 28.sp,
-                color: const Color(
-                  0xff5B4214,
-                ),
-              ),
-            ),
-          ),
+
           backgroundColor: Colors.transparent,
           elevation: 0.0,
-          bottom: PreferredSize(
-            preferredSize: Size(
-              MediaQuery.of(context).size.width,
-              30,
-            ),
-            child: const SizedBox(),
-          ),
+          // bottom: PreferredSize(
+          //   preferredSize: Size(
+          //     MediaQuery.of(context).size.width,
+          //     30,
+          //   ),
+          //   child: const SizedBox(),
+          // ),
         ),
         body: SafeArea(
           child: SingleChildScrollView(
@@ -87,6 +75,23 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
+                  SizedBox(
+                    width: 255.w,
+                    height: 42.w,
+                    child: Text(
+                      'Forgot Password?',
+                      style: GoogleFonts.poppins(
+                        fontWeight: FontWeight.w500,
+                        fontSize: 28.sp,
+                        color: const Color(
+                          0xff5B4214,
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 20.h,
+                  ),
                   SvgPicture.asset('assets/buttons/lock.svg'),
                   SizedBox(
                     height: 20.h,
@@ -313,7 +318,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
             ),
             child: SizedBox(
               width: 296.w,
-              height: 390.h,
+              height: 390.w,
               child: Padding(
                 padding: EdgeInsets.only(
                   left: 28.w,
@@ -324,18 +329,44 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                 child: Column(
                   children: [
                     SizedBox(
+                      width: 140.w,
+                      height: 110.w,
                       child: SvgPicture.asset('assets/images/pop_up.svg'),
                     ),
                     SizedBox(
                       height: 10.h,
                     ),
-                    SvgPicture.asset('assets/images/pass_next.svg'),
+                    SizedBox(
+                      width: 167.w,
+                      height: 60.w,
+                      child: Text(
+                        'Password reset Code Sent!',
+                        textAlign: TextAlign.center,
+                        style: GoogleFonts.poppins(
+                          fontSize: 20.sp,
+                          fontWeight: FontWeight.w700,
+                          color: Color(0xff00B900),
+                        ),
+                      ),
+                    ),
                     SizedBox(
                       height: 20.h,
                     ),
-                    SvgPicture.asset('assets/images/code_sent.svg'),
                     SizedBox(
-                      height: 20.h,
+                      width: 211.w,
+                      height: 57.w,
+                      child: Text(
+                        '4-digit reset code has been sent to your email.',
+                        textAlign: TextAlign.center,
+                        style: GoogleFonts.poppins(
+                          fontSize: 16.sp,
+                          fontWeight: FontWeight.w400,
+                          color: Color(0xff6C6C6C),
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 30.h,
                     ),
                     Container(
                       width: double.infinity,
