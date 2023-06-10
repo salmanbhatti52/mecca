@@ -3,6 +3,7 @@ import 'package:MeccaIslamicCenter/APIModels/SignUp_LogIn_Model.dart';
 import 'package:MeccaIslamicCenter/Utilities/showToast.dart';
 import 'package:MeccaIslamicCenter/before_login_screens/signup_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get_it/get_it.dart';
@@ -71,35 +72,35 @@ class _LogInState extends State<LogIn> {
                 body: SingleChildScrollView(
                   child: Padding(
                     padding: EdgeInsets.only(
-                      left: 18,
-                      right: 18,
+                      left: 18.w,
+                      right: 18.w,
                       bottom: MediaQuery.of(context).viewInsets.bottom,
                     ),
                     child: Form(
                       key: _logInKey,
                       child: Column(
                         children: [
-                          const SizedBox(
-                            height: 30,
+                          SizedBox(
+                            height: 30.h,
                           ),
                           SizedBox(
-                            width: 146,
-                            height: 117,
+                            width: 146.w,
+                            height: 117.h,
                             child: SvgPicture.asset(
                               'assets/images/islamic_center.svg',
                               fit: BoxFit.scaleDown,
                             ),
                           ),
-                          const SizedBox(
-                            height: 61,
+                          SizedBox(
+                            height: 61.h,
                           ),
                           SizedBox(
-                            width: 159,
-                            height: 30,
+                            width: 159.w,
+                            height: 30.w,
                             child: Text(
                               'Welcome Back!',
                               style: GoogleFonts.poppins(
-                                fontSize: 20,
+                                fontSize: 20.sp,
                                 fontWeight: FontWeight.w500,
                                 color: const Color(
                                   0xff00B900,
@@ -107,16 +108,16 @@ class _LogInState extends State<LogIn> {
                               ),
                             ),
                           ),
-                          const SizedBox(
-                            height: 10,
+                          SizedBox(
+                            height: 10.h,
                           ),
                           SizedBox(
-                            width: 75,
-                            height: 42,
+                            width: 75.w,
+                            height: 46.w,
                             child: Text(
                               'Login',
                               style: GoogleFonts.poppins(
-                                fontSize: 28,
+                                fontSize: 28.sp,
                                 fontWeight: FontWeight.w500,
                                 color: const Color(
                                   0xff000000,
@@ -124,8 +125,8 @@ class _LogInState extends State<LogIn> {
                               ),
                             ),
                           ),
-                          const SizedBox(
-                            height: 40,
+                          SizedBox(
+                            height: 40.h,
                           ),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.start,
@@ -133,7 +134,7 @@ class _LogInState extends State<LogIn> {
                               Text(
                                 'Email',
                                 style: GoogleFonts.poppins(
-                                  fontSize: 16,
+                                  fontSize: 16.sp,
                                   fontWeight: FontWeight.w400,
                                   color: const Color(
                                     0xff000000,
@@ -142,15 +143,15 @@ class _LogInState extends State<LogIn> {
                               ),
                             ],
                           ),
-                          const SizedBox(
-                            height: 8,
+                          SizedBox(
+                            height: 8.h,
                           ),
                           Container(
-                            width: 337,
-                            height: 50,
+                            width: double.infinity,
+                            height: 50.h,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(
-                                12,
+                                12.r,
                               ),
                               color: const Color(
                                 0xffF7F7F7,
@@ -170,7 +171,7 @@ class _LogInState extends State<LogIn> {
                               autofocus: false,
                               cursorColor: const Color(0xffE8B55B),
                               style: GoogleFonts.poppins(
-                                fontSize: 12,
+                                fontSize: 12.sp,
                                 fontWeight: FontWeight.w400,
                                 color: Colors.black,
                               ),
@@ -179,11 +180,15 @@ class _LogInState extends State<LogIn> {
                                   'assets/icons/email.svg',
                                   fit: BoxFit.scaleDown,
                                 ),
-                                contentPadding:
-                                    const EdgeInsets.only(top: 16, bottom: 0.0),
+                                contentPadding: EdgeInsets.only(
+                                  top: 17.h,
+                                  bottom: 17.h,
+                                  left: 19.w,
+                                  right: 19.w,
+                                ),
                                 focusedBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(
-                                    16,
+                                    16.r,
                                   ),
                                   borderSide: const BorderSide(
                                     color: Color(0xffE8B55B),
@@ -192,7 +197,7 @@ class _LogInState extends State<LogIn> {
                                 border: InputBorder.none,
                                 hintText: 'Enter Email here',
                                 hintStyle: GoogleFonts.poppins(
-                                  fontSize: 12,
+                                  fontSize: 12.sp,
                                   fontWeight: FontWeight.w400,
                                   color: const Color(
                                     0xff6C6C6C,
@@ -201,8 +206,8 @@ class _LogInState extends State<LogIn> {
                               ),
                             ),
                           ),
-                          const SizedBox(
-                            height: 25,
+                          SizedBox(
+                            height: 25.h,
                           ),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.start,
@@ -210,7 +215,7 @@ class _LogInState extends State<LogIn> {
                               Text(
                                 'Password',
                                 style: GoogleFonts.poppins(
-                                  fontSize: 16,
+                                  fontSize: 16.sp,
                                   fontWeight: FontWeight.w400,
                                   color: const Color(
                                     0xff000000,
@@ -219,15 +224,15 @@ class _LogInState extends State<LogIn> {
                               ),
                             ],
                           ),
-                          const SizedBox(
-                            height: 8,
+                          SizedBox(
+                            height: 8.h,
                           ),
                           Container(
-                            width: 337,
-                            height: 50,
+                            width: double.infinity,
+                            height: 50.h,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(
-                                12,
+                                12.r,
                               ),
                               color: const Color(
                                 0xffF7F7F7,
@@ -248,13 +253,17 @@ class _LogInState extends State<LogIn> {
                               autofocus: false,
                               cursorColor: const Color(0xffE8B55B),
                               style: GoogleFonts.poppins(
-                                fontSize: 12,
+                                fontSize: 12.sp,
                                 fontWeight: FontWeight.w400,
                                 color: Colors.black,
                               ),
                               decoration: InputDecoration(
-                                contentPadding:
-                                    const EdgeInsets.only(top: 18, bottom: 0.0),
+                                contentPadding: EdgeInsets.only(
+                                  top: 17.h,
+                                  bottom: 17.h,
+                                  left: 19.w,
+                                  right: 19.w,
+                                ),
 
                                 suffixIcon: IconButton(
                                   icon: isHidden
@@ -279,7 +288,7 @@ class _LogInState extends State<LogIn> {
                                 ),
                                 focusedBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(
-                                    12,
+                                    12.r,
                                   ),
                                   borderSide: const BorderSide(
                                     color: Color(0xffE8B55B),
@@ -299,7 +308,7 @@ class _LogInState extends State<LogIn> {
                                 // ),
                                 hintText: 'Enter Password here',
                                 hintStyle: GoogleFonts.poppins(
-                                  fontSize: 12,
+                                  fontSize: 12.sp,
                                   fontWeight: FontWeight.w400,
                                   color: const Color(
                                     0xff6C6C6C,
@@ -342,7 +351,7 @@ class _LogInState extends State<LogIn> {
                                 child: Text(
                                   'Forget Password?',
                                   style: GoogleFonts.poppins(
-                                    fontSize: 12,
+                                    fontSize: 12.sp,
                                     fontWeight: FontWeight.w400,
                                     color: const Color(
                                       0xff6C6C6C,
@@ -352,13 +361,13 @@ class _LogInState extends State<LogIn> {
                               ),
                             ],
                           ),
-                          const SizedBox(
-                            height: 35,
+                          SizedBox(
+                            height: 35.h,
                           ),
                           isLoading
                               ? Container(
-                                  width: 337,
-                                  height: 63,
+                                  width: double.infinity,
+                                  height: 63.h,
                                   decoration: BoxDecoration(
                                     gradient: const LinearGradient(
                                       colors: [
@@ -371,7 +380,7 @@ class _LogInState extends State<LogIn> {
                                       ],
                                     ),
                                     borderRadius: BorderRadius.circular(
-                                      12,
+                                      12.r,
                                     ),
                                   ),
                                   child: Center(
@@ -382,15 +391,15 @@ class _LogInState extends State<LogIn> {
                                         Text(
                                           'PLEASE WAIT',
                                           style: GoogleFonts.poppins(
-                                            fontSize: 18,
+                                            fontSize: 18.sp,
                                             fontWeight: FontWeight.w500,
                                             color: const Color(
                                               0xff5B4214,
                                             ),
                                           ),
                                         ),
-                                        const SizedBox(
-                                          width: 7,
+                                        SizedBox(
+                                          width: 7.h,
                                         ),
                                         const CircularProgressIndicator(
                                           color: Color(
@@ -402,8 +411,8 @@ class _LogInState extends State<LogIn> {
                                   ),
                                 )
                               : Container(
-                                  width: 337,
-                                  height: 63,
+                                  width: 337.w,
+                                  height: 63.h,
                                   decoration: BoxDecoration(
                                     gradient: const LinearGradient(
                                       colors: [
@@ -416,13 +425,13 @@ class _LogInState extends State<LogIn> {
                                       ],
                                     ),
                                     borderRadius: BorderRadius.circular(
-                                      12,
+                                      12.r,
                                     ),
                                   ),
                                   child: Center(
                                     child: SizedBox(
-                                      width: 237,
-                                      height: 37,
+                                      width: double.infinity,
+                                      height: 37.h,
                                       child: MaterialButton(
                                         focusColor: const Color(0xffF7E683),
                                         splashColor: const Color(0xffF7E683),
@@ -430,7 +439,7 @@ class _LogInState extends State<LogIn> {
                                         child: Text(
                                           'LOGIN',
                                           style: GoogleFonts.poppins(
-                                            fontSize: 18,
+                                            fontSize: 18.sp,
                                             fontWeight: FontWeight.w500,
                                             color: const Color(
                                               0xff5B4214,
@@ -441,19 +450,19 @@ class _LogInState extends State<LogIn> {
                                     ),
                                   ),
                                 ),
-                          const SizedBox(
-                            height: 30,
+                          SizedBox(
+                            height: 30.h,
                           ),
                           SizedBox(
                             width: double.infinity,
-                            height: 27,
+                            height: 27.w,
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Text(
                                   'Don’t have an account?',
                                   style: GoogleFonts.poppins(
-                                    fontSize: 16,
+                                    fontSize: 16.sp,
                                     fontWeight: FontWeight.w400,
                                     color: const Color(
                                       0xff000000,
@@ -485,7 +494,7 @@ class _LogInState extends State<LogIn> {
                                   child: Text(
                                     'Sign Up',
                                     style: GoogleFonts.poppins(
-                                      fontSize: 16,
+                                      fontSize: 16.sp,
                                       fontWeight: FontWeight.w400,
                                       color: const Color(
                                         0xff00B900,
@@ -542,7 +551,7 @@ class _LogInState extends State<LogIn> {
       } else {
         print('failure ' + logInData.toString());
         showToastError(
-          _responseLogIn.message,
+          'experiencing technical issue!',
           FToast().init(context),
         );
       }

@@ -1,6 +1,7 @@
 import 'package:MeccaIslamicCenter/APIModels/API_Response.dart';
 import 'package:MeccaIslamicCenter/APIModels/all_bookmarked_books.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get_it/get_it.dart';
@@ -120,7 +121,7 @@ class _BookMarkState extends State<BookMark> {
       appBar: PreferredSize(
         preferredSize: Size(
           MediaQuery.of(context).size.width,
-          105,
+          105.h,
         ),
         child: Stack(
           alignment: Alignment.bottomCenter,
@@ -149,11 +150,11 @@ class _BookMarkState extends State<BookMark> {
                 ),
               ),
               child: Padding(
-                padding: const EdgeInsets.only(
-                  top: 55.0,
-                  bottom: 40,
-                  left: 117,
-                  right: 20,
+                padding: EdgeInsets.only(
+                  top: 55.0.h,
+                  bottom: 40.h,
+                  left: 117.w,
+                  right: 20.w,
                 ),
                 child: Container(
                   // color: Colors.red,
@@ -162,16 +163,18 @@ class _BookMarkState extends State<BookMark> {
                     //crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      SizedBox(
-                        width: 159,
-                        height: 42,
-                        child: Text(
-                          'Bookmarks',
-                          style: GoogleFonts.poppins(
-                            fontSize: 28,
-                            fontWeight: FontWeight.w500,
-                            color: const Color(
-                              0xff5B4214,
+                      Expanded(
+                        child: SizedBox(
+                          width: 159.w,
+                          height: 42.w,
+                          child: Text(
+                            'Bookmarks',
+                            style: GoogleFonts.poppins(
+                              fontSize: 28.sp,
+                              fontWeight: FontWeight.w500,
+                              color: const Color(
+                                0xff5B4214,
+                              ),
                             ),
                           ),
                         ),
@@ -188,26 +191,26 @@ class _BookMarkState extends State<BookMark> {
             Positioned(
               bottom: -30,
               child: SizedBox(
-                width: 343,
+                width: 343.w,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Material(
                       elevation: 1,
                       borderRadius: BorderRadius.circular(
-                        12,
+                        12.r,
                       ),
                       color: Colors.white,
                       child: SizedBox(
-                        width: 294,
-                        height: 44,
+                        width: 294.w,
+                        height: 44.h,
                         child: TextField(
                           // expands: true, maxLines: null,
                           //onTap: () => searchBooksMethod(context),
                           onChanged: (value) => _runFilter(value),
                           controller: searchController,
                           style: GoogleFonts.poppins(
-                              fontSize: 14,
+                              fontSize: 14.sp,
                               fontWeight: FontWeight.w300,
                               color: Colors.black),
                           cursorColor: const Color(
@@ -215,12 +218,12 @@ class _BookMarkState extends State<BookMark> {
                           ),
                           decoration: InputDecoration(
                             contentPadding: EdgeInsets.only(
-                              top: 13,
-                              bottom: 13,
+                              top: 13.h,
+                              bottom: 13.h,
                             ),
                             hintText: 'Search here',
                             hintStyle: GoogleFonts.poppins(
-                              fontSize: 14,
+                              fontSize: 14.sp,
                               fontWeight: FontWeight.w300,
                               color: const Color(
                                 0xff6C6C6C,
@@ -228,7 +231,7 @@ class _BookMarkState extends State<BookMark> {
                             ),
                             focusedBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(
-                                12,
+                                12.r,
                               ),
                               borderSide: const BorderSide(
                                 color: Color(0xffE8B55B),
@@ -263,15 +266,15 @@ class _BookMarkState extends State<BookMark> {
                 axisDirection: AxisDirection.down,
                 color: const Color(0xffE8B55B),
                 child: Padding(
-                  padding: const EdgeInsets.only(
-                    top: 38,
+                  padding: EdgeInsets.only(
+                    top: 38.h,
                   ),
                   child: _popularFoundBooks!.isEmpty
                       ? Center(
                           child: Text(
                             'No books are bookmarked yet',
                             style: GoogleFonts.poppins(
-                              fontSize: 20,
+                              fontSize: 20.sp,
                               fontWeight: FontWeight.w500,
                               color: Color(
                                 0xff5B4214,
@@ -280,16 +283,16 @@ class _BookMarkState extends State<BookMark> {
                           ),
                         )
                       : GridView.builder(
-                          padding: const EdgeInsets.symmetric(horizontal: 14),
+                          padding: EdgeInsets.symmetric(horizontal: 14.w),
                           shrinkWrap: true,
                           itemCount: _popularFoundBooks!.length,
                           physics: const BouncingScrollPhysics(),
                           gridDelegate:
-                              const SliverGridDelegateWithFixedCrossAxisCount(
+                              SliverGridDelegateWithFixedCrossAxisCount(
                                   childAspectRatio: 0.6,
                                   crossAxisCount: 2,
-                                  crossAxisSpacing: 19.0,
-                                  mainAxisSpacing: 24.0),
+                                  crossAxisSpacing: 19.0.w,
+                                  mainAxisSpacing: 24.0.h),
                           itemBuilder: (BuildContext context, int index) {
                             return isReading
                                 ? CircularProgressIndicator()
@@ -309,21 +312,21 @@ class _BookMarkState extends State<BookMark> {
                                         ),
                                       ),
                                     ),
-                                    child: SizedBox(
-                                      height: 330,
-                                      child: BookMarkFirstPageWidget(
-                                        function: () {
-                                          bookMark(
-                                              context,
-                                              _popularFoundBooks![index]
-                                                  .books_id
-                                                  .toString());
-                                          setState(() {});
-                                        },
-                                        allBooksBookMarked:
-                                            _popularFoundBooks![index],
-                                        isRemoving: isRemoving,
-                                      ),
+                                    child: BookMarkFirstPageWidget(
+                                      function: () {
+                                        bookMark(
+                                            context,
+                                            _popularFoundBooks![index]
+                                                .books_id
+                                                .toString(),
+                                            index);
+                                        setState(() {});
+                                      },
+                                      allBooksBookMarked:
+                                          _popularFoundBooks![index],
+                                      isRemoving: isRemoving,
+                                      index: index,
+                                      currentIndex: currentIndex,
                                     ),
                                   );
                           },
@@ -334,11 +337,13 @@ class _BookMarkState extends State<BookMark> {
     );
   }
 
+  int currentIndex = -1;
   late APIResponse _responseRemoveBookMark;
   bool isRemoving = false;
-  bookMark(BuildContext context, String id) async {
+  bookMark(BuildContext context, String id, int index) async {
     setState(() {
       isRemoving = true;
+      currentIndex = index;
     });
     Map addData = {
       "users_customers_id": userID.toString(),

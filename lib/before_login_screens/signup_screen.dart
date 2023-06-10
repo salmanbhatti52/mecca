@@ -2,6 +2,7 @@ import 'package:MeccaIslamicCenter/APIModels/API_Response.dart';
 import 'package:MeccaIslamicCenter/APIModels/SignUp_LogIn_Model.dart';
 import 'package:MeccaIslamicCenter/Utilities/showToast.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get_it/get_it.dart';
@@ -56,16 +57,16 @@ class _SignUpState extends State<SignUp> {
           bottom: PreferredSize(
             preferredSize: Size(
               MediaQuery.of(context).size.width,
-              10,
+              20.w,
             ),
             child: SizedBox(
-              width: 109,
-              height: 42,
+              width: 109.w,
+              height: 42.w,
               child: Text(
                 'Sign Up',
                 style: GoogleFonts.poppins(
                   fontWeight: FontWeight.w500,
-                  fontSize: 28,
+                  fontSize: 28.sp,
                   color: const Color(
                     0xff5B4214,
                   ),
@@ -78,16 +79,16 @@ class _SignUpState extends State<SignUp> {
         body: SafeArea(
           child: SingleChildScrollView(
             child: Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 18.0,
-                vertical: 20,
+              padding: EdgeInsets.symmetric(
+                horizontal: 18.0.w,
+                vertical: 20.h,
               ),
               child: Form(
                 key: _signUpKey,
                 child: Column(
                   children: [
-                    const SizedBox(
-                      height: 25,
+                    SizedBox(
+                      height: 25.h,
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.start,
@@ -95,7 +96,7 @@ class _SignUpState extends State<SignUp> {
                         Text(
                           'First Name',
                           style: GoogleFonts.poppins(
-                            fontSize: 16,
+                            fontSize: 16.sp,
                             fontWeight: FontWeight.w400,
                             color: const Color(
                               0xff000000,
@@ -104,15 +105,15 @@ class _SignUpState extends State<SignUp> {
                         ),
                       ],
                     ),
-                    const SizedBox(
-                      height: 8,
+                    SizedBox(
+                      height: 8.h,
                     ),
                     Container(
-                      width: 337,
-                      height: 50,
+                      width: double.infinity,
+                      height: 50.h,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(
-                          12,
+                          12.r,
                         ),
                         color: const Color(
                           0xffF7F7F7,
@@ -131,7 +132,7 @@ class _SignUpState extends State<SignUp> {
                         autofocus: false,
                         cursorColor: const Color(0xffE8B55B),
                         style: GoogleFonts.poppins(
-                          fontSize: 12,
+                          fontSize: 12.sp,
                           fontWeight: FontWeight.w400,
                           color: Colors.black,
                         ),
@@ -142,18 +143,22 @@ class _SignUpState extends State<SignUp> {
                           ),
                           focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(
-                              12,
+                              12.r,
                             ),
                             borderSide: const BorderSide(
                               color: Color(0xffE8B55B),
                             ),
                           ),
                           border: InputBorder.none,
-                          contentPadding:
-                              const EdgeInsets.only(top: 18, bottom: 0.0),
+                          contentPadding: EdgeInsets.only(
+                            top: 17.h,
+                            bottom: 17.h,
+                            left: 19.w,
+                            right: 19.w,
+                          ),
                           hintText: 'Enter Name here',
                           hintStyle: GoogleFonts.poppins(
-                            fontSize: 12,
+                            fontSize: 12.sp,
                             fontWeight: FontWeight.w400,
                             color: const Color(
                               0xff6C6C6C,
@@ -162,8 +167,8 @@ class _SignUpState extends State<SignUp> {
                         ),
                       ),
                     ),
-                    const SizedBox(
-                      height: 25,
+                    SizedBox(
+                      height: 25.h,
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.start,
@@ -171,7 +176,7 @@ class _SignUpState extends State<SignUp> {
                         Text(
                           'Last Name',
                           style: GoogleFonts.poppins(
-                            fontSize: 16,
+                            fontSize: 16.sp,
                             fontWeight: FontWeight.w400,
                             color: const Color(
                               0xff000000,
@@ -180,15 +185,15 @@ class _SignUpState extends State<SignUp> {
                         ),
                       ],
                     ),
-                    const SizedBox(
-                      height: 8,
+                    SizedBox(
+                      height: 8.h,
                     ),
                     Container(
-                      width: 337,
-                      height: 50,
+                      width: double.infinity,
+                      height: 50.h,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(
-                          12,
+                          12.r,
                         ),
                         color: const Color(
                           0xffF7F7F7,
@@ -207,7 +212,7 @@ class _SignUpState extends State<SignUp> {
                         autofocus: false,
                         cursorColor: const Color(0xffE8B55B),
                         style: GoogleFonts.poppins(
-                          fontSize: 12,
+                          fontSize: 12.sp,
                           fontWeight: FontWeight.w400,
                           color: Colors.black,
                         ),
@@ -218,18 +223,22 @@ class _SignUpState extends State<SignUp> {
                           ),
                           focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(
-                              12,
+                              12.r,
                             ),
                             borderSide: const BorderSide(
                               color: Color(0xffE8B55B),
                             ),
                           ),
                           border: InputBorder.none,
-                          contentPadding:
-                              const EdgeInsets.only(top: 18, bottom: 0.0),
+                          contentPadding: EdgeInsets.only(
+                            top: 17.h,
+                            bottom: 17.h,
+                            left: 19.w,
+                            right: 19.w,
+                          ),
                           hintText: 'Enter Name here',
                           hintStyle: GoogleFonts.poppins(
-                            fontSize: 12,
+                            fontSize: 12.sp,
                             fontWeight: FontWeight.w400,
                             color: const Color(
                               0xff6C6C6C,
@@ -238,8 +247,8 @@ class _SignUpState extends State<SignUp> {
                         ),
                       ),
                     ),
-                    const SizedBox(
-                      height: 25,
+                    SizedBox(
+                      height: 25.h,
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.start,
@@ -247,7 +256,7 @@ class _SignUpState extends State<SignUp> {
                         Text(
                           'Email',
                           style: GoogleFonts.poppins(
-                            fontSize: 16,
+                            fontSize: 16.sp,
                             fontWeight: FontWeight.w400,
                             color: const Color(
                               0xff000000,
@@ -256,15 +265,15 @@ class _SignUpState extends State<SignUp> {
                         ),
                       ],
                     ),
-                    const SizedBox(
-                      height: 8,
+                    SizedBox(
+                      height: 8.h,
                     ),
                     Container(
-                      width: 337,
-                      height: 50,
+                      width: double.infinity,
+                      height: 50.h,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(
-                          12,
+                          12.r,
                         ),
                         color: const Color(
                           0xffF7F7F7,
@@ -283,7 +292,7 @@ class _SignUpState extends State<SignUp> {
                         autofocus: false,
                         cursorColor: const Color(0xffE8B55B),
                         style: GoogleFonts.poppins(
-                          fontSize: 12,
+                          fontSize: 12.sp,
                           fontWeight: FontWeight.w400,
                           color: Colors.black,
                         ),
@@ -294,18 +303,22 @@ class _SignUpState extends State<SignUp> {
                           ),
                           focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(
-                              12,
+                              12.r,
                             ),
                             borderSide: const BorderSide(
                               color: Color(0xffE8B55B),
                             ),
                           ),
                           border: InputBorder.none,
-                          contentPadding:
-                              const EdgeInsets.only(top: 16, bottom: 0.0),
+                          contentPadding: EdgeInsets.only(
+                            top: 17.h,
+                            bottom: 17.h,
+                            left: 19.w,
+                            right: 19.w,
+                          ),
                           hintText: 'Enter Email here',
                           hintStyle: GoogleFonts.poppins(
-                            fontSize: 12,
+                            fontSize: 12.sp,
                             fontWeight: FontWeight.w400,
                             color: const Color(
                               0xff6C6C6C,
@@ -314,8 +327,8 @@ class _SignUpState extends State<SignUp> {
                         ),
                       ),
                     ),
-                    const SizedBox(
-                      height: 25,
+                    SizedBox(
+                      height: 25.h,
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.start,
@@ -323,7 +336,7 @@ class _SignUpState extends State<SignUp> {
                         Text(
                           'Password',
                           style: GoogleFonts.poppins(
-                            fontSize: 16,
+                            fontSize: 16.sp,
                             fontWeight: FontWeight.w400,
                             color: const Color(
                               0xff000000,
@@ -332,15 +345,15 @@ class _SignUpState extends State<SignUp> {
                         ),
                       ],
                     ),
-                    const SizedBox(
-                      height: 8,
+                    SizedBox(
+                      height: 8.h,
                     ),
                     Container(
-                      width: 337,
-                      height: 50,
+                      width: double.infinity,
+                      height: 50.h,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(
-                          12,
+                          12.r,
                         ),
                         color: const Color(
                           0xffF7F7F7,
@@ -360,7 +373,7 @@ class _SignUpState extends State<SignUp> {
                         autofocus: false,
                         cursorColor: const Color(0xffE8B55B),
                         style: GoogleFonts.poppins(
-                          fontSize: 12,
+                          fontSize: 12.sp,
                           fontWeight: FontWeight.w400,
                           color: Colors.black,
                         ),
@@ -387,18 +400,22 @@ class _SignUpState extends State<SignUp> {
                           ),
                           focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(
-                              12,
+                              12.r,
                             ),
                             borderSide: const BorderSide(
                               color: Color(0xffE8B55B),
                             ),
                           ),
                           border: InputBorder.none,
-                          contentPadding:
-                              const EdgeInsets.only(top: 18, bottom: 0.0),
+                          contentPadding: EdgeInsets.only(
+                            top: 17.h,
+                            bottom: 17.h,
+                            left: 19.w,
+                            right: 19.w,
+                          ),
                           hintText: 'Enter Password here',
                           hintStyle: GoogleFonts.poppins(
-                            fontSize: 12,
+                            fontSize: 12.sp,
                             fontWeight: FontWeight.w400,
                             color: const Color(
                               0xff6C6C6C,
@@ -407,13 +424,13 @@ class _SignUpState extends State<SignUp> {
                         ),
                       ),
                     ),
-                    const SizedBox(
-                      height: 50,
+                    SizedBox(
+                      height: 50.h,
                     ),
                     isLoading
                         ? Container(
-                            width: 337,
-                            height: 63,
+                            width: double.infinity,
+                            height: 63.h,
                             decoration: BoxDecoration(
                               gradient: const LinearGradient(
                                 colors: [
@@ -426,7 +443,7 @@ class _SignUpState extends State<SignUp> {
                                 ],
                               ),
                               borderRadius: BorderRadius.circular(
-                                12,
+                                12.r,
                               ),
                             ),
                             child: Center(
@@ -436,15 +453,15 @@ class _SignUpState extends State<SignUp> {
                                   Text(
                                     'PLEASE WAIT',
                                     style: GoogleFonts.poppins(
-                                      fontSize: 18,
+                                      fontSize: 18.sp,
                                       fontWeight: FontWeight.w500,
                                       color: const Color(
                                         0xff5B4214,
                                       ),
                                     ),
                                   ),
-                                  const SizedBox(
-                                    width: 7,
+                                  SizedBox(
+                                    width: 7.w,
                                   ),
                                   const CircularProgressIndicator(
                                     color: Color(
@@ -456,8 +473,8 @@ class _SignUpState extends State<SignUp> {
                             ),
                           )
                         : Container(
-                            width: 337,
-                            height: 63,
+                            width: double.infinity,
+                            height: 63.h,
                             decoration: BoxDecoration(
                               gradient: const LinearGradient(
                                 colors: [
@@ -470,13 +487,13 @@ class _SignUpState extends State<SignUp> {
                                 ],
                               ),
                               borderRadius: BorderRadius.circular(
-                                12,
+                                12.r,
                               ),
                             ),
                             child: Center(
                               child: SizedBox(
-                                width: 237,
-                                height: 37,
+                                width: double.infinity,
+                                height: 37.h,
                                 child: MaterialButton(
                                   focusColor: const Color(0xffF7E683),
                                   splashColor: const Color(0xffF7E683),
@@ -484,7 +501,7 @@ class _SignUpState extends State<SignUp> {
                                   child: Text(
                                     'SIGN UP',
                                     style: GoogleFonts.poppins(
-                                      fontSize: 18,
+                                      fontSize: 18.sp,
                                       fontWeight: FontWeight.w500,
                                       color: const Color(
                                         0xff5B4214,
@@ -495,19 +512,19 @@ class _SignUpState extends State<SignUp> {
                               ),
                             ),
                           ),
-                    const SizedBox(
-                      height: 60,
+                    SizedBox(
+                      height: 60.h,
                     ),
                     SizedBox(
-                      width: 265,
-                      height: 27,
+                      width: double.infinity,
+                      height: 27.w,
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
                             'Don’t have an account?',
                             style: GoogleFonts.poppins(
-                              fontSize: 16,
+                              fontSize: 16.sp,
                               fontWeight: FontWeight.w400,
                               color: const Color(
                                 0xff000000,
@@ -539,7 +556,7 @@ class _SignUpState extends State<SignUp> {
                             child: Text(
                               'Login',
                               style: GoogleFonts.poppins(
-                                fontSize: 16,
+                                fontSize: 16.sp,
                                 fontWeight: FontWeight.w400,
                                 color: const Color(
                                   0xff00B900,
@@ -597,7 +614,7 @@ class _SignUpState extends State<SignUp> {
               _responseSignIn.message.toString(),
         );
         showToastError(
-          _responseSignIn.message,
+          'experiencing technical issue!',
           FToast().init(context),
         );
       }

@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get_it/get_it.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -73,13 +73,13 @@ class _ResetPasswordOTPState extends State<ResetPasswordOTP> {
           bottom: PreferredSize(
             preferredSize: Size(
               MediaQuery.of(context).size.width,
-              30,
+              30.w,
             ),
             child: Text(
               'Forgot Password?',
               style: GoogleFonts.poppins(
                 fontWeight: FontWeight.w500,
-                fontSize: 28,
+                fontSize: 28.sp,
                 color: const Color(
                   0xff5B4214,
                 ),
@@ -91,32 +91,40 @@ class _ResetPasswordOTPState extends State<ResetPasswordOTP> {
         body: SafeArea(
           child: SingleChildScrollView(
             child: Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 28.0,
-                vertical: 20,
+              padding: EdgeInsets.symmetric(
+                horizontal: 28.0.w,
+                vertical: 20.h,
               ),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  // SizedBox(
-                  //   height: 40,
-                  // ),
-                  SvgPicture.asset('assets/images/reset_text.svg'),
-                  const SizedBox(
-                    height: 15,
+                  SizedBox(
+                    width: 288.w,
+                    height: 66.w,
+                    child: Text(
+                      textAlign: TextAlign.center,
+                      'We have sent a 4-digit verification           to your an email address.              Please enter it below.',
+                      style: GoogleFonts.poppins(
+                          fontSize: 16.sp,
+                          fontWeight: FontWeight.w400,
+                          color: Color(0xff6C6C6C)),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 15.h,
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       SizedBox(
-                        width: 200,
-                        height: 90,
+                        width: 200.w,
+                        height: 90.w,
                         child: Text(
                           timerText,
                           style: GoogleFonts.poppins(
-                            fontSize: 60,
+                            fontSize: 60.sp,
                             fontWeight: FontWeight.w600,
                             color: const Color(
                               0xff00B900,
@@ -126,11 +134,11 @@ class _ResetPasswordOTPState extends State<ResetPasswordOTP> {
                       ),
                     ],
                   ),
-                  const SizedBox(
-                    height: 30,
+                  SizedBox(
+                    height: 30.h,
                   ),
                   OtpTextField(
-                    fieldWidth: 56,
+                    fieldWidth: 56.h,
                     cursorColor: const Color(
                       0xffE8B55B,
                     ),
@@ -141,7 +149,7 @@ class _ResetPasswordOTPState extends State<ResetPasswordOTP> {
                     ],
                     textStyle: GoogleFonts.outfit(
                       fontWeight: FontWeight.w400,
-                      fontSize: 12,
+                      fontSize: 12.sp,
                       color: Colors.black,
                     ),
                     decoration: InputDecoration(
@@ -149,7 +157,7 @@ class _ResetPasswordOTPState extends State<ResetPasswordOTP> {
                       counterText: '',
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(
-                          16,
+                          16.r,
                         ),
                         borderSide: const BorderSide(
                           color: Color(0xffF7F7F7),
@@ -157,7 +165,7 @@ class _ResetPasswordOTPState extends State<ResetPasswordOTP> {
                       ),
                       focusedBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(
-                          16,
+                          16.r,
                         ),
                         borderSide: const BorderSide(
                           color: Color(
@@ -171,7 +179,7 @@ class _ResetPasswordOTPState extends State<ResetPasswordOTP> {
                       hintText: '-',
                       hintStyle: GoogleFonts.outfit(
                         fontWeight: FontWeight.w400,
-                        fontSize: 12,
+                        fontSize: 12.sp,
                         color: const Color(
                           0xff6C6C6C,
                         ),
@@ -192,13 +200,13 @@ class _ResetPasswordOTPState extends State<ResetPasswordOTP> {
                       });
                     }, // end onSubmit
                   ),
-                  const SizedBox(
-                    height: 28,
+                  SizedBox(
+                    height: 28.h,
                   ),
                   SizedBox(
                     // color: Colors.red,
-                    width: !isTimerCompleted || !isLoading ? 300 : 180,
-                    height: isLoading ? 60 : 30,
+                    width: !isTimerCompleted || !isLoading ? 300.w : 180.w,
+                    height: isLoading ? 60.h : 30.h,
                     child: isLoading
                         ? const Center(
                             child: CircularProgressIndicator(
@@ -227,7 +235,7 @@ class _ResetPasswordOTPState extends State<ResetPasswordOTP> {
                                   ? 'Resend Verification Code'
                                   : 'We\'ve sent you a 4 digit verification code',
                               style: GoogleFonts.poppins(
-                                fontSize: 14,
+                                fontSize: 14.sp,
                                 decoration: TextDecoration.underline,
                                 fontWeight: FontWeight.w500,
                                 color: const Color(
@@ -237,12 +245,12 @@ class _ResetPasswordOTPState extends State<ResetPasswordOTP> {
                             ),
                           ),
                   ),
-                  const SizedBox(
-                    height: 70,
+                  SizedBox(
+                    height: 70.h,
                   ),
                   Container(
-                    width: 337,
-                    height: 63,
+                    width: double.infinity,
+                    height: 63.h,
                     decoration: BoxDecoration(
                       gradient: const LinearGradient(
                         colors: [
@@ -255,13 +263,13 @@ class _ResetPasswordOTPState extends State<ResetPasswordOTP> {
                         ],
                       ),
                       borderRadius: BorderRadius.circular(
-                        12,
+                        12.r,
                       ),
                     ),
                     child: Center(
                       child: SizedBox(
-                        width: 237,
-                        height: 37,
+                        width: double.infinity,
+                        height: 37.h,
                         child: MaterialButton(
                           focusColor: const Color(0xffF7E683),
                           splashColor: const Color(0xffF7E683),
@@ -269,7 +277,7 @@ class _ResetPasswordOTPState extends State<ResetPasswordOTP> {
                           child: Text(
                             'NEXT',
                             style: GoogleFonts.poppins(
-                              fontSize: 18,
+                              fontSize: 18.sp,
                               fontWeight: FontWeight.w500,
                               color: const Color(
                                 0xff5B4214,

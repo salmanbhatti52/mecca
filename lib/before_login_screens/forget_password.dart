@@ -2,6 +2,7 @@ import 'package:MeccaIslamicCenter/APIModels/API_Response.dart';
 import 'package:MeccaIslamicCenter/APIModels/forgetPasswordModel.dart';
 import 'package:MeccaIslamicCenter/Utilities/showToast.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get_it/get_it.dart';
@@ -43,7 +44,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
         appBar: AppBar(
           centerTitle: true,
           leading: Padding(
-            padding: const EdgeInsets.only(top: 23.0),
+            padding: EdgeInsets.only(top: 23.0.h),
             child: GestureDetector(
               onTap: () => Navigator.of(context).pop(),
               child: SvgPicture.asset(
@@ -52,65 +53,68 @@ class _ForgetPasswordState extends State<ForgetPassword> {
               ),
             ),
           ),
-          title: Padding(
-            padding: const EdgeInsets.only(top: 23.0),
-            child: Text(
-              'Forgot Password?',
-              style: GoogleFonts.poppins(
-                fontWeight: FontWeight.w500,
-                fontSize: 28,
-                color: const Color(
-                  0xff5B4214,
-                ),
-              ),
-            ),
-          ),
+
           backgroundColor: Colors.transparent,
           elevation: 0.0,
-          bottom: PreferredSize(
-            preferredSize: Size(
-              MediaQuery.of(context).size.width,
-              30,
-            ),
-            child: const SizedBox(),
-          ),
+          // bottom: PreferredSize(
+          //   preferredSize: Size(
+          //     MediaQuery.of(context).size.width,
+          //     30,
+          //   ),
+          //   child: const SizedBox(),
+          // ),
         ),
         body: SafeArea(
           child: SingleChildScrollView(
             child: Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 18.0,
-                vertical: 30,
+              padding: EdgeInsets.symmetric(
+                horizontal: 18.0.w,
+                vertical: 30.h,
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  SvgPicture.asset('assets/buttons/lock.svg'),
-                  const SizedBox(
-                    height: 20,
+                  SizedBox(
+                    width: 255.w,
+                    height: 42.w,
+                    child: Text(
+                      'Forgot Password?',
+                      style: GoogleFonts.poppins(
+                        fontWeight: FontWeight.w500,
+                        fontSize: 28.sp,
+                        color: const Color(
+                          0xff5B4214,
+                        ),
+                      ),
+                    ),
                   ),
-                  Align(
-                    alignment: Alignment.center,
-                    child: Center(
-                      child: SizedBox(
-                        height: 48,
-                        width: 222,
-                        child: Text(
-                          'Please enter your register email to reset password.',
-                          style: GoogleFonts.poppins(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w400,
-                            color: const Color(
-                              0xff6C6C6C,
-                            ),
+                  SizedBox(
+                    height: 20.h,
+                  ),
+                  SvgPicture.asset('assets/buttons/lock.svg'),
+                  SizedBox(
+                    height: 20.h,
+                  ),
+                  Center(
+                    child: SizedBox(
+                      height: 65.h,
+                      width: 222.w,
+                      child: Text(
+                        textAlign: TextAlign.center,
+                        'Please enter your register email to reset password.',
+                        style: GoogleFonts.poppins(
+                          fontSize: 16.sp,
+                          fontWeight: FontWeight.w400,
+                          color: const Color(
+                            0xff6C6C6C,
                           ),
                         ),
                       ),
                     ),
                   ),
-                  const SizedBox(
-                    height: 24,
+                  SizedBox(
+                    height: 24.h,
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.start,
@@ -118,7 +122,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                       Text(
                         'Email',
                         style: GoogleFonts.poppins(
-                          fontSize: 16,
+                          fontSize: 16.sp,
                           fontWeight: FontWeight.w400,
                           color: const Color(
                             0xff000000,
@@ -127,15 +131,15 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                       ),
                     ],
                   ),
-                  const SizedBox(
-                    height: 8,
+                  SizedBox(
+                    height: 8.h,
                   ),
                   Container(
-                    width: 337,
-                    height: 50,
+                    width: double.infinity,
+                    height: 50.h,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(
-                        12,
+                        12.r,
                       ),
                       color: const Color(
                         0xffF7F7F7,
@@ -154,20 +158,24 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                       autofocus: false,
                       cursorColor: const Color(0xffE8B55B),
                       style: GoogleFonts.poppins(
-                        fontSize: 12,
+                        fontSize: 12.sp,
                         fontWeight: FontWeight.w400,
                         color: Colors.black,
                       ),
                       decoration: InputDecoration(
-                        contentPadding:
-                            const EdgeInsets.only(top: 16, bottom: 0.0),
+                        contentPadding: EdgeInsets.only(
+                          top: 17.h,
+                          bottom: 17.h,
+                          left: 19.w,
+                          right: 19.w,
+                        ),
                         prefixIcon: SvgPicture.asset(
                           'assets/icons/email.svg',
                           fit: BoxFit.scaleDown,
                         ),
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(
-                            12,
+                            12.r,
                           ),
                           borderSide: const BorderSide(
                             color: Color(0xffE8B55B),
@@ -176,7 +184,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                         border: InputBorder.none,
                         hintText: 'Enter Email here',
                         hintStyle: GoogleFonts.poppins(
-                          fontSize: 12,
+                          fontSize: 12.sp,
                           fontWeight: FontWeight.w400,
                           color: const Color(
                             0xff6C6C6C,
@@ -185,13 +193,13 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                       ),
                     ),
                   ),
-                  const SizedBox(
-                    height: 90,
+                  SizedBox(
+                    height: 90.h,
                   ),
                   isLoading
                       ? Container(
-                          width: 337,
-                          height: 63,
+                          width: double.infinity,
+                          height: 63.h,
                           decoration: BoxDecoration(
                             gradient: const LinearGradient(
                               colors: [
@@ -204,7 +212,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                               ],
                             ),
                             borderRadius: BorderRadius.circular(
-                              12,
+                              12.r,
                             ),
                           ),
                           child: Center(
@@ -214,15 +222,15 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                                 Text(
                                   'PLEASE WAIT',
                                   style: GoogleFonts.poppins(
-                                    fontSize: 18,
+                                    fontSize: 18.sp,
                                     fontWeight: FontWeight.w500,
                                     color: const Color(
                                       0xff5B4214,
                                     ),
                                   ),
                                 ),
-                                const SizedBox(
-                                  width: 7,
+                                SizedBox(
+                                  width: 7.h,
                                 ),
                                 const CircularProgressIndicator(
                                   color: Color(
@@ -234,8 +242,8 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                           ),
                         )
                       : Container(
-                          width: 337,
-                          height: 63,
+                          width: double.infinity,
+                          height: 63.h,
                           decoration: BoxDecoration(
                             gradient: const LinearGradient(
                               colors: [
@@ -248,13 +256,13 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                               ],
                             ),
                             borderRadius: BorderRadius.circular(
-                              12,
+                              12.r,
                             ),
                           ),
                           child: Center(
                             child: SizedBox(
-                              width: 237,
-                              height: 37,
+                              width: double.infinity,
+                              height: 37.h,
                               child: MaterialButton(
                                 focusColor: const Color(0xffF7E683),
                                 splashColor: const Color(0xffF7E683),
@@ -262,7 +270,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                                 child: Text(
                                   'NEXT',
                                   style: GoogleFonts.poppins(
-                                    fontSize: 18,
+                                    fontSize: 18.sp,
                                     fontWeight: FontWeight.w500,
                                     color: const Color(
                                       0xff5B4214,
@@ -300,44 +308,69 @@ class _ForgetPasswordState extends State<ForgetPassword> {
         print(
             'object successful again ' + _responseForget.data!.otp!.toString());
         showDialog(
-          context: context,
           builder: (context) => Dialog(
             //insetPadding: EdgeInsets.zero,
             alignment: Alignment.center,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(
-                15,
+                15.r,
               ),
             ),
             child: SizedBox(
-              width: 296,
-              height: 390,
+              width: 296.w,
+              height: 390.w,
               child: Padding(
-                padding: const EdgeInsets.only(
-                  left: 28,
-                  right: 28,
-                  top: 20,
-                  bottom: 14,
+                padding: EdgeInsets.only(
+                  left: 28.w,
+                  right: 28.w,
+                  top: 20.h,
+                  bottom: 14.h,
                 ),
                 child: Column(
                   children: [
                     SizedBox(
+                      width: 140.w,
+                      height: 110.w,
                       child: SvgPicture.asset('assets/images/pop_up.svg'),
                     ),
-                    const SizedBox(
-                      height: 10,
+                    SizedBox(
+                      height: 10.h,
                     ),
-                    SvgPicture.asset('assets/images/pass_next.svg'),
-                    const SizedBox(
-                      height: 20,
+                    SizedBox(
+                      width: 167.w,
+                      height: 60.w,
+                      child: Text(
+                        'Password reset Code Sent!',
+                        textAlign: TextAlign.center,
+                        style: GoogleFonts.poppins(
+                          fontSize: 20.sp,
+                          fontWeight: FontWeight.w700,
+                          color: Color(0xff00B900),
+                        ),
+                      ),
                     ),
-                    SvgPicture.asset('assets/images/code_sent.svg'),
-                    const SizedBox(
-                      height: 20,
+                    SizedBox(
+                      height: 20.h,
+                    ),
+                    SizedBox(
+                      width: 211.w,
+                      height: 57.w,
+                      child: Text(
+                        '4-digit reset code has been sent to your email.',
+                        textAlign: TextAlign.center,
+                        style: GoogleFonts.poppins(
+                          fontSize: 16.sp,
+                          fontWeight: FontWeight.w400,
+                          color: Color(0xff6C6C6C),
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 30.h,
                     ),
                     Container(
-                      width: 337,
-                      height: 63,
+                      width: double.infinity,
+                      height: 63.h,
                       decoration: BoxDecoration(
                         gradient: const LinearGradient(
                           colors: [
@@ -350,13 +383,13 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                           ],
                         ),
                         borderRadius: BorderRadius.circular(
-                          12,
+                          12.r,
                         ),
                       ),
                       child: Center(
                         child: SizedBox(
-                          width: 237,
-                          height: 37,
+                          width: double.infinity,
+                          height: 37.h,
                           child: MaterialButton(
                             focusColor: const Color(0xffF7E683),
                             splashColor: const Color(0xffF7E683),
@@ -371,7 +404,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                             child: Text(
                               'OK',
                               style: GoogleFonts.poppins(
-                                fontSize: 18,
+                                fontSize: 18.sp,
                                 fontWeight: FontWeight.w500,
                                 color: const Color(
                                   0xff5B4214,
@@ -387,11 +420,12 @@ class _ForgetPasswordState extends State<ForgetPassword> {
               ),
             ),
           ),
+          context: context,
         );
       } else {
         print('object failed' + forgetData.toString());
         showToastError(
-          _responseForget.message,
+          'experiencing technical issue!',
           FToast().init(context),
         );
       }

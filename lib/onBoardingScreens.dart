@@ -1,5 +1,6 @@
 import 'package:MeccaIslamicCenter/before_login_screens/login_screens.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class OnBoardingScreens extends StatefulWidget {
@@ -34,7 +35,7 @@ class _OnBoardingScreensState extends State<OnBoardingScreens> {
           controller: pageController,
           children: [
             Container(
-              padding: const EdgeInsets.only(bottom: 35),
+              padding: EdgeInsets.only(bottom: 35.h),
               width: MediaQuery.of(context).size.width,
               height: MediaQuery.of(context).size.height,
               decoration: const BoxDecoration(
@@ -57,9 +58,9 @@ class _OnBoardingScreensState extends State<OnBoardingScreens> {
               ),
               child: Column(
                 children: [
-                  const SafeArea(
+                  SafeArea(
                     child: SizedBox(
-                      height: 50,
+                      height: 50.h,
                     ),
                   ),
                   Stack(
@@ -74,8 +75,8 @@ class _OnBoardingScreensState extends State<OnBoardingScreens> {
                       ),
                     ],
                   ),
-                  const SizedBox(
-                    height: 70,
+                  SizedBox(
+                    height: 70.h,
                   ),
                   SvgPicture.asset('assets/images/onboard2_text.svg'),
                   const Spacer(

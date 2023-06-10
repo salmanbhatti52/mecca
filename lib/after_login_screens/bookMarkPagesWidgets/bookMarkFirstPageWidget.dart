@@ -1,8 +1,8 @@
 import 'package:MeccaIslamicCenter/APIModels/all_bookmarked_books.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
-
 import 'package:google_fonts/google_fonts.dart';
 import 'package:secure_shared_preferences/secure_shared_pref.dart';
 
@@ -10,11 +10,15 @@ class BookMarkFirstPageWidget extends StatefulWidget {
   final AllBooksBookMarked allBooksBookMarked;
   final VoidCallback function;
   final bool isRemoving;
+  final int index;
+  final int currentIndex;
   const BookMarkFirstPageWidget({
     Key? key,
     required this.allBooksBookMarked,
     required this.function,
     required this.isRemoving,
+    required this.index,
+    required this.currentIndex,
   }) : super(key: key);
 
   @override
@@ -46,22 +50,22 @@ class _BookMarkFirstPageWidgetState extends State<BookMarkFirstPageWidget> {
     print(
         "pag numbers of books " + widget.allBooksBookMarked.pages!.toString());
     return Container(
-      width: 165,
-      height: 330,
+      width: 165.w,
+      height: 330.h,
       decoration: BoxDecoration(
         color: const Color(
           0xffF7F7F7,
         ),
         // color: Colors.red,
         borderRadius: BorderRadius.circular(
-          10,
+          10.r,
         ),
       ),
       child: Padding(
-        padding: const EdgeInsets.only(
-          top: 5,
-          left: 5,
-          right: 5,
+        padding: EdgeInsets.only(
+          top: 5.h,
+          left: 5.w,
+          right: 5.w,
         ),
         child: Column(
           children: [
@@ -70,11 +74,11 @@ class _BookMarkFirstPageWidgetState extends State<BookMarkFirstPageWidget> {
               children: [
                 ClipRRect(
                   borderRadius: BorderRadius.circular(
-                    8,
+                    8.r,
                   ),
                   child: SizedBox(
-                    width: 146,
-                    height: 152,
+                    width: 146.w,
+                    height: 152.w,
                     child: Image.network(
                       'https://mecca.eigix.net/public/${widget.allBooksBookMarked.cover}',
                       fit: BoxFit.cover,
@@ -106,38 +110,47 @@ class _BookMarkFirstPageWidgetState extends State<BookMarkFirstPageWidget> {
                 Padding(
                   padding: const EdgeInsets.all(4.0),
                   child: GestureDetector(
-                    onTap: widget.function,
-                    child: SizedBox(
-                        height: 20,
-                        width: 20,
-                        child: widget.isRemoving
-                            ? const SizedBox(
-                                width: 20,
-                                height: 25,
-                                child: CircularProgressIndicator(
-                                  color: Color(0xffE8B55B),
-                                  strokeWidth: 0.9,
-                                ),
-                              )
-                            : SvgPicture.asset(
-                                'assets/buttons/save.svg',
-                                colorFilter: const ColorFilter.mode(
-                                    Color(
-                                      0xff00B900,
-                                    ),
-                                    BlendMode.srcIn),
-                                // fit: BoxFit.scaleDown,
-                              )),
-                  ),
+                      onTap: widget.function,
+                      child: SizedBox(
+                          height: 20.h,
+                          width: 20.w,
+                          child: widget.currentIndex == widget.index
+                              ? widget.isRemoving
+                                  ? SizedBox(
+                                      width: 20.w,
+                                      height: 25.h,
+                                      child: CircularProgressIndicator(
+                                        color: Color(0xffE8B55B),
+                                        strokeWidth: 0.9,
+                                      ),
+                                    )
+                                  : SvgPicture.asset(
+                                      'assets/buttons/save.svg',
+                                      colorFilter: const ColorFilter.mode(
+                                          Color(
+                                            0xff00B900,
+                                          ),
+                                          BlendMode.srcIn),
+                                      // fit: BoxFit.scaleDown,
+                                    )
+                              : SvgPicture.asset(
+                                  'assets/buttons/save.svg',
+                                  colorFilter: const ColorFilter.mode(
+                                      Color(
+                                        0xff00B900,
+                                      ),
+                                      BlendMode.srcIn),
+                                  // fit: BoxFit.scaleDown,
+                                ))),
                 ),
               ],
             ),
-            const SizedBox(
-              height: 8,
+            SizedBox(
+              height: 8.h,
             ),
             Expanded(
               child: Container(
-                height: 168,
+                height: 168.h,
                 // color: Colors.red,
                 child: ListView(
                   children: [
@@ -146,14 +159,14 @@ class _BookMarkFirstPageWidgetState extends State<BookMarkFirstPageWidget> {
                       children: [
                         Container(
                           // color: Colors.red,
-                          width: 110,
-                          height: 32,
+                          width: 110.w,
+                          height: 32.h,
                           child: AutoSizeText(
                             maxLines: 3,
                             minFontSize: 9,
                             widget.allBooksBookMarked.title!,
                             style: GoogleFonts.poppins(
-                              fontSize: 12,
+                              fontSize: 12.sp,
                               fontWeight: FontWeight.w400,
                               color: const Color(
                                 0xff000000,
@@ -163,8 +176,8 @@ class _BookMarkFirstPageWidgetState extends State<BookMarkFirstPageWidget> {
                         ),
                       ],
                     ),
-                    const SizedBox(
-                      height: 6,
+                    SizedBox(
+                      height: 6.h,
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.start,
@@ -174,7 +187,7 @@ class _BookMarkFirstPageWidgetState extends State<BookMarkFirstPageWidget> {
                           // minFontSize: 10,
                           'Author',
                           style: GoogleFonts.poppins(
-                            fontSize: 8,
+                            fontSize: 8.sp,
                             fontWeight: FontWeight.w400,
                             color: const Color(
                               0xff316F94,
@@ -183,22 +196,24 @@ class _BookMarkFirstPageWidgetState extends State<BookMarkFirstPageWidget> {
                         ),
                       ],
                     ),
-                    const SizedBox(
-                      height: 2,
+                    SizedBox(
+                      height: 2.h,
                     ),
+
+                    //testing purpose 12345
                     Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Container(
                           // color: Colors.red,
-                          width: 120,
-                          height: 20,
+                          width: 120.w,
+                          height: 20.h,
                           child: AutoSizeText(
                             maxLines: 2,
                             minFontSize: 10,
                             widget.allBooksBookMarked.author!.name!,
                             style: GoogleFonts.poppins(
-                              fontSize: 10,
+                              fontSize: 10.sp,
                               fontWeight: FontWeight.w400,
                               color: const Color(
                                 0xff5B4214,
@@ -219,7 +234,7 @@ class _BookMarkFirstPageWidgetState extends State<BookMarkFirstPageWidget> {
                           // minFontSize: 10,
                           'Category',
                           style: GoogleFonts.poppins(
-                            fontSize: 8,
+                            fontSize: 8.sp,
                             fontWeight: FontWeight.w400,
                             color: const Color(
                               0xff00B900,
@@ -228,11 +243,11 @@ class _BookMarkFirstPageWidgetState extends State<BookMarkFirstPageWidget> {
                         ),
                       ],
                     ),
-                    const SizedBox(
-                      height: 6,
+                    SizedBox(
+                      height: 6.h,
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(bottom: 6.0),
+                      padding: EdgeInsets.only(bottom: 6.0.h),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
@@ -242,7 +257,7 @@ class _BookMarkFirstPageWidgetState extends State<BookMarkFirstPageWidget> {
                               // minFontSize: 10,
                               widget.allBooksBookMarked.category!.name!,
                               style: GoogleFonts.poppins(
-                                fontSize: 10,
+                                fontSize: 10.sp,
                                 fontWeight: FontWeight.w400,
                                 color: const Color(
                                   0xff5B4214,

@@ -24,9 +24,6 @@ class _CustomSplashState extends State<CustomSplash> {
     secureSharedPref = await SecureSharedPref.getInstance();
     isLogin = (await secureSharedPref.getString('isLogin')) ?? 'false';
 
-    print(
-      'is logged in collected successfully on splash ' + isLogin,
-    );
     Future.delayed(const Duration(seconds: 6), () async {
       Navigator.pushReplacement(context, MaterialPageRoute(
           //pushReplacement = replacing the route so that

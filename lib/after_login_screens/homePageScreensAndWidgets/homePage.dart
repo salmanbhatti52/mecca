@@ -3,6 +3,7 @@ import 'package:MeccaIslamicCenter/after_login_screens/BookDetails/bookDetails.d
 import 'package:MeccaIslamicCenter/after_login_screens/homePageScreensAndWidgets/topBooksWidget.dart';
 import 'package:MeccaIslamicCenter/before_login_screens/login_screens.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get_it/get_it.dart';
@@ -84,15 +85,16 @@ class _HomePageState extends State<HomePage> {
   }
 
   /// Bookmark Method
-
+  int currentIndex = -1;
   late APIResponse<BookViewModel> _responseAddBookMark;
   bool isAdding = false;
   bool isBookMarked = false;
 
-  featuredBookBookmark(BuildContext context, String id) async {
+  featuredBookBookmark(BuildContext context, String id, int index) async {
     setState(() {
       isAdding = true;
       isBookMarked = true;
+      currentIndex = index;
     });
     Map addData = {
       "users_customers_id": userID.toString(),
@@ -127,11 +129,13 @@ class _HomePageState extends State<HomePage> {
   /// bookmark method ended here
 
   /// bookmark method for top books starts
+  int currentIndexTop = -1;
   late APIResponse<BookViewModel> _responseAddBookMarkInTopBooks;
   bool isAddingInTopBooks = false;
-  topBooksBookmark(BuildContext context, String id) async {
+  topBooksBookmark(BuildContext context, String id, index) async {
     setState(() {
       isAddingInTopBooks = true;
+      currentIndexTop = index;
     });
     Map addData = {
       "users_customers_id": userID.toString(),
@@ -329,7 +333,7 @@ class _HomePageState extends State<HomePage> {
         appBar: PreferredSize(
           preferredSize: Size(
             MediaQuery.of(context).size.width,
-            140,
+            140.w,
           ),
           child: Stack(
             alignment: Alignment.bottomCenter,
@@ -358,60 +362,61 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ),
                   child: Padding(
-                    padding: const EdgeInsets.only(
-                      left: 20.0,
-                      top: 70,
-                      right: 20,
+                    padding: EdgeInsets.only(
+                      left: 20.0.w,
+                      top: 70.h,
+                      right: 20.w,
                     ),
                     child: Column(
+                      //mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         // SizedBox(
                         //   height: 70,
                         // ),
-                        Container(
-                          // color: Colors.red,
-                          width: MediaQuery.of(context).size.width,
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              SizedBox(
-                                width: 145,
-                                height: 27,
-                                child: Text(
-                                  'Welcome to the',
-                                  style: GoogleFonts.poppins(
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 18,
-                                    color: const Color(
-                                      0xff5B4214,
-                                    ),
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            SizedBox(
+                              width: 145.w,
+                              height: 27.w,
+                              child: Text(
+                                'Welcome to the',
+                                style: GoogleFonts.poppins(
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 18.sp,
+                                  color: const Color(
+                                    0xff5B4214,
                                   ),
                                 ),
                               ),
-                              // const SizedBox(
-                              //   width: 170,
-                              // ),
-                              GestureDetector(
-                                onTap: () => logout(context),
-                                child: SvgPicture.asset(
-                                    'assets/buttons/logout.svg'),
+                            ),
+                            // const SizedBox(
+                            //   width: 170,
+                            // ),
+                            GestureDetector(
+                              onTap: () => logout(context),
+                              child: SvgPicture.asset(
+                                'assets/buttons/logout.svg',
+                                width: 18.w,
+                                height: 18.h,
+                                fit: BoxFit.cover,
                               ),
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
 
                         Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             SizedBox(
-                              width: 284,
-                              height: 42,
+                              width: 284.w,
+                              height: 42.w,
                               child: Text(
                                 'Islamic Book Library',
                                 style: GoogleFonts.poppins(
                                   fontWeight: FontWeight.w500,
-                                  fontSize: 28,
+                                  fontSize: 28.sp,
                                   color: const Color(
                                     0xff5B4214,
                                   ),
@@ -426,19 +431,19 @@ class _HomePageState extends State<HomePage> {
               Positioned(
                 bottom: -30,
                 child: SizedBox(
-                  width: 343,
+                  width: 343.w,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Material(
                         elevation: 1,
                         borderRadius: BorderRadius.circular(
-                          12,
+                          12.r,
                         ),
                         color: Colors.white,
                         child: SizedBox(
-                          width: 294,
-                          height: 44,
+                          width: 294.w,
+                          height: 44.h,
                           child: TextField(
                             // expands: true, maxLines: null,
                             //onTap: () => searchBooksMethod(context),
@@ -450,20 +455,20 @@ class _HomePageState extends State<HomePage> {
                                         : _runAuthorFilter(value),
                             controller: searchController,
                             style: GoogleFonts.poppins(
-                                fontSize: 14,
+                                fontSize: 14.sp,
                                 fontWeight: FontWeight.w300,
                                 color: Colors.black),
                             cursorColor: const Color(
                               0xffE8B55B,
                             ),
                             decoration: InputDecoration(
-                              contentPadding: const EdgeInsets.only(
-                                top: 13,
-                                bottom: 13,
+                              contentPadding: EdgeInsets.only(
+                                top: 13.h,
+                                bottom: 13.h,
                               ),
                               hintText: 'Search here',
                               hintStyle: GoogleFonts.poppins(
-                                fontSize: 14,
+                                fontSize: 14.sp,
                                 fontWeight: FontWeight.w300,
                                 color: const Color(
                                   0xff6C6C6C,
@@ -471,7 +476,7 @@ class _HomePageState extends State<HomePage> {
                               ),
                               focusedBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(
-                                  12,
+                                  12.r,
                                 ),
                                 borderSide: const BorderSide(
                                   color: Color(0xffE8B55B),
@@ -489,7 +494,7 @@ class _HomePageState extends State<HomePage> {
                       Material(
                         elevation: 1,
                         borderRadius: BorderRadius.circular(
-                          8,
+                          8.r,
                         ),
                         child: GestureDetector(
                           onTap: () => showDialog(
@@ -499,18 +504,18 @@ class _HomePageState extends State<HomePage> {
                               return Dialog(
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(
-                                    12,
+                                    12.r,
                                   ),
                                 ),
                                 elevation: 0.0,
                                 backgroundColor: Colors.white,
                                 child: SizedBox(
-                                  width: 266,
-                                  height: 143,
+                                  width: 266.w,
+                                  height: 148.w,
                                   child: Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                      horizontal: 16.0,
-                                      vertical: 12,
+                                    padding: EdgeInsets.symmetric(
+                                      horizontal: 16.0.w,
+                                      vertical: 12.h,
                                     ),
                                     child: Column(
                                       mainAxisAlignment:
@@ -519,25 +524,23 @@ class _HomePageState extends State<HomePage> {
                                           CrossAxisAlignment.start,
                                       children: [
                                         SizedBox(
-                                          width: 92,
-                                          height: 27,
+                                          width: 92.w,
+                                          height: 27.w,
                                           child: Text(
                                             'Search By',
                                             style: GoogleFonts.poppins(
                                               color: const Color(0xff000000),
                                               fontWeight: FontWeight.w500,
-                                              fontSize: 18,
+                                              fontSize: 18.sp,
                                             ),
                                           ),
                                         ),
-                                        const SizedBox(
-                                          height: 17,
-                                        ),
+                                        Spacer(),
                                         Row(
                                           children: [
                                             Container(
-                                              width: 57,
-                                              height: 30,
+                                              width: 57.w,
+                                              height: 30.h,
                                               decoration: BoxDecoration(
                                                 color: const Color(
                                                   0xffF7F7F7,
@@ -551,7 +554,7 @@ class _HomePageState extends State<HomePage> {
                                                 ),
                                                 borderRadius:
                                                     BorderRadius.circular(
-                                                  18,
+                                                  18.r,
                                                 ),
                                               ),
                                               child: TextButton(
@@ -567,7 +570,7 @@ class _HomePageState extends State<HomePage> {
                                                 child: Text(
                                                   'All',
                                                   style: GoogleFonts.poppins(
-                                                    fontSize: 12,
+                                                    fontSize: 12.sp,
                                                     fontWeight: FontWeight.w400,
                                                     color: isSelectedButton == 1
                                                         ? const Color(
@@ -580,12 +583,12 @@ class _HomePageState extends State<HomePage> {
                                                 ),
                                               ),
                                             ),
-                                            const SizedBox(
-                                              width: 12,
+                                            SizedBox(
+                                              width: 12.h,
                                             ),
                                             Container(
-                                              width: 57,
-                                              height: 30,
+                                              width: 57.w,
+                                              height: 30.h,
                                               decoration: BoxDecoration(
                                                 color: const Color(
                                                   0xffF7F7F7,
@@ -599,7 +602,7 @@ class _HomePageState extends State<HomePage> {
                                                 ),
                                                 borderRadius:
                                                     BorderRadius.circular(
-                                                  18,
+                                                  18.r,
                                                 ),
                                               ),
                                               child: TextButton(
@@ -615,7 +618,7 @@ class _HomePageState extends State<HomePage> {
                                                 child: Text(
                                                   'Books',
                                                   style: GoogleFonts.poppins(
-                                                      fontSize: 12,
+                                                      fontSize: 12.sp,
                                                       fontWeight:
                                                           FontWeight.w400,
                                                       color:
@@ -628,12 +631,12 @@ class _HomePageState extends State<HomePage> {
                                                 ),
                                               ),
                                             ),
-                                            const SizedBox(
-                                              width: 12,
+                                            SizedBox(
+                                              width: 12.w,
                                             ),
                                             Container(
-                                              width: 64,
-                                              height: 30,
+                                              width: 64.w,
+                                              height: 30.h,
                                               decoration: BoxDecoration(
                                                 color: const Color(
                                                   0xffF7F7F7,
@@ -647,7 +650,7 @@ class _HomePageState extends State<HomePage> {
                                                 ),
                                                 borderRadius:
                                                     BorderRadius.circular(
-                                                  18,
+                                                  18.r,
                                                 ),
                                               ),
                                               child: TextButton(
@@ -662,7 +665,7 @@ class _HomePageState extends State<HomePage> {
                                                 child: Text(
                                                   'Author',
                                                   style: GoogleFonts.poppins(
-                                                    fontSize: 12,
+                                                    fontSize: 12.sp,
                                                     fontWeight: FontWeight.w400,
                                                     color: isSelectedButton == 3
                                                         ? const Color(
@@ -677,12 +680,10 @@ class _HomePageState extends State<HomePage> {
                                             ),
                                           ],
                                         ),
-                                        const SizedBox(
-                                          height: 17,
-                                        ),
+                                        Spacer(),
                                         Container(
-                                          width: 61,
-                                          height: 28,
+                                          width: 61.w,
+                                          height: 28.h,
                                           decoration: BoxDecoration(
                                             gradient: const LinearGradient(
                                               colors: [
@@ -692,7 +693,7 @@ class _HomePageState extends State<HomePage> {
                                               ],
                                             ),
                                             borderRadius: BorderRadius.circular(
-                                              6,
+                                              6.r,
                                             ),
                                           ),
                                           child: TextButton(
@@ -711,7 +712,7 @@ class _HomePageState extends State<HomePage> {
                                             child: Text(
                                               'OK',
                                               style: GoogleFonts.poppins(
-                                                fontSize: 12,
+                                                fontSize: 12.sp,
                                                 fontWeight: FontWeight.w400,
                                                 color: const Color(
                                                   0xff5B4214,
@@ -728,12 +729,12 @@ class _HomePageState extends State<HomePage> {
                             }),
                           ),
                           child: Container(
-                            width: 44,
-                            height: 50,
+                            width: 44.w,
+                            height: 50.h,
                             decoration: BoxDecoration(
                               color: Colors.white,
                               borderRadius: BorderRadius.circular(
-                                8,
+                                8.r,
                               ),
                             ),
                             child: SvgPicture.asset(
@@ -767,26 +768,26 @@ class _HomePageState extends State<HomePage> {
                     color: const Color(0xffE8B55B),
                     child: SingleChildScrollView(
                       child: Padding(
-                        padding: const EdgeInsets.only(
-                          left: 20,
-                          top: 14,
-                          bottom: 14,
+                        padding: EdgeInsets.only(
+                          left: 20.w,
+                          top: 14.h,
+                          bottom: 14.h,
                         ),
                         child: Column(
                           children: [
-                            const SizedBox(
-                              height: 30,
+                            SizedBox(
+                              height: 30.h,
                             ),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
                                 SizedBox(
-                                  width: 100,
-                                  height: 27,
+                                  width: 100.w,
+                                  height: 27.w,
                                   child: Text(
                                     'Categories',
                                     style: GoogleFonts.poppins(
-                                      fontSize: 18,
+                                      fontSize: 18.sp,
                                       decoration: TextDecoration.none,
                                       fontWeight: FontWeight.w500,
                                       color: const Color(
@@ -797,8 +798,8 @@ class _HomePageState extends State<HomePage> {
                                 ),
                               ],
                             ),
-                            const SizedBox(
-                              height: 16,
+                            SizedBox(
+                              height: 16.h,
                             ),
                             isNameLoading
                                 ? const Center(
@@ -807,15 +808,15 @@ class _HomePageState extends State<HomePage> {
                                     ),
                                   )
                                 : SizedBox(
-                                    height: 30,
+                                    height: 30.h,
                                     child: ListView.builder(
                                       shrinkWrap: true,
                                       physics: const BouncingScrollPhysics(),
                                       scrollDirection: Axis.horizontal,
                                       itemBuilder: (context, index) {
                                         return Padding(
-                                          padding: const EdgeInsets.symmetric(
-                                              horizontal: 4.0),
+                                          padding: EdgeInsets.symmetric(
+                                              horizontal: 4.0.w),
                                           child: GestureDetector(
                                             onTap: () {
                                               print('category print123 ' +
@@ -872,19 +873,19 @@ class _HomePageState extends State<HomePage> {
                                       itemCount: catNameList!.length,
                                     ),
                                   ),
-                            const SizedBox(
-                              height: 16,
+                            SizedBox(
+                              height: 16.h,
                             ),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
                                 SizedBox(
-                                  width: 141,
-                                  height: 27,
+                                  width: 141.w,
+                                  height: 27.w,
                                   child: Text(
                                     'Featured Books',
                                     style: GoogleFonts.poppins(
-                                      fontSize: 18,
+                                      fontSize: 18.sp,
                                       decoration: TextDecoration.none,
                                       fontWeight: FontWeight.w500,
                                       color: const Color(
@@ -895,8 +896,8 @@ class _HomePageState extends State<HomePage> {
                                 ),
                               ],
                             ),
-                            const SizedBox(
-                              height: 10,
+                            SizedBox(
+                              height: 10.h,
                             ),
                             isPopuplarBooksLoading
                                 ? const Center(
@@ -905,7 +906,7 @@ class _HomePageState extends State<HomePage> {
                                     ),
                                   )
                                 : SizedBox(
-                                    height: 310,
+                                    height: 310.h,
                                     child: _popularFoundBooks.isNotEmpty
                                         ? ListView.builder(
                                             shrinkWrap: true,
@@ -914,9 +915,8 @@ class _HomePageState extends State<HomePage> {
                                             scrollDirection: Axis.horizontal,
                                             itemBuilder: (context, index) {
                                               return Padding(
-                                                padding:
-                                                    const EdgeInsets.symmetric(
-                                                        horizontal: 4.0),
+                                                padding: EdgeInsets.symmetric(
+                                                    horizontal: 4.0),
                                                 child: GestureDetector(
                                                   onTap: () {
                                                     print('feature alert');
@@ -940,11 +940,14 @@ class _HomePageState extends State<HomePage> {
                                                             _popularFoundBooks[
                                                                     index]
                                                                 .books_id
-                                                                .toString()),
+                                                                .toString(),
+                                                            index),
                                                     popularBooksGetModel:
                                                         _popularFoundBooks[
                                                             index],
                                                     isAdding: isAdding,
+                                                    index: index,
+                                                    currentIndex: currentIndex,
                                                   ),
                                                 ),
                                               );
@@ -952,24 +955,24 @@ class _HomePageState extends State<HomePage> {
                                             itemCount:
                                                 _popularFoundBooks.length,
                                           )
-                                        : const Text(
+                                        : Text(
                                             'No results found',
-                                            style: TextStyle(fontSize: 24),
+                                            style: TextStyle(fontSize: 24.sp),
                                           ),
                                   ),
-                            const SizedBox(
-                              height: 10,
+                            SizedBox(
+                              height: 10.h,
                             ),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
                                 SizedBox(
-                                  width: 141,
-                                  height: 27,
+                                  width: 141.h,
+                                  height: 27.w,
                                   child: Text(
                                     'Top Books',
                                     style: GoogleFonts.poppins(
-                                      fontSize: 18,
+                                      fontSize: 18.sp,
                                       decoration: TextDecoration.none,
                                       fontWeight: FontWeight.w500,
                                       color: const Color(
@@ -980,8 +983,8 @@ class _HomePageState extends State<HomePage> {
                                 ),
                               ],
                             ),
-                            const SizedBox(
-                              height: 10,
+                            SizedBox(
+                              height: 10.h,
                             ),
                             isTopBooksLoading
                                 ? const Center(
@@ -990,7 +993,7 @@ class _HomePageState extends State<HomePage> {
                                     ),
                                   )
                                 : SizedBox(
-                                    height: 310,
+                                    height: 310.h,
                                     child: ListView.builder(
                                       shrinkWrap: true,
                                       physics: const BouncingScrollPhysics(),
@@ -1000,9 +1003,8 @@ class _HomePageState extends State<HomePage> {
                                                     .downloads! >=
                                                 1
                                             ? Padding(
-                                                padding:
-                                                    const EdgeInsets.symmetric(
-                                                        horizontal: 4.0),
+                                                padding: EdgeInsets.symmetric(
+                                                    horizontal: 4.0.w),
                                                 child:
                                                     topBooksData![index] != null
                                                         ? TopBooksWidget(
@@ -1015,9 +1017,13 @@ class _HomePageState extends State<HomePage> {
                                                                     _popularFoundBooks[
                                                                             index]
                                                                         .books_id
-                                                                        .toString()),
+                                                                        .toString(),
+                                                                    index),
                                                             isAddingInTopBooks:
                                                                 isAddingInTopBooks,
+                                                            index: index,
+                                                            currentIndex:
+                                                                currentIndexTop,
                                                           )
                                                         : const Center(
                                                             child: Text(
