@@ -13,10 +13,18 @@ import '../../Utilities/showToast.dart';
 
 class BookDetailsWidget extends StatefulWidget {
   final RelatedBooksModel relatedBooksModel;
+  final int index;
+  final int currentIndex;
+  final VoidCallback function;
+  final bool isAdding;
 
   const BookDetailsWidget({
     Key? key,
     required this.relatedBooksModel,
+    required this.index,
+    required this.currentIndex,
+    required this.function,
+    required this.isAdding,
   }) : super(key: key);
 
   @override
