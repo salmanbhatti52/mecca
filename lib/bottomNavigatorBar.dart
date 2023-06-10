@@ -2,6 +2,7 @@ import 'package:MeccaIslamicCenter/after_login_screens/ProfileChangingsScreens/U
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart' as foundation;
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -107,18 +108,18 @@ class _BottomNavigationBarScreensState
             key: key,
             body: _pages[_currentIndex],
             bottomNavigationBar: Container(
-              decoration: const BoxDecoration(
+              decoration: BoxDecoration(
                 borderRadius: BorderRadius.vertical(
                   top: Radius.circular(
-                    20,
+                    20.r,
                   ),
                 ),
               ),
-              height: 75,
+              height: 75.h,
               child: ClipRRect(
-                borderRadius: const BorderRadius.vertical(
+                borderRadius: BorderRadius.vertical(
                   top: Radius.circular(
-                    20,
+                    20.r,
                   ),
                 ),
                 child: BottomNavigationBar(
@@ -155,18 +156,18 @@ class _BottomNavigationBarScreensState
                   backgroundColor: Colors.white,
                   showUnselectedLabels: true,
                   showSelectedLabels: true,
-                  iconSize: 18,
+                  iconSize: 18.sp,
                   selectedItemColor: const Color(0xff00B900),
                   unselectedItemColor: const Color(
                     0xffADADAD,
                   ),
                   selectedLabelStyle: GoogleFonts.outfit(
                     fontWeight: FontWeight.w500,
-                    fontSize: 12,
+                    fontSize: 12.sp,
                   ),
                   unselectedLabelStyle: GoogleFonts.outfit(
                     fontWeight: FontWeight.w500,
-                    fontSize: 12,
+                    fontSize: 12.sp,
                   ),
                 ),
               ),

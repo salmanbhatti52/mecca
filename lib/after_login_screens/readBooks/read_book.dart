@@ -5,6 +5,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_pdfview/flutter_pdfview.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -95,7 +96,7 @@ class _ReadBookState extends State<ReadBook> {
         appBar: PreferredSize(
           preferredSize: Size(
             MediaQuery.of(context).size.width,
-            111,
+            111.w,
           ),
           child: Container(
             decoration: const BoxDecoration(
@@ -112,11 +113,11 @@ class _ReadBookState extends State<ReadBook> {
               ),
             ),
             child: Padding(
-              padding: const EdgeInsets.only(
-                top: 63.0,
-                bottom: 40,
-                left: 24,
-                right: 20,
+              padding: EdgeInsets.only(
+                top: 63.0.h,
+                bottom: 40.h,
+                left: 24.w,
+                right: 20.w,
               ),
               child: Row(
                 children: [
@@ -127,8 +128,8 @@ class _ReadBookState extends State<ReadBook> {
                       fit: BoxFit.scaleDown,
                     ),
                   ),
-                  const SizedBox(
-                    width: 97,
+                  SizedBox(
+                    width: 97.w,
                   ),
                   InkWell(
                     onTap: () => showDialog(
@@ -139,7 +140,7 @@ class _ReadBookState extends State<ReadBook> {
                           backgroundColor: Colors.white,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(
-                              15,
+                              15.r,
                             ),
                             side: const BorderSide(
                               color: Color(
@@ -148,18 +149,18 @@ class _ReadBookState extends State<ReadBook> {
                             ),
                           ),
                           child: SizedBox(
-                            width: 300,
-                            height: 180,
+                            width: 300.w,
+                            height: 300.w,
                             child: Padding(
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 16.0,
+                              padding: EdgeInsets.symmetric(
+                                horizontal: 16.0.w,
                               ),
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Container(
-                                    height: 80,
-                                    width: 220,
+                                    height: 80.h,
+                                    width: 220.w,
                                     // color: Colors.red,
                                     child: AutoSizeText(
                                       textAlign: TextAlign.center,
@@ -167,7 +168,7 @@ class _ReadBookState extends State<ReadBook> {
                                       minFontSize: 20,
                                       'Enter the page number you want to go to',
                                       style: GoogleFonts.poppins(
-                                        fontSize: 20,
+                                        fontSize: 20.sp,
                                         fontWeight: FontWeight.w500,
                                         color: const Color(
                                           0xff5B4214,
@@ -175,12 +176,12 @@ class _ReadBookState extends State<ReadBook> {
                                       ),
                                     ),
                                   ),
-                                  const SizedBox(
-                                    height: 15,
+                                  SizedBox(
+                                    height: 15.h,
                                   ),
                                   SizedBox(
-                                    width: 70,
-                                    height: 50,
+                                    width: 70.w,
+                                    height: 50.h,
                                     child: Center(
                                       child: TextField(
                                         textAlign: TextAlign.center,
@@ -222,7 +223,7 @@ class _ReadBookState extends State<ReadBook> {
                                           0xffE8B55B,
                                         ),
                                         style: GoogleFonts.poppins(
-                                          fontSize: 12,
+                                          fontSize: 12.sp,
                                           fontWeight: FontWeight.w400,
                                           color: const Color(
                                             0xff5B4214,
@@ -250,6 +251,39 @@ class _ReadBookState extends State<ReadBook> {
                                       ),
                                     ),
                                   ),
+                                  SizedBox(
+                                    height: 15.h,
+                                  ),
+                                  MaterialButton(
+                                    onPressed: () {
+                                      setState(() {
+                                        // pdfViewController
+                                        //     .setPage(int.parse(val));
+                                        // print('page jump ' +
+                                        //     currentPage.toString());
+                                        Navigator.of(context).pop();
+                                      });
+                                    },
+                                    child: Container(
+                                      width: 70.w,
+                                      height: 40.h,
+                                      decoration: BoxDecoration(
+                                        color: Colors.red,
+                                        borderRadius:
+                                            BorderRadius.circular(5.r),
+                                      ),
+                                      child: Center(
+                                        child: Text(
+                                          'OK',
+                                          style: GoogleFonts.urbanist(
+                                            fontSize: 22,
+                                            fontWeight: FontWeight.w500,
+                                            color: Colors.white,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
                                 ],
                               ),
                             ),
@@ -261,48 +295,48 @@ class _ReadBookState extends State<ReadBook> {
                       children: [
                         Container(
                           width: currentPage!.bitLength == 0
-                              ? 24
+                              ? 24.w
                               : currentPage!.bitLength == 1
-                                  ? 24
+                                  ? 24.w
                                   : currentPage!.bitLength == 2
-                                      ? 24
+                                      ? 24.w
                                       : currentPage!.bitLength == 3
-                                          ? 24
+                                          ? 24.w
                                           : currentPage!.bitLength == 4
-                                              ? 24
+                                              ? 24.w
                                               : currentPage!.bitLength == 5
-                                                  ? 25
+                                                  ? 25.w
                                                   : currentPage!.bitLength == 6
-                                                      ? 26
+                                                      ? 26.w
                                                       : currentPage!
                                                                   .bitLength ==
                                                               7
-                                                          ? 26
+                                                          ? 26.w
                                                           : currentPage!
                                                                       .bitLength ==
                                                                   8
-                                                              ? 27
+                                                              ? 27.w
                                                               : currentPage!
                                                                           .bitLength ==
                                                                       9
-                                                                  ? 28
+                                                                  ? 28.w
                                                                   : currentPage!
                                                                               .bitLength ==
                                                                           10
-                                                                      ? 29
+                                                                      ? 29.w
                                                                       : currentPage!.bitLength ==
                                                                               11
-                                                                          ? 30
+                                                                          ? 30.w
                                                                           : currentPage!.bitLength == 12
-                                                                              ? 31
+                                                                              ? 31.w
                                                                               : null,
-                          height: 21,
+                          height: 21.w,
                           decoration: BoxDecoration(
                             color: const Color(
                               0xff5B4214,
                             ),
                             borderRadius: BorderRadius.circular(
-                              4,
+                              4.r,
                             ),
                           ),
                           child: Center(
@@ -310,51 +344,51 @@ class _ReadBookState extends State<ReadBook> {
                               currentPage.toString(),
                               style: GoogleFonts.poppins(
                                 fontWeight: FontWeight.w600,
-                                fontSize: 11,
+                                fontSize: 11.sp,
                                 color: Colors.white,
                               ),
                             ),
                           ),
                         ),
-                        const SizedBox(
-                          width: 10,
+                        SizedBox(
+                          width: 10.w,
                         ),
                         Text(
                           '/',
                           style: GoogleFonts.poppins(
                             fontWeight: FontWeight.w400,
-                            fontSize: 16,
+                            fontSize: 16.sp,
                             color: const Color(
                               0xff5B4214,
                             ),
                           ),
                         ),
-                        const SizedBox(
-                          width: 10,
+                        SizedBox(
+                          width: 10.w,
                         ),
                         SizedBox(
-                          width: 120,
-                          height: 22,
+                          width: 120.w,
+                          height: 22.w,
                           child: Row(
                             children: [
                               Text(
                                 widget.popularBooksGetModel,
                                 style: GoogleFonts.poppins(
                                   fontWeight: FontWeight.w400,
-                                  fontSize: 16,
+                                  fontSize: 16.sp,
                                   color: const Color(
                                     0xff5B4214,
                                   ),
                                 ),
                               ),
-                              const SizedBox(
-                                width: 9,
+                              SizedBox(
+                                width: 9.w,
                               ),
                               Text(
                                 'Pages',
                                 style: GoogleFonts.poppins(
                                   fontWeight: FontWeight.w400,
-                                  fontSize: 16,
+                                  fontSize: 16.sp,
                                   color: const Color(
                                     0xff5B4214,
                                   ),
