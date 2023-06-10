@@ -2,9 +2,9 @@ import 'package:MeccaIslamicCenter/after_login_screens/ProfileChangingsScreens/U
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart' as foundation;
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:sizer/sizer.dart';
 
 import 'after_login_screens/bookMarkPagesWidgets/bookMark.dart';
 import 'after_login_screens/browsePagesAndWidgets/browsePage.dart';
@@ -58,42 +58,37 @@ class _BottomNavigationBarScreensState
   Widget build(BuildContext context) {
     if (isIos) {
       return CupertinoTabScaffold(
-          tabBar: CupertinoTabBar(items: [
-            BottomNavigationBarItem(
-              icon: SvgPicture.asset('assets/icons/home.svg'),
-              activeIcon: SvgPicture.asset('assets/icons/home_green.svg'),
-              label: 'Home',
-            ),
-            BottomNavigationBarItem(
-              icon: SvgPicture.asset('assets/icons/search.svg'),
-              activeIcon: SvgPicture.asset('assets/icons/search_green.svg'),
-              label: 'Browse',
-            ),
-            BottomNavigationBarItem(
-              icon: SvgPicture.asset('assets/icons/bookmark.svg'),
-              activeIcon: SvgPicture.asset('assets/icons/bookmark_green.svg'),
-              label: 'Bookmark',
-            ),
-            BottomNavigationBarItem(
-              icon: SvgPicture.asset('assets/icons/profile_grey.svg'),
-              activeIcon: SvgPicture.asset('assets/icons/profile_green.svg'),
-              label: 'Profile',
-            ),
-          ]),
+          tabBar: CupertinoTabBar(
+            items: [
+              BottomNavigationBarItem(
+                icon: SvgPicture.asset('assets/icons/home.svg'),
+                activeIcon: SvgPicture.asset('assets/icons/home_green.svg'),
+                label: 'Home',
+              ),
+              BottomNavigationBarItem(
+                icon: SvgPicture.asset('assets/icons/search.svg'),
+                activeIcon: SvgPicture.asset('assets/icons/search_green.svg'),
+                label: 'Browse',
+              ),
+              BottomNavigationBarItem(
+                icon: SvgPicture.asset('assets/icons/bookmark.svg'),
+                activeIcon: SvgPicture.asset('assets/icons/bookmark_green.svg'),
+                label: 'Bookmark',
+              ),
+              BottomNavigationBarItem(
+                icon: SvgPicture.asset('assets/icons/profile_grey.svg'),
+                activeIcon: SvgPicture.asset('assets/icons/profile_green.svg'),
+                label: 'Profile',
+              ),
+            ],
+            onTap: onTap,
+          ),
           tabBuilder: (context, index) {
-            switch (index) {
-              case 0:
-                return const HomePage();
-
-              case 1:
-                return const Browse();
-
-              case 2:
-                return const BookMark();
-
-              default:
-                return const UpdatePassword();
-            }
+            return CupertinoTabView(
+              builder: (context) {
+                return _pages[_currentIndex];
+              },
+            );
           });
     } else {
       return WillPopScope(
@@ -113,18 +108,18 @@ class _BottomNavigationBarScreensState
             key: key,
             body: _pages[_currentIndex],
             bottomNavigationBar: Container(
-              decoration: const BoxDecoration(
+              decoration: BoxDecoration(
                 borderRadius: BorderRadius.vertical(
                   top: Radius.circular(
-                    20,
+                    20.r,
                   ),
                 ),
               ),
-              height: 8.h,
+              height: 75.h,
               child: ClipRRect(
-                borderRadius: const BorderRadius.vertical(
+                borderRadius: BorderRadius.vertical(
                   top: Radius.circular(
-                    20,
+                    20.r,
                   ),
                 ),
                 child: BottomNavigationBar(
@@ -161,18 +156,18 @@ class _BottomNavigationBarScreensState
                   backgroundColor: Colors.white,
                   showUnselectedLabels: true,
                   showSelectedLabels: true,
-                  iconSize: 18,
+                  iconSize: 18.sp,
                   selectedItemColor: const Color(0xff00B900),
                   unselectedItemColor: const Color(
                     0xffADADAD,
                   ),
                   selectedLabelStyle: GoogleFonts.outfit(
                     fontWeight: FontWeight.w500,
-                    fontSize: 12,
+                    fontSize: 12.sp,
                   ),
                   unselectedLabelStyle: GoogleFonts.outfit(
                     fontWeight: FontWeight.w500,
-                    fontSize: 12,
+                    fontSize: 12.sp,
                   ),
                 ),
               ),
