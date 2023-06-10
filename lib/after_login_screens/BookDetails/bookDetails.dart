@@ -333,6 +333,8 @@ class _BookDetailsState extends State<BookDetails> {
                                       onTap: () => bookMark(
                                           context,
                                           widget.popularBooksGetModel.books_id
+                                              .toString(),
+                                          widget.popularBooksGetModel.books_id
                                               .toString()),
                                       child: Container(
                                         padding: EdgeInsets.symmetric(
@@ -646,9 +648,10 @@ class _BookDetailsState extends State<BookDetails> {
   late APIResponse<BookViewModel> _responseAddBookMark;
 
   bool isBookMarkDone = false;
-  bookMark(BuildContext context, String id) async {
+  bookMark(BuildContext context, String id, String bookIDBookmark) async {
     setState(() {
       isBookMarkDone = true;
+      bookIDBookmark = id;
     });
     Map addData = {
       "users_customers_id": userID.toString(),
