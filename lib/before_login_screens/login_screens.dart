@@ -551,7 +551,7 @@ class _LogInState extends State<LogIn> {
       } else {
         print('failure ' + logInData.toString());
         showToastError(
-          'experiencing technical issue!',
+          _responseLogIn.message.toString(),
           FToast().init(context),
         );
       }

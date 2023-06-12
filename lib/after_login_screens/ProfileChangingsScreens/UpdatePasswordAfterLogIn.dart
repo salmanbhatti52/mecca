@@ -666,6 +666,9 @@ class _UpdatePasswordState extends State<UpdatePassword> {
                                                               ),
                                                               child: Center(
                                                                 child: Row(
+                                                                  mainAxisSize:
+                                                                      MainAxisSize
+                                                                          .min,
                                                                   children: [
                                                                     Text(
                                                                       'PLEASE WAIT',

@@ -45,11 +45,13 @@ class _HomePageState extends State<HomePage> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     searchController = TextEditingController();
     init();
-    initPopularBooks(false, -1);
+    initPopularBooks(
+      false,
+      -1,
+    );
     initTopBooksBasedOnDownloads();
   }
 
@@ -84,7 +86,7 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
-  /// Bookmark Method
+  /// Bookmark Method for home books
   int currentIndex = -1;
   late APIResponse<BookViewModel> _responseAddBookMark;
   bool isAdding = false;
@@ -109,7 +111,11 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
       );
-      initPopularBooks(false, -1);
+      initPopularBooks(
+        false,
+        -1,
+      );
+      initTopBooksBasedOnDownloads();
     } else {
       print('objectHERE ' +
           _responseAddBookMark.status.toString() +
@@ -151,6 +157,10 @@ class _HomePageState extends State<HomePage> {
         ),
       );
       initTopBooksBasedOnDownloads();
+      initPopularBooks(
+        false,
+        -1,
+      );
     } else {
       showToastError(
         _responseAddBookMarkInTopBooks.message,
@@ -167,7 +177,10 @@ class _HomePageState extends State<HomePage> {
   late APIResponse<List<PoplarBooksModel>> _responsePopularBooks;
   List<PoplarBooksModel>? popularBooksData;
 
-  initPopularBooks(bool isFromCategory, int catID) async {
+  initPopularBooks(
+    bool isFromCategory,
+    int catID,
+  ) async {
     setState(() {
       isPopuplarBooksLoading = true;
     });
@@ -271,6 +284,7 @@ class _HomePageState extends State<HomePage> {
 
   late APIResponse<List<PoplarBooksModel>> _responseTopBooks;
   List<PoplarBooksModel>? topBooksData;
+
   initTopBooksBasedOnDownloads() async {
     setState(() {
       isTopBooksLoading = true;
@@ -832,7 +846,10 @@ class _HomePageState extends State<HomePage> {
                                                     catNameList![index]
                                                             .isCategorySelected =
                                                         false;
-                                                    initPopularBooks(false, -1);
+                                                    initPopularBooks(
+                                                      false,
+                                                      -1,
+                                                    );
                                                   });
                                                 } else {
                                                   for (CategoryGetModel model
@@ -848,9 +865,10 @@ class _HomePageState extends State<HomePage> {
                                                         true;
                                                   });
                                                   initPopularBooks(
-                                                      true,
-                                                      catNameList![index]
-                                                          .categories_id!);
+                                                    true,
+                                                    catNameList![index]
+                                                        .categories_id!,
+                                                  );
                                                 }
                                                 print("abayyyy " +
                                                     catNameList![index]
@@ -919,7 +937,6 @@ class _HomePageState extends State<HomePage> {
                                                     horizontal: 4.0),
                                                 child: GestureDetector(
                                                   onTap: () {
-                                                    print('feature alert');
                                                     Navigator.of(
                                                       context,
                                                       rootNavigator: true,
@@ -927,9 +944,10 @@ class _HomePageState extends State<HomePage> {
                                                       MaterialPageRoute(
                                                         builder: (context) =>
                                                             BookDetails(
-                                                                popularBooksGetModel:
-                                                                    _popularFoundBooks[
-                                                                        index]),
+                                                          popularBooksGetModel:
+                                                              _popularFoundBooks[
+                                                                  index],
+                                                        ),
                                                       ),
                                                     );
                                                   },
@@ -1005,30 +1023,48 @@ class _HomePageState extends State<HomePage> {
                                             ? Padding(
                                                 padding: EdgeInsets.symmetric(
                                                     horizontal: 4.0.w),
-                                                child:
-                                                    topBooksData![index] != null
-                                                        ? TopBooksWidget(
-                                                            popularBooksGetModelTop:
-                                                                topBooksData![
-                                                                    index],
-                                                            function: () =>
-                                                                topBooksBookmark(
-                                                                    context,
-                                                                    _popularFoundBooks[
-                                                                            index]
-                                                                        .books_id
-                                                                        .toString(),
-                                                                    index),
-                                                            isAddingInTopBooks:
-                                                                isAddingInTopBooks,
-                                                            index: index,
-                                                            currentIndex:
-                                                                currentIndexTop,
-                                                          )
-                                                        : const Center(
-                                                            child: Text(
-                                                                'No top books yet'),
-                                                          ),
+                                                child: topBooksData![index] !=
+                                                        null
+                                                    ? GestureDetector(
+                                                        onTap: () {
+                                                          Navigator.of(
+                                                            context,
+                                                            rootNavigator: true,
+                                                          ).push(
+                                                            MaterialPageRoute(
+                                                              builder:
+                                                                  (context) =>
+                                                                      BookDetails(
+                                                                popularBooksGetModel:
+                                                                    topBooksData![
+                                                                        index],
+                                                              ),
+                                                            ),
+                                                          );
+                                                        },
+                                                        child: TopBooksWidget(
+                                                          popularBooksGetModelTop:
+                                                              topBooksData![
+                                                                  index],
+                                                          function: () =>
+                                                              topBooksBookmark(
+                                                                  context,
+                                                                  _popularFoundBooks[
+                                                                          index]
+                                                                      .books_id
+                                                                      .toString(),
+                                                                  index),
+                                                          isAddingInTopBooks:
+                                                              isAddingInTopBooks,
+                                                          index: index,
+                                                          currentIndex:
+                                                              currentIndexTop,
+                                                        ),
+                                                      )
+                                                    : const Center(
+                                                        child: Text(
+                                                            'No top books yet'),
+                                                      ),
                                               )
                                             : const SizedBox();
                                       },
@@ -1050,5 +1086,35 @@ class _HomePageState extends State<HomePage> {
     await secureSharedPref.putString('isLogin', 'false');
     Navigator.of(context).pushReplacement(
         MaterialPageRoute(builder: (context) => const LogIn()));
+  }
+
+  late APIResponse<BookViewModel> _responseAddBookMarkBookDetails;
+
+  bool isBookMarkDone = false;
+  bookMark(
+    BuildContext context,
+    String id,
+  ) async {
+    setState(() {
+      isBookMarkDone = true;
+    });
+    Map addData = {
+      "users_customers_id": userID.toString(),
+      "books_id": id,
+    };
+    _responseAddBookMarkBookDetails = await service.addBookMark(addData);
+    print(_responseAddBookMarkBookDetails.data.toString());
+    if (_responseAddBookMarkBookDetails.status!.toLowerCase() == 'success') {
+      showToastSuccess(
+          'Book added to bookmarks successfully', FToast().init(context));
+    } else {
+      showToastError(
+        _responseAddBookMarkBookDetails.message,
+        FToast().init(context),
+      );
+    }
+    setState(() {
+      isBookMarkDone = false;
+    });
   }
 }

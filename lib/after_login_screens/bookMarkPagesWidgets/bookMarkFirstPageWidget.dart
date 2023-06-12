@@ -149,123 +149,123 @@ class _BookMarkFirstPageWidgetState extends State<BookMarkFirstPageWidget> {
               height: 8.h,
             ),
             Expanded(
-              child: Container(
-                height: 168.h,
-                // color: Colors.red,
-                child: ListView(
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Container(
-                          // color: Colors.red,
-                          width: 110.w,
-                          height: 32.h,
-                          child: AutoSizeText(
-                            maxLines: 3,
-                            minFontSize: 9,
-                            widget.allBooksBookMarked.title!,
-                            style: GoogleFonts.poppins(
-                              fontSize: 12.sp,
-                              fontWeight: FontWeight.w400,
-                              color: const Color(
-                                0xff000000,
-                              ),
-                            ),
-                          ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Container(
+                    // color: Colors.red,
+                    width: 110.w,
+                    height: 32.h,
+                    child: AutoSizeText(
+                      maxLines: 3,
+                      minFontSize: 10,
+                      widget.allBooksBookMarked.title!,
+                      style: GoogleFonts.poppins(
+                        fontSize: 12.sp,
+                        fontWeight: FontWeight.w400,
+                        color: const Color(
+                          0xff000000,
                         ),
-                      ],
+                      ),
                     ),
-                    SizedBox(
-                      height: 6.h,
+                  ),
+                ],
+              ),
+            ),
+            // SizedBox(
+            //   height: 6.h,
+            // ),
+            Expanded(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  AutoSizeText(
+                    // maxLines: 2,
+                    // minFontSize: 10,
+                    'Author',
+                    style: GoogleFonts.poppins(
+                      fontSize: 8.sp,
+                      fontWeight: FontWeight.w400,
+                      color: const Color(
+                        0xff316F94,
+                      ),
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        AutoSizeText(
-                          // maxLines: 2,
-                          // minFontSize: 10,
-                          'Author',
-                          style: GoogleFonts.poppins(
-                            fontSize: 8.sp,
-                            fontWeight: FontWeight.w400,
-                            color: const Color(
-                              0xff316F94,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(
-                      height: 2.h,
-                    ),
+                  ),
+                ],
+              ),
+            ),
+            // SizedBox(
+            //   height: 2.h,
+            // ),
 
-                    //testing purpose 12345
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Container(
-                          // color: Colors.red,
-                          width: 120.w,
-                          height: 20.h,
-                          child: AutoSizeText(
-                            maxLines: 2,
-                            minFontSize: 10,
-                            widget.allBooksBookMarked.author!.name!,
-                            style: GoogleFonts.poppins(
-                              fontSize: 10.sp,
-                              fontWeight: FontWeight.w400,
-                              color: const Color(
-                                0xff5B4214,
-                              ),
-                            ),
+            //testing purpose 12345
+            Expanded(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Container(
+                    // color: Colors.red,
+                    width: 120.w,
+                    height: 20.h,
+                    child: AutoSizeText(
+                      maxLines: 2,
+                      minFontSize: 10,
+                      widget.allBooksBookMarked.author!.name!,
+                      style: GoogleFonts.poppins(
+                        fontSize: 10.sp,
+                        fontWeight: FontWeight.w400,
+                        color: const Color(
+                          0xff5B4214,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            // const SizedBox(
+            //   height: 1,
+            // ),
+            Expanded(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  AutoSizeText(
+                    // maxLines: 2,
+                    // minFontSize: 10,
+                    'Category',
+                    style: GoogleFonts.poppins(
+                      fontSize: 8.sp,
+                      fontWeight: FontWeight.w400,
+                      color: const Color(
+                        0xff00B900,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            // SizedBox(
+            //   height: 6.h,
+            // ),
+            Expanded(
+              child: Padding(
+                padding: EdgeInsets.only(bottom: 6.0.h),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Expanded(
+                      child: AutoSizeText(
+                        // maxLines: 2,
+                        // minFontSize: 10,
+                        widget.allBooksBookMarked.category!.name!,
+                        style: GoogleFonts.poppins(
+                          fontSize: 10.sp,
+                          fontWeight: FontWeight.w400,
+                          color: const Color(
+                            0xff5B4214,
                           ),
                         ),
-                      ],
-                    ),
-                    // const SizedBox(
-                    //   height: 1,
-                    // ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        AutoSizeText(
-                          // maxLines: 2,
-                          // minFontSize: 10,
-                          'Category',
-                          style: GoogleFonts.poppins(
-                            fontSize: 8.sp,
-                            fontWeight: FontWeight.w400,
-                            color: const Color(
-                              0xff00B900,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(
-                      height: 6.h,
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(bottom: 6.0.h),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Expanded(
-                            child: AutoSizeText(
-                              // maxLines: 2,
-                              // minFontSize: 10,
-                              widget.allBooksBookMarked.category!.name!,
-                              style: GoogleFonts.poppins(
-                                fontSize: 10.sp,
-                                fontWeight: FontWeight.w400,
-                                color: const Color(
-                                  0xff5B4214,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
                       ),
                     ),
                   ],

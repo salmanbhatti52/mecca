@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:MeccaIslamicCenter/APIModels/book_download_model.dart';
 import 'package:MeccaIslamicCenter/APIModels/popular_books_model.dart';
+import 'package:MeccaIslamicCenter/bottomNavigatorBar.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
@@ -25,8 +26,11 @@ import 'bookDetailsWidget.dart';
 
 class BookDetails extends StatefulWidget {
   final PoplarBooksModel popularBooksGetModel;
-  const BookDetails({Key? key, required this.popularBooksGetModel})
-      : super(key: key);
+
+  const BookDetails({
+    Key? key,
+    required this.popularBooksGetModel,
+  }) : super(key: key);
 
   @override
   State<BookDetails> createState() => _BookDetailsState();
@@ -37,6 +41,7 @@ class _BookDetailsState extends State<BookDetails> {
   bool isLoading = false;
   late SecureSharedPref secureSharedPref;
   int userID = -1;
+
   @override
   void initState() {
     // TODO: implement initState
@@ -47,40 +52,67 @@ class _BookDetailsState extends State<BookDetails> {
   bool isRelatedBooksLoading = false;
   late APIResponse<List<RelatedBooksModel>> _responseRelatedBooks;
   List<RelatedBooksModel>? relatedBooksList;
+  List<PoplarBooksModel>? popularBooksData;
+
+  late APIResponse<List<PoplarBooksModel>> _responsePopularBooks;
+
   initRelatedBooks(String id) async {
     setState(() {
       isRelatedBooksLoading = true;
     });
     secureSharedPref = await SecureSharedPref.getInstance();
     userID = (await secureSharedPref.getInt('userID')) ?? -1;
-
-    print(
-      'id collected successfully on details page ' + userID.toString(),
-    );
     Map relatedData = {
       "users_customers_id": userID.toString(),
       "books_id": id,
+    };
+    Map dataPopular = {
+      "users_customers_id": userID.toString(),
     };
     _responseRelatedBooks = await service.relatedBooks(relatedData);
     relatedBooksList = [];
     if (_responseRelatedBooks.status!.toLowerCase() == 'success') {
       relatedBooksList = _responseRelatedBooks.data;
     } else {
-      print('error aa raha hai  ' + _responseRelatedBooks.status.toString());
       showToastError(
         _responseRelatedBooks.message,
         FToast().init(context),
       );
+    }
+    _responsePopularBooks = await service.getPopularBooks(dataPopular);
+    popularBooksData = [];
+    if (_responsePopularBooks.status!.toLowerCase() == 'success') {
+      // await prefs.putInt('bookID', _responsePopularBooks.data!.);
+      for (PoplarBooksModel model in _responsePopularBooks.data!) {
+        popularBooksData!.add(model);
+      }
+    }
+    if (popularBooksData!
+            .firstWhere((element) =>
+                element.books_id == widget.popularBooksGetModel.books_id)
+            .bookmarked!
+            .toLowerCase() ==
+        'yes') {
+      setState(() {
+        isBookmarked = true;
+      });
+    } else {
+      setState(() {
+        isBookmarked = false;
+      });
     }
     setState(() {
       isRelatedBooksLoading = false;
     });
   }
 
+  bool isBookmarked = false;
+
   // bookmark method starts here
   int currentIndex = -1;
   late APIResponse<BookViewModel> _responseAddRelatedBooks;
   bool isAdding = false;
+
   featuredBookBookmark(BuildContext context, String id, int index) async {
     setState(() {
       isAdding = true;
@@ -112,6 +144,7 @@ class _BookDetailsState extends State<BookDetails> {
       isAdding = false;
     });
   }
+
   // bookmark method end here
 
   @override
@@ -153,7 +186,16 @@ class _BookDetailsState extends State<BookDetails> {
               child: Row(
                 children: [
                   GestureDetector(
-                    onTap: () => Navigator.of(context).pop(),
+                    onTap: () {
+                      setState(() {
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => BottomNavigationBarScreens(),
+                          ),
+                        );
+                      });
+                    },
                     child: SvgPicture.asset(
                       'assets/buttons/back-button.svg',
                       fit: BoxFit.scaleDown,
@@ -329,70 +371,94 @@ class _BookDetailsState extends State<BookDetails> {
                                         ),
                                       ),
                                     )
-                                  : GestureDetector(
-                                      onTap: () => bookMark(
-                                          context,
-                                          widget.popularBooksGetModel.books_id
-                                              .toString(),
-                                          widget.popularBooksGetModel.books_id
-                                              .toString()),
-                                      child: Container(
-                                        padding: EdgeInsets.symmetric(
-                                          horizontal: 8.w,
-                                          vertical: 6.h,
-                                        ),
-                                        width: 106.w,
-                                        height: 30.w,
-                                        decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(
-                                            15.r,
+                                  : isRelatedBooksLoading
+                                      ? SizedBox(
+                                          width: 20.w,
+                                          height: 25.h,
+                                          child: CircularProgressIndicator(
+                                            color: Color(0xffE8B55B),
+                                            strokeWidth: 0.9,
                                           ),
-                                          color: const Color(0xffF7F7F7),
-                                        ),
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceAround,
-                                          children: [
-                                            widget.popularBooksGetModel
-                                                        .bookmarked!
-                                                        .toLowerCase() ==
-                                                    'yes'
-                                                ? SvgPicture.asset(
-                                                    'assets/buttons/save.svg',
-                                                    width: 16.w, height: 16.h,
-                                                    fit: BoxFit.cover,
-                                                    colorFilter:
-                                                        const ColorFilter.mode(
-                                                            Color(
-                                                              0xff00B900,
+                                        )
+                                      : GestureDetector(
+                                          onTap: () => bookMark(
+                                              context,
+                                              widget
+                                                  .popularBooksGetModel.books_id
+                                                  .toString()),
+                                          child: Container(
+                                            padding: EdgeInsets.symmetric(
+                                              horizontal: 8.w,
+                                              vertical: 6.h,
+                                            ),
+                                            width: 106.w,
+                                            height: 30.w,
+                                            decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(
+                                                15.r,
+                                              ),
+                                              color: const Color(0xffF7F7F7),
+                                            ),
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.spaceAround,
+                                              children: [
+                                                isBookmarked
+                                                    ? isAdding
+                                                        ? SizedBox(
+                                                            width: 20.w,
+                                                            height: 25.h,
+                                                            child:
+                                                                CircularProgressIndicator(
+                                                              color: Color(
+                                                                  0xffE8B55B),
+                                                              strokeWidth: 0.9,
                                                             ),
-                                                            BlendMode.srcIn),
-                                                    // fit: BoxFit.scaleDown,
-                                                  )
-                                                : SvgPicture.asset(
-                                                    'assets/buttons/save.svg',
-                                                    width: 16.w, height: 16.h,
-                                                    fit: BoxFit.cover,
-                                                    colorFilter:
-                                                        const ColorFilter.mode(
-                                                            Color(
-                                                              0xff6C6C6C,
-                                                            ),
-                                                            BlendMode.srcIn),
-                                                    // fit: BoxFit.scaleDown,
-                                                  ),
-                                            Text(
-                                              'Bookmark',
-                                              style: GoogleFonts.poppins(
-                                                  fontSize: 13.sp,
-                                                  fontWeight: FontWeight.w400,
-                                                  color:
-                                                      const Color(0xff6C6C6C)),
-                                            )
-                                          ],
+                                                          )
+                                                        : SvgPicture.asset(
+                                                            'assets/buttons/save.svg',
+                                                            width: 16.w,
+                                                            height: 16.h,
+                                                            fit: BoxFit.cover,
+                                                            colorFilter:
+                                                                const ColorFilter
+                                                                        .mode(
+                                                                    Color(
+                                                                      0xff00B900,
+                                                                    ),
+                                                                    BlendMode
+                                                                        .srcIn),
+                                                            // fit: BoxFit.scaleDown,
+                                                          )
+                                                    : SvgPicture.asset(
+                                                        'assets/buttons/save.svg',
+                                                        width: 16.w,
+                                                        height: 16.h,
+                                                        fit: BoxFit.cover,
+                                                        colorFilter:
+                                                            const ColorFilter
+                                                                    .mode(
+                                                                Color(
+                                                                  0xff6C6C6C,
+                                                                ),
+                                                                BlendMode
+                                                                    .srcIn),
+                                                        // fit: BoxFit.scaleDown,
+                                                      ),
+                                                Text(
+                                                  'Bookmark',
+                                                  style: GoogleFonts.poppins(
+                                                      fontSize: 13.sp,
+                                                      fontWeight:
+                                                          FontWeight.w400,
+                                                      color: const Color(
+                                                          0xff6C6C6C)),
+                                                )
+                                              ],
+                                            ),
+                                          ),
                                         ),
-                                      ),
-                                    ),
                               SizedBox(
                                 height: isBookMarkDone ? 14.h : 10.h,
                               ),
@@ -452,7 +518,8 @@ class _BookDetailsState extends State<BookDetails> {
                                               children: [
                                                 SvgPicture.asset(
                                                   'assets/icons/download.svg',
-                                                  width: 16.w, height: 16.h,
+                                                  width: 16.w,
+                                                  height: 16.h,
                                                   fit: BoxFit.cover,
                                                   colorFilter:
                                                       const ColorFilter.mode(
@@ -645,34 +712,6 @@ class _BookDetailsState extends State<BookDetails> {
     );
   }
 
-  late APIResponse<BookViewModel> _responseAddBookMark;
-
-  bool isBookMarkDone = false;
-  bookMark(BuildContext context, String id, String bookIDBookmark) async {
-    setState(() {
-      isBookMarkDone = true;
-      bookIDBookmark = id;
-    });
-    Map addData = {
-      "users_customers_id": userID.toString(),
-      "books_id": id,
-    };
-    _responseAddBookMark = await service.addBookMark(addData);
-    print(_responseAddBookMark.data.toString());
-    if (_responseAddBookMark.status!.toLowerCase() == 'success') {
-      showToastSuccess(
-          'Book added to bookmarks successfully', FToast().init(context));
-    } else {
-      showToastError(
-        _responseAddBookMark.message,
-        FToast().init(context),
-      );
-    }
-    setState(() {
-      isBookMarkDone = false;
-    });
-  }
-
   bool isDownloading = false;
   late APIResponse<BookDownloadModel> _responseDownload;
 
@@ -731,6 +770,7 @@ class _BookDetailsState extends State<BookDetails> {
   bool isDownloadStarts = false;
   String progressPercentage = '';
   double percent = 0.0;
+
   showDownloadProgress(received, total) {
     percent = 0.0;
     if (total != -1) {
@@ -742,6 +782,7 @@ class _BookDetailsState extends State<BookDetails> {
   }
 
   var dio = Dio();
+
   downloadBook(BuildContext context, String id) async {
     setState(() {
       isDownloading = true;
@@ -780,6 +821,7 @@ class _BookDetailsState extends State<BookDetails> {
 
   bool isReading = false;
   late APIResponse<BookViewModel> _responseReadBook;
+
   readBooks(BuildContext context, String bookID) async {
     setState(() {
       isReading = true;
@@ -817,6 +859,38 @@ class _BookDetailsState extends State<BookDetails> {
     }
     setState(() {
       isReading = false;
+    });
+  }
+
+  late APIResponse<BookViewModel> _responseAddBookMarkForBookDetails;
+
+  bool isBookMarkDone = false;
+
+  bookMark(
+    BuildContext context,
+    String id,
+  ) async {
+    setState(() {
+      isBookMarkDone = true;
+    });
+    Map addData = {
+      "users_customers_id": userID.toString(),
+      "books_id": id,
+    };
+    _responseAddBookMarkForBookDetails = await service.addBookMark(addData);
+    print(_responseAddBookMarkForBookDetails.data.toString());
+    if (_responseAddBookMarkForBookDetails.status!.toLowerCase() == 'success') {
+      showToastSuccess(
+          'Book added to bookmarks successfully', FToast().init(context));
+      initRelatedBooks(id);
+    } else {
+      showToastError(
+        _responseAddBookMarkForBookDetails.message,
+        FToast().init(context),
+      );
+    }
+    setState(() {
+      isBookMarkDone = false;
     });
   }
 }

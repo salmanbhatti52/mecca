@@ -24,9 +24,9 @@ class Browse extends StatefulWidget {
 
 class _BrowseState extends State<Browse> {
   late TextEditingController searchController;
-  bool isAllSelected = false;
-  bool isBooksSelected = false;
-  bool isAuthorSelected = false;
+  bool isAddingBook = false;
+  int indexOfSelectedBook = -1;
+  int isSelectedButton = 0;
   bool isPopuplarBooksLoading = false;
   late SecureSharedPref secureSharedPref;
   int userID = -1;
@@ -35,7 +35,10 @@ class _BrowseState extends State<Browse> {
     // TODO: implement initState
     super.initState();
     searchController = TextEditingController();
-    initPopularBooks(false, -1);
+    initPopularBooks(
+      false,
+      -1,
+    );
     init();
   }
 
@@ -60,7 +63,10 @@ class _BrowseState extends State<Browse> {
   late APIResponse<List<PoplarBooksModel>> _responsePopularBooks;
   List<PoplarBooksModel>? popularBooksData;
 
-  initPopularBooks(bool isFromCategory, int catID) async {
+  initPopularBooks(
+    bool isFromCategory,
+    int catID,
+  ) async {
     setState(() {
       isPopuplarBooksLoading = true;
     });
@@ -120,7 +126,46 @@ class _BrowseState extends State<Browse> {
     });
   }
 
-  /// bookmark method starts
+  void _runBooksFilter(String enteredKeyword) {
+    List<PoplarBooksModel> results = [];
+    if (enteredKeyword.isEmpty) {
+      // if the search field is empty or only contains white-space, we'll display all users
+      results = popularBooksData!;
+    } else {
+      results = popularBooksData!
+          .where((user) =>
+              user.title!.toLowerCase().contains(enteredKeyword.toLowerCase()))
+          .toList();
+      // we use the toLowerCase() method to make it case-insensitive
+    }
+
+    // Refresh the UI
+    setState(() {
+      _popularFoundBooks = results;
+    });
+  }
+
+  void _runAuthorFilter(String enteredKeyword) {
+    List<PoplarBooksModel> results = [];
+    if (enteredKeyword.isEmpty) {
+      // if the search field is empty or only contains white-space, we'll display all users
+      results = popularBooksData!;
+    } else {
+      results = popularBooksData!
+          .where((user) => user.author!.name!
+              .toLowerCase()
+              .contains(enteredKeyword.toLowerCase()))
+          .toList();
+      // we use the toLowerCase() method to make it case-insensitive
+    }
+
+    // Refresh the UI
+    setState(() {
+      _popularFoundBooks = results;
+    });
+  }
+
+  /// bookmark method starts for browse widget
   int currentIndex = -1;
   late APIResponse<BookViewModel> _responseAddBookMark;
   bool isAdding = false;
@@ -142,7 +187,10 @@ class _BrowseState extends State<Browse> {
           ),
         ),
       );
-      initPopularBooks(false, -1);
+      initPopularBooks(
+        false,
+        -1,
+      );
     } else {
       showToastError(
         _responseAddBookMark.message,
@@ -239,6 +287,326 @@ class _BrowseState extends State<Browse> {
                       ),
                     ),
                   )),
+              Positioned(
+                bottom: -30,
+                child: SizedBox(
+                  width: 343.w,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Material(
+                        elevation: 1,
+                        borderRadius: BorderRadius.circular(
+                          12.r,
+                        ),
+                        color: Colors.white,
+                        child: SizedBox(
+                          width: 294.w,
+                          height: 44.h,
+                          child: TextField(
+                            // expands: true, maxLines: null,
+                            //onTap: () => searchBooksMethod(context),
+                            onChanged: (value) =>
+                                (isSelectedButton == 1 || isSelectedButton == 0)
+                                    ? _runFilter(value)
+                                    : isSelectedButton == 2
+                                        ? _runBooksFilter(value)
+                                        : _runAuthorFilter(value),
+                            controller: searchController,
+                            style: GoogleFonts.poppins(
+                                fontSize: 14.sp,
+                                fontWeight: FontWeight.w300,
+                                color: Colors.black),
+                            cursorColor: const Color(
+                              0xffE8B55B,
+                            ),
+                            decoration: InputDecoration(
+                              contentPadding: EdgeInsets.only(
+                                top: 13.h,
+                                bottom: 13.h,
+                              ),
+                              hintText: 'Search here',
+                              hintStyle: GoogleFonts.poppins(
+                                fontSize: 14.sp,
+                                fontWeight: FontWeight.w300,
+                                color: const Color(
+                                  0xff6C6C6C,
+                                ),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(
+                                  12.r,
+                                ),
+                                borderSide: const BorderSide(
+                                  color: Color(0xffE8B55B),
+                                ),
+                              ),
+                              border: InputBorder.none,
+                              prefixIcon: SvgPicture.asset(
+                                'assets/buttons/search_appbar.svg',
+                                fit: BoxFit.scaleDown,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      Material(
+                        elevation: 1,
+                        borderRadius: BorderRadius.circular(
+                          8.r,
+                        ),
+                        child: GestureDetector(
+                          onTap: () => showDialog(
+                            context: context,
+                            builder: (context) =>
+                                StatefulBuilder(builder: (context, setState) {
+                              return Dialog(
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(
+                                    12.r,
+                                  ),
+                                ),
+                                elevation: 0.0,
+                                backgroundColor: Colors.white,
+                                child: SizedBox(
+                                  width: 266.w,
+                                  height: 148.w,
+                                  child: Padding(
+                                    padding: EdgeInsets.symmetric(
+                                      horizontal: 16.0.w,
+                                      vertical: 12.h,
+                                    ),
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        SizedBox(
+                                          width: 92.w,
+                                          height: 27.w,
+                                          child: Text(
+                                            'Search By',
+                                            style: GoogleFonts.poppins(
+                                              color: const Color(0xff000000),
+                                              fontWeight: FontWeight.w500,
+                                              fontSize: 18.sp,
+                                            ),
+                                          ),
+                                        ),
+                                        Spacer(),
+                                        Row(
+                                          children: [
+                                            Container(
+                                              width: 57.w,
+                                              height: 30.h,
+                                              decoration: BoxDecoration(
+                                                color: const Color(
+                                                  0xffF7F7F7,
+                                                ),
+                                                border: Border.all(
+                                                  color: isSelectedButton == 1
+                                                      ? const Color(
+                                                          0xff00B900,
+                                                        )
+                                                      : Colors.transparent,
+                                                ),
+                                                borderRadius:
+                                                    BorderRadius.circular(
+                                                  18.r,
+                                                ),
+                                              ),
+                                              child: TextButton(
+                                                style: const ButtonStyle(
+                                                  visualDensity:
+                                                      VisualDensity.compact,
+                                                ),
+                                                onPressed: () {
+                                                  setState(() {
+                                                    isSelectedButton = 1;
+                                                  });
+                                                },
+                                                child: Text(
+                                                  'All',
+                                                  style: GoogleFonts.poppins(
+                                                    fontSize: 12.sp,
+                                                    fontWeight: FontWeight.w400,
+                                                    color: isSelectedButton == 1
+                                                        ? const Color(
+                                                            0xff00B900,
+                                                          )
+                                                        : const Color(
+                                                            0xff000000,
+                                                          ),
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                            SizedBox(
+                                              width: 12.h,
+                                            ),
+                                            Container(
+                                              width: 57.w,
+                                              height: 30.h,
+                                              decoration: BoxDecoration(
+                                                color: const Color(
+                                                  0xffF7F7F7,
+                                                ),
+                                                border: Border.all(
+                                                  color: isSelectedButton == 2
+                                                      ? const Color(
+                                                          0xff00B900,
+                                                        )
+                                                      : Colors.transparent,
+                                                ),
+                                                borderRadius:
+                                                    BorderRadius.circular(
+                                                  18.r,
+                                                ),
+                                              ),
+                                              child: TextButton(
+                                                style: const ButtonStyle(
+                                                  visualDensity:
+                                                      VisualDensity.compact,
+                                                ),
+                                                onPressed: () {
+                                                  setState(() {
+                                                    isSelectedButton = 2;
+                                                  });
+                                                },
+                                                child: Text(
+                                                  'Books',
+                                                  style: GoogleFonts.poppins(
+                                                      fontSize: 12.sp,
+                                                      fontWeight:
+                                                          FontWeight.w400,
+                                                      color:
+                                                          isSelectedButton == 2
+                                                              ? const Color(
+                                                                  0xff00B900)
+                                                              : const Color(
+                                                                  0xff000000,
+                                                                )),
+                                                ),
+                                              ),
+                                            ),
+                                            SizedBox(
+                                              width: 12.w,
+                                            ),
+                                            Container(
+                                              width: 64.w,
+                                              height: 30.h,
+                                              decoration: BoxDecoration(
+                                                color: const Color(
+                                                  0xffF7F7F7,
+                                                ),
+                                                border: Border.all(
+                                                  color: isSelectedButton == 3
+                                                      ? const Color(
+                                                          0xff00B900,
+                                                        )
+                                                      : Colors.transparent,
+                                                ),
+                                                borderRadius:
+                                                    BorderRadius.circular(
+                                                  18.r,
+                                                ),
+                                              ),
+                                              child: TextButton(
+                                                style: const ButtonStyle(
+                                                  visualDensity:
+                                                      VisualDensity.compact,
+                                                ),
+                                                onPressed: () {
+                                                  isSelectedButton = 3;
+                                                  setState(() {});
+                                                },
+                                                child: Text(
+                                                  'Author',
+                                                  style: GoogleFonts.poppins(
+                                                    fontSize: 12.sp,
+                                                    fontWeight: FontWeight.w400,
+                                                    color: isSelectedButton == 3
+                                                        ? const Color(
+                                                            0xff00B900,
+                                                          )
+                                                        : const Color(
+                                                            0xff000000,
+                                                          ),
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        Spacer(),
+                                        Container(
+                                          width: 61.w,
+                                          height: 28.h,
+                                          decoration: BoxDecoration(
+                                            gradient: const LinearGradient(
+                                              colors: [
+                                                Color(0xffF7E683),
+                                                Color(0xffF7E683),
+                                                Color(0xffE8B55B)
+                                              ],
+                                            ),
+                                            borderRadius: BorderRadius.circular(
+                                              6.r,
+                                            ),
+                                          ),
+                                          child: TextButton(
+                                            style: const ButtonStyle(
+                                              visualDensity:
+                                                  VisualDensity.compact,
+                                            ),
+                                            onPressed: () {
+                                              //isSelectedButton;
+                                              print(
+                                                  isSelectedButton.toString());
+                                              setState(() {
+                                                Navigator.of(context).pop();
+                                              });
+                                            },
+                                            child: Text(
+                                              'OK',
+                                              style: GoogleFonts.poppins(
+                                                fontSize: 12.sp,
+                                                fontWeight: FontWeight.w400,
+                                                color: const Color(
+                                                  0xff5B4214,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              );
+                            }),
+                          ),
+                          child: Container(
+                            width: 44.w,
+                            height: 50.h,
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(
+                                8.r,
+                              ),
+                            ),
+                            child: SvgPicture.asset(
+                              'assets/buttons/search.svg',
+                              fit: BoxFit.scaleDown,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
             ],
           ),
         ),

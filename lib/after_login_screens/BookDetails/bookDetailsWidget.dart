@@ -152,119 +152,123 @@ class _BookDetailsWidgetState extends State<BookDetailsWidget> {
               height: 10.h,
             ),
             Expanded(
-              child: ListView(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Container(
-                        // color: Colors.red,
-                        width: 110.w,
-                        height: 32.h,
-                        child: AutoSizeText(
-                          maxLines: 3,
-                          minFontSize: 9,
-                          widget.relatedBooksModel.title!,
-                          style: GoogleFonts.poppins(
-                            fontSize: 12.sp,
-                            fontWeight: FontWeight.w400,
-                            color: const Color(
-                              0xff000000,
-                            ),
-                          ),
+                  Container(
+                    // color: Colors.red,
+                    width: 110.w,
+                    height: 32.h,
+                    child: AutoSizeText(
+                      maxLines: 3,
+                      minFontSize: 9,
+                      widget.relatedBooksModel.title!,
+                      style: GoogleFonts.poppins(
+                        fontSize: 12.sp,
+                        fontWeight: FontWeight.w400,
+                        color: const Color(
+                          0xff000000,
                         ),
                       ),
-                    ],
-                  ),
-                  SizedBox(
-                    height: 7.h,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      AutoSizeText(
-                        // maxLines: 2,
-                        // minFontSize: 10,
-                        'Author',
-                        style: GoogleFonts.poppins(
-                          fontSize: 8.sp,
-                          fontWeight: FontWeight.w400,
-                          color: const Color(
-                            0xff316F94,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  // SizedBox(
-                  //   height: 3,
-                  // ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Container(
-                        // color: Colors.red,
-                        width: 120.w,
-                        height: 20.h,
-                        child: AutoSizeText(
-                          maxLines: 2,
-                          minFontSize: 10,
-                          widget.relatedBooksModel.author!.name!,
-                          style: GoogleFonts.poppins(
-                            fontSize: 10.sp,
-                            fontWeight: FontWeight.w400,
-                            color: const Color(
-                              0xff5B4214,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(
-                    height: 1.h,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      AutoSizeText(
-                        // maxLines: 2,
-                        // minFontSize: 10,
-                        'Category',
-                        style: GoogleFonts.poppins(
-                          fontSize: 8.sp,
-                          fontWeight: FontWeight.w400,
-                          color: const Color(
-                            0xff00B900,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  // SizedBox(
-                  //   height: 1,
-                  // ),
-                  Padding(
-                    padding: EdgeInsets.only(bottom: 6.0.h),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        AutoSizeText(
-                          // maxLines: 2,
-                          // minFontSize: 10,
-                          widget.relatedBooksModel.category!.name!,
-                          style: GoogleFonts.poppins(
-                            fontSize: 10.sp,
-                            fontWeight: FontWeight.w400,
-                            color: const Color(
-                              0xff5B4214,
-                            ),
-                          ),
-                        ),
-                      ],
                     ),
                   ),
                 ],
+              ),
+            ),
+            // SizedBox(
+            //   height: 7.h,
+            // ),
+            Expanded(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  AutoSizeText(
+                    // maxLines: 2,
+                    // minFontSize: 10,
+                    'Author',
+                    style: GoogleFonts.poppins(
+                      fontSize: 8.sp,
+                      fontWeight: FontWeight.w400,
+                      color: const Color(
+                        0xff316F94,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            // SizedBox(
+            //   height: 3,
+            // ),
+            Expanded(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Container(
+                    // color: Colors.red,
+                    width: 120.w,
+                    height: 20.h,
+                    child: AutoSizeText(
+                      maxLines: 2,
+                      minFontSize: 10,
+                      widget.relatedBooksModel.author!.name!,
+                      style: GoogleFonts.poppins(
+                        fontSize: 10.sp,
+                        fontWeight: FontWeight.w400,
+                        color: const Color(
+                          0xff5B4214,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            // SizedBox(
+            //   height: 1.h,
+            // ),
+            Expanded(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  AutoSizeText(
+                    // maxLines: 2,
+                    // minFontSize: 10,
+                    'Category',
+                    style: GoogleFonts.poppins(
+                      fontSize: 8.sp,
+                      fontWeight: FontWeight.w400,
+                      color: const Color(
+                        0xff00B900,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            // SizedBox(
+            //   height: 1,
+            // ),
+            Expanded(
+              child: Padding(
+                padding: EdgeInsets.only(bottom: 6.0.h),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    AutoSizeText(
+                      // maxLines: 2,
+                      // minFontSize: 10,
+                      widget.relatedBooksModel.category!.name!,
+                      style: GoogleFonts.poppins(
+                        fontSize: 10.sp,
+                        fontWeight: FontWeight.w400,
+                        color: const Color(
+                          0xff5B4214,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
           ],

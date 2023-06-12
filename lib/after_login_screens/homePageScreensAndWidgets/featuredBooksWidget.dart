@@ -123,6 +123,7 @@ class _FeaturedBooksWidgetState extends State<FeaturedBooksWidget> {
                             )
                           : GestureDetector(
                               onTap: widget.function,
+                              onTapCancel: null,
                               // featuredBookBookmark(context,
                               // widget.popularBooksGetModel.books_id!.toString()),
                               child: SizedBox(
@@ -177,96 +178,104 @@ class _FeaturedBooksWidgetState extends State<FeaturedBooksWidget> {
             SizedBox(
               height: 10.h,
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Container(
-                  // color: Colors.red,
-                  width: 110.w,
-                  height: 32.h,
-                  child: AutoSizeText(
-                    maxLines: 3,
-                    minFontSize: 9,
-                    widget.popularBooksGetModel.title!,
-                    style: GoogleFonts.poppins(
-                      fontSize: 12.sp,
-                      fontWeight: FontWeight.w400,
-                      color: const Color(
-                        0xff000000,
+            Expanded(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Container(
+                    // color: Colors.red,
+                    width: 110.w,
+                    height: 32.h,
+                    child: AutoSizeText(
+                      maxLines: 3,
+                      minFontSize: 10,
+                      widget.popularBooksGetModel.title!,
+                      style: GoogleFonts.poppins(
+                        fontSize: 12.sp,
+                        fontWeight: FontWeight.w400,
+                        color: const Color(
+                          0xff000000,
+                        ),
                       ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-            SizedBox(
-              height: 7.h,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                AutoSizeText(
-                  // maxLines: 2,
-                  // minFontSize: 10,
-                  'Author',
-                  style: GoogleFonts.poppins(
-                    fontSize: 8.sp,
-                    fontWeight: FontWeight.w400,
-                    color: const Color(
-                      0xff316F94,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            SizedBox(
-              height: 6.h,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Container(
-                  // color: Colors.red,
-                  width: 120.w,
-                  height: 20.h,
-                  child: AutoSizeText(
-                    maxLines: 2,
-                    minFontSize: 10,
-                    widget.popularBooksGetModel.author!.name!,
+            // SizedBox(
+            //   height: 7.h,
+            // ),
+            Expanded(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  AutoSizeText(
+                    // maxLines: 2,
+                    // minFontSize: 10,
+                    'Author',
                     style: GoogleFonts.poppins(
-                      fontSize: 10.sp,
+                      fontSize: 8.sp,
                       fontWeight: FontWeight.w400,
                       color: const Color(
-                        0xff5B4214,
+                        0xff316F94,
                       ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-            SizedBox(
-              height: 6.h,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                AutoSizeText(
-                  // maxLines: 2,
-                  // minFontSize: 10,
-                  'Category',
-                  style: GoogleFonts.poppins(
-                    fontSize: 8.sp,
-                    fontWeight: FontWeight.w400,
-                    color: const Color(
-                      0xff00B900,
+            // SizedBox(
+            //   height: 6.h,
+            // ),
+            Expanded(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Container(
+                    // color: Colors.red,
+                    width: 120.w,
+                    height: 20.h,
+                    child: AutoSizeText(
+                      maxLines: 2,
+                      minFontSize: 10,
+                      widget.popularBooksGetModel.author!.name!,
+                      style: GoogleFonts.poppins(
+                        fontSize: 10.sp,
+                        fontWeight: FontWeight.w400,
+                        color: const Color(
+                          0xff5B4214,
+                        ),
+                      ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-            SizedBox(
-              height: 6.h,
+            // SizedBox(
+            //   height: 6.h,
+            // ),
+            Expanded(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  AutoSizeText(
+                    // maxLines: 2,
+                    // minFontSize: 10,
+                    'Category',
+                    style: GoogleFonts.poppins(
+                      fontSize: 8.sp,
+                      fontWeight: FontWeight.w400,
+                      color: const Color(
+                        0xff00B900,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
+            // SizedBox(
+            //   height: 6.h,
+            // ),
             Expanded(
               child: Padding(
                 padding: EdgeInsets.only(bottom: 8.0.h),
