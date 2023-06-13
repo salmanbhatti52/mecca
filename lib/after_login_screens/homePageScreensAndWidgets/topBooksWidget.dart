@@ -12,13 +12,21 @@ class TopBooksWidget extends StatefulWidget {
   final bool isAddingInTopBooks;
   final int index;
   final int currentIndex;
+  final int currentIndexToRemoveFromTop;
+  final bool isRemovingFromTop;
+  final int indexToRemoveFromTopFromTop;
+  final VoidCallback functionToRemoveFromTop;
   const TopBooksWidget(
       {Key? key,
       required this.popularBooksGetModelTop,
       required this.function,
       required this.isAddingInTopBooks,
       required this.index,
-      required this.currentIndex})
+      required this.currentIndex,
+      required this.isRemovingFromTop,
+      required this.indexToRemoveFromTopFromTop,
+      required this.functionToRemoveFromTop,
+      required this.currentIndexToRemoveFromTop})
       : super(key: key);
 
   @override
@@ -106,8 +114,10 @@ class _TopBooksWidgetState extends State<TopBooksWidget> {
                 ),
                 Padding(
                   padding: const EdgeInsets.all(4.0),
-                  child: widget.currentIndex == widget.index
-                      ? widget.isAddingInTopBooks
+                  child: widget.currentIndex == widget.index ||
+                          widget.currentIndexToRemoveFromTop ==
+                              widget.indexToRemoveFromTopFromTop
+                      ? widget.isAddingInTopBooks || widget.isRemovingFromTop
                           ? SizedBox(
                               width: 20.w,
                               height: 25.h,
@@ -117,7 +127,11 @@ class _TopBooksWidgetState extends State<TopBooksWidget> {
                               ),
                             )
                           : GestureDetector(
-                              onTap: widget.function,
+                              onTap: widget.popularBooksGetModelTop.bookmarked!
+                                          .toLowerCase() ==
+                                      'no'
+                                  ? widget.function
+                                  : widget.functionToRemoveFromTop,
                               child: SizedBox(
                                 height: 20.h,
                                 width: 20.w,
@@ -141,7 +155,11 @@ class _TopBooksWidgetState extends State<TopBooksWidget> {
                               ),
                             )
                       : GestureDetector(
-                          onTap: widget.function,
+                          onTap: widget.popularBooksGetModelTop.bookmarked!
+                                      .toLowerCase() ==
+                                  'no'
+                              ? widget.function
+                              : widget.functionToRemoveFromTop,
                           child: SizedBox(
                             height: 20.h,
                             width: 20.w,

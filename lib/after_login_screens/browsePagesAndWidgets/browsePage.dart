@@ -30,6 +30,7 @@ class _BrowseState extends State<Browse> {
   bool isPopuplarBooksLoading = false;
   late SecureSharedPref secureSharedPref;
   int userID = -1;
+
   @override
   void initState() {
     // TODO: implement initState
@@ -43,6 +44,7 @@ class _BrowseState extends State<Browse> {
   }
 
   bool isBrowseLoading = false;
+
   init() async {
     setState(() {
       isBrowseLoading = true;
@@ -169,6 +171,7 @@ class _BrowseState extends State<Browse> {
   int currentIndex = -1;
   late APIResponse<BookViewModel> _responseAddBookMark;
   bool isAdding = false;
+
   browseBookBookmark(BuildContext context, String bookID, int index) async {
     setState(() {
       isAdding = true;
@@ -666,6 +669,15 @@ class _BrowseState extends State<Browse> {
                                   isAdding: isAdding,
                                   index: index,
                                   currentIndex: currentIndex,
+                                  isRemoving: isRemoving,
+                                  indexToRemove: index,
+                                  currentIndexToRemove: currentIndexToRemove,
+                                  functionToRemove: () => bookMark(
+                                      context,
+                                      _popularFoundBooks[index]
+                                          .books_id
+                                          .toString(),
+                                      index),
                                 ),
                               );
                             },
@@ -687,5 +699,43 @@ class _BrowseState extends State<Browse> {
     await secureSharedPref.putString('isLogin', 'false');
     Navigator.of(context).pushReplacement(
         MaterialPageRoute(builder: (context) => const LogIn()));
+  }
+
+  int currentIndexToRemove = -1;
+  late APIResponse _responseRemoveBookMark;
+  bool isRemoving = false;
+
+  bookMark(BuildContext context, String id, int indexToRemove) async {
+    setState(() {
+      isRemoving = true;
+      currentIndexToRemove = indexToRemove;
+    });
+    Map addData = {
+      "users_customers_id": userID.toString(),
+      "books_id": id,
+    };
+    _responseRemoveBookMark = await service.removeBookMark(addData);
+    if (_responseRemoveBookMark.status!.toLowerCase() == 'success') {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text(
+            "Book removed from bookmarks successfully",
+          ),
+        ),
+      );
+      initPopularBooks(false, -1);
+      // setState(() {
+      //   _popularFoundBooks!
+      //       .removeWhere((element) => element.books_id!.toString() == id);
+      // });
+    } else {
+      showToastError(
+        _responseRemoveBookMark.message,
+        FToast().init(context),
+      );
+    }
+    setState(() {
+      isRemoving = false;
+    });
   }
 }

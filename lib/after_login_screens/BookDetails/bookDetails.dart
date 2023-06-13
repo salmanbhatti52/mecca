@@ -372,20 +372,22 @@ class _BookDetailsState extends State<BookDetails> {
                                       ),
                                     )
                                   : isRelatedBooksLoading
-                                      ? SizedBox(
-                                          width: 20.w,
-                                          height: 25.h,
-                                          child: CircularProgressIndicator(
-                                            color: Color(0xffE8B55B),
-                                            strokeWidth: 0.9,
-                                          ),
+                                      ? CircularProgressIndicator(
+                                          color: Color(0xffE8B55B),
+                                          strokeWidth: 0.9,
                                         )
                                       : GestureDetector(
-                                          onTap: () => bookMark(
-                                              context,
-                                              widget
-                                                  .popularBooksGetModel.books_id
-                                                  .toString()),
+                                          onTap: () => !isBookmarked
+                                              ? bookMark(
+                                                  context,
+                                                  widget.popularBooksGetModel
+                                                      .books_id
+                                                      .toString())
+                                              : bookMarkRemove(
+                                                  context,
+                                                  widget.popularBooksGetModel
+                                                      .books_id
+                                                      .toString()),
                                           child: Container(
                                             padding: EdgeInsets.symmetric(
                                               horizontal: 8.w,
@@ -886,6 +888,38 @@ class _BookDetailsState extends State<BookDetails> {
     } else {
       showToastError(
         _responseAddBookMarkForBookDetails.message,
+        FToast().init(context),
+      );
+    }
+    setState(() {
+      isBookMarkDone = false;
+    });
+  }
+
+  // int currentIndexToRemove = -1;
+  late APIResponse _responseRemoveBookMark;
+  bool isRemoving = false;
+  bookMarkRemove(BuildContext context, String id) async {
+    setState(() {
+      isBookMarkDone = true;
+      // currentIndexToRemove = indexToRemove;
+    });
+    Map addData = {
+      "users_customers_id": userID.toString(),
+      "books_id": id,
+    };
+    _responseRemoveBookMark = await service.removeBookMark(addData);
+    if (_responseRemoveBookMark.status!.toLowerCase() == 'success') {
+      showToastSuccess(
+          "Book removed from bookmarks successfully", FToast().init(context));
+      initRelatedBooks(id);
+      // setState(() {
+      //   _popularFoundBooks!
+      //       .removeWhere((element) => element.books_id!.toString() == id);
+      // });
+    } else {
+      showToastError(
+        _responseRemoveBookMark.message,
         FToast().init(context),
       );
     }

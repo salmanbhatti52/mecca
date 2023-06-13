@@ -966,6 +966,20 @@ class _HomePageState extends State<HomePage> {
                                                     isAdding: isAdding,
                                                     index: index,
                                                     currentIndex: currentIndex,
+                                                    isRemovingFromFeatured:
+                                                        isRemovingFromFeatured,
+                                                    indexToRemoveFromFeatured:
+                                                        index,
+                                                    currentIndexToRemoveFromFeatured:
+                                                        currentIndexToRemoveFromFeatured,
+                                                    functionToRemoveFromFeatured: () =>
+                                                        bookMarkRemoveFromFeatured(
+                                                            context,
+                                                            _popularFoundBooks[
+                                                                    index]
+                                                                .books_id
+                                                                .toString(),
+                                                            index),
                                                   ),
                                                 ),
                                               );
@@ -1059,6 +1073,20 @@ class _HomePageState extends State<HomePage> {
                                                           index: index,
                                                           currentIndex:
                                                               currentIndexTop,
+                                                          isRemovingFromTop:
+                                                              isRemovingFromTop,
+                                                          indexToRemoveFromTopFromTop:
+                                                              index,
+                                                          functionToRemoveFromTop: () =>
+                                                              bookMarkRemoveFromTop(
+                                                                  context,
+                                                                  _popularFoundBooks![
+                                                                          index]
+                                                                      .books_id
+                                                                      .toString(),
+                                                                  index),
+                                                          currentIndexToRemoveFromTop:
+                                                              currentIndexToRemoveFromTop,
                                                         ),
                                                       )
                                                     : const Center(
@@ -1115,6 +1143,85 @@ class _HomePageState extends State<HomePage> {
     }
     setState(() {
       isBookMarkDone = false;
+    });
+  }
+
+  int currentIndexToRemoveFromFeatured = -1;
+  late APIResponse _responseRemoveBookMarkFromFeatured;
+  bool isRemovingFromFeatured = false;
+  bookMarkRemoveFromFeatured(
+      BuildContext context, String id, int indexToRemoveFromFeatured) async {
+    setState(() {
+      isRemovingFromFeatured = true;
+      currentIndexToRemoveFromFeatured = indexToRemoveFromFeatured;
+    });
+    Map addData = {
+      "users_customers_id": userID.toString(),
+      "books_id": id,
+    };
+    _responseRemoveBookMarkFromFeatured = await service.removeBookMark(addData);
+    if (_responseRemoveBookMarkFromFeatured.status!.toLowerCase() ==
+        'success') {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text(
+            "Book removed from bookmarks successfully",
+          ),
+        ),
+      );
+      initPopularBooks(false, -1);
+      initTopBooksBasedOnDownloads();
+      // setState(() {
+      //   _popularFoundBooks!
+      //       .removeWhere((element) => element.books_id!.toString() == id);
+      // });
+    } else {
+      showToastError(
+        _responseRemoveBookMarkFromFeatured.message,
+        FToast().init(context),
+      );
+    }
+    setState(() {
+      isRemovingFromFeatured = false;
+    });
+  }
+
+  int currentIndexToRemoveFromTop = -1;
+  late APIResponse _responseRemoveBookMarkFromTop;
+  bool isRemovingFromTop = false;
+  bookMarkRemoveFromTop(
+      BuildContext context, String id, int indexToRemoveFromTop) async {
+    setState(() {
+      isRemovingFromTop = true;
+      currentIndexToRemoveFromTop = indexToRemoveFromTop;
+    });
+    Map addData = {
+      "users_customers_id": userID.toString(),
+      "books_id": id,
+    };
+    _responseRemoveBookMarkFromTop = await service.removeBookMark(addData);
+    if (_responseRemoveBookMarkFromTop.status!.toLowerCase() == 'success') {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text(
+            "Book removed from bookmarks successfully",
+          ),
+        ),
+      );
+      initTopBooksBasedOnDownloads();
+      initPopularBooks(false, -1);
+      // setState(() {
+      //   _popularFoundBooks!
+      //       .removeWhere((element) => element.books_id!.toString() == id);
+      // });
+    } else {
+      showToastError(
+        _responseRemoveBookMarkFromTop.message,
+        FToast().init(context),
+      );
+    }
+    setState(() {
+      isRemovingFromTop = false;
     });
   }
 }

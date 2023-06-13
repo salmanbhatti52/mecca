@@ -12,13 +12,21 @@ class BrowseBooksWidget extends StatefulWidget {
   final bool isAdding;
   final int index;
   final int currentIndex;
+  final bool isRemoving;
+  final int indexToRemove;
+  final int currentIndexToRemove;
+  final VoidCallback functionToRemove;
   const BrowseBooksWidget(
       {Key? key,
       required this.popularBooksGetModel,
       required this.function,
       required this.isAdding,
       required this.index,
-      required this.currentIndex})
+      required this.currentIndex,
+      required this.isRemoving,
+      required this.indexToRemove,
+      required this.currentIndexToRemove,
+      required this.functionToRemove})
       : super(key: key);
 
   @override
@@ -105,8 +113,9 @@ class _BrowseBooksWidgetState extends State<BrowseBooksWidget> {
               ),
               Padding(
                   padding: const EdgeInsets.all(4.0),
-                  child: widget.currentIndex == widget.index
-                      ? widget.isAdding
+                  child: widget.currentIndex == widget.index ||
+                          widget.currentIndexToRemove == widget.indexToRemove
+                      ? widget.isAdding || widget.isRemoving
                           ? SizedBox(
                               width: 20.w,
                               height: 25.h,
@@ -116,7 +125,11 @@ class _BrowseBooksWidgetState extends State<BrowseBooksWidget> {
                               ),
                             )
                           : GestureDetector(
-                              onTap: widget.function,
+                              onTap: widget.popularBooksGetModel.bookmarked!
+                                          .toLowerCase() ==
+                                      'yes'
+                                  ? widget.functionToRemove
+                                  : widget.function,
                               child: SizedBox(
                                 height: 20.h,
                                 width: 20.w,
@@ -139,7 +152,11 @@ class _BrowseBooksWidgetState extends State<BrowseBooksWidget> {
                               ),
                             )
                       : GestureDetector(
-                          onTap: widget.function,
+                          onTap: widget.popularBooksGetModel.bookmarked!
+                                      .toLowerCase() ==
+                                  'yes'
+                              ? widget.functionToRemove
+                              : widget.function,
                           child: SizedBox(
                             height: 20.h,
                             width: 20.w,

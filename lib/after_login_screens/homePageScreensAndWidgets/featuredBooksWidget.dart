@@ -15,13 +15,21 @@ class FeaturedBooksWidget extends StatefulWidget {
   final bool isAdding;
   final int index;
   final int currentIndex;
+  final bool isRemovingFromFeatured;
+  final int indexToRemoveFromFeatured;
+  final int currentIndexToRemoveFromFeatured;
+  final VoidCallback functionToRemoveFromFeatured;
   const FeaturedBooksWidget(
       {Key? key,
       required this.popularBooksGetModel,
       required this.function,
       required this.isAdding,
       required this.index,
-      required this.currentIndex})
+      required this.currentIndex,
+      required this.isRemovingFromFeatured,
+      required this.indexToRemoveFromFeatured,
+      required this.currentIndexToRemoveFromFeatured,
+      required this.functionToRemoveFromFeatured})
       : super(key: key);
 
   @override
@@ -111,8 +119,10 @@ class _FeaturedBooksWidgetState extends State<FeaturedBooksWidget> {
                 ),
                 Padding(
                   padding: const EdgeInsets.all(4.0),
-                  child: widget.currentIndex == widget.index
-                      ? widget.isAdding
+                  child: widget.currentIndex == widget.index ||
+                          widget.currentIndexToRemoveFromFeatured ==
+                              widget.indexToRemoveFromFeatured
+                      ? widget.isAdding || widget.isRemovingFromFeatured
                           ? SizedBox(
                               width: 20.w,
                               height: 25.h,
@@ -122,8 +132,12 @@ class _FeaturedBooksWidgetState extends State<FeaturedBooksWidget> {
                               ),
                             )
                           : GestureDetector(
-                              onTap: widget.function,
-                              onTapCancel: null,
+                              onTap: widget.popularBooksGetModel.bookmarked!
+                                          .toLowerCase() ==
+                                      'no'
+                                  ? widget.function
+                                  : widget.functionToRemoveFromFeatured,
+
                               // featuredBookBookmark(context,
                               // widget.popularBooksGetModel.books_id!.toString()),
                               child: SizedBox(
@@ -148,7 +162,11 @@ class _FeaturedBooksWidgetState extends State<FeaturedBooksWidget> {
                               ),
                             )
                       : GestureDetector(
-                          onTap: widget.function,
+                          onTap: widget.popularBooksGetModel.bookmarked!
+                                      .toLowerCase() ==
+                                  'no'
+                              ? widget.function
+                              : widget.functionToRemoveFromFeatured,
                           // featuredBookBookmark(context,
                           // widget.popularBooksGetModel.books_id!.toString()),
                           child: SizedBox(
