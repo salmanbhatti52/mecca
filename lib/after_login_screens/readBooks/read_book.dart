@@ -184,6 +184,7 @@ class _ReadBookState extends State<ReadBook> {
                                     height: 50.h,
                                     child: Center(
                                       child: TextField(
+                                        textInputAction: TextInputAction.go,
                                         textAlign: TextAlign.center,
                                         inputFormatters: [
                                           LengthLimitingTextInputFormatter(
@@ -212,8 +213,6 @@ class _ReadBookState extends State<ReadBook> {
                                             setState(() {
                                               pdfViewController
                                                   .setPage(int.parse(val));
-                                              print('page jump ' +
-                                                  currentPage.toString());
                                             });
                                             Navigator.of(context).pop();
                                           }
