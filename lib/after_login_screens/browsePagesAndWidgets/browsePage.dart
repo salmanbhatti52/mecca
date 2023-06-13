@@ -397,7 +397,7 @@ class _BrowseState extends State<Browse> {
                                             ),
                                           ),
                                         ),
-                                        Spacer(),
+                                        const Spacer(),
                                         Row(
                                           children: [
                                             Container(
@@ -542,7 +542,7 @@ class _BrowseState extends State<Browse> {
                                             ),
                                           ],
                                         ),
-                                        Spacer(),
+                                        const Spacer(),
                                         Container(
                                           width: 61.w,
                                           height: 28.h,
@@ -565,8 +565,7 @@ class _BrowseState extends State<Browse> {
                                             ),
                                             onPressed: () {
                                               //isSelectedButton;
-                                              print(
-                                                  isSelectedButton.toString());
+
                                               setState(() {
                                                 Navigator.of(context).pop();
                                               });
@@ -644,7 +643,6 @@ class _BrowseState extends State<Browse> {
                             itemBuilder: (BuildContext context, int index) {
                               return GestureDetector(
                                 onTap: () {
-                                  print('browse tapped');
                                   Navigator.of(
                                     context,
                                     rootNavigator: true,

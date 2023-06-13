@@ -51,10 +51,6 @@ class _FeaturedBooksWidgetState extends State<FeaturedBooksWidget> {
   init() async {
     secureSharedPref = await SecureSharedPref.getInstance();
     userID = (await secureSharedPref.getInt('userID')) ?? -1;
-
-    print(
-      'id collected successfully on featured widget ' + userID.toString(),
-    );
   }
 
   @override
@@ -126,7 +122,7 @@ class _FeaturedBooksWidgetState extends State<FeaturedBooksWidget> {
                           ? SizedBox(
                               width: 20.w,
                               height: 25.h,
-                              child: CircularProgressIndicator(
+                              child: const CircularProgressIndicator(
                                 color: Color(0xffE8B55B),
                                 strokeWidth: 0.9,
                               ),

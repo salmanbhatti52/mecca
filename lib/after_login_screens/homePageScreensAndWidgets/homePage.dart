@@ -66,10 +66,6 @@ class _HomePageState extends State<HomePage> {
     secureSharedPref = await SecureSharedPref.getInstance();
     userID = (await secureSharedPref.getInt('userID')) ?? -1;
 
-    print(
-      'id collected successfully on home page ' + userID.toString(),
-    );
-
     _response = await service.getCategory();
     catNameList = [];
     if (_response.status!.toLowerCase() == 'success') {
@@ -117,10 +113,6 @@ class _HomePageState extends State<HomePage> {
       );
       initTopBooksBasedOnDownloads();
     } else {
-      print('objectHERE ' +
-          _responseAddBookMark.status.toString() +
-          " " +
-          _responseAddBookMark.message.toString());
       showToastError(
         _responseAddBookMark.message,
         FToast().init(context),
@@ -549,7 +541,7 @@ class _HomePageState extends State<HomePage> {
                                             ),
                                           ),
                                         ),
-                                        Spacer(),
+                                        const Spacer(),
                                         Row(
                                           children: [
                                             Container(
@@ -694,7 +686,7 @@ class _HomePageState extends State<HomePage> {
                                             ),
                                           ],
                                         ),
-                                        Spacer(),
+                                        const Spacer(),
                                         Container(
                                           width: 61.w,
                                           height: 28.h,
@@ -933,8 +925,9 @@ class _HomePageState extends State<HomePage> {
                                             scrollDirection: Axis.horizontal,
                                             itemBuilder: (context, index) {
                                               return Padding(
-                                                padding: EdgeInsets.symmetric(
-                                                    horizontal: 4.0),
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                        horizontal: 4.0),
                                                 child: GestureDetector(
                                                   onTap: () {
                                                     Navigator.of(
@@ -1080,7 +1073,7 @@ class _HomePageState extends State<HomePage> {
                                                           functionToRemoveFromTop: () =>
                                                               bookMarkRemoveFromTop(
                                                                   context,
-                                                                  _popularFoundBooks![
+                                                                  _popularFoundBooks[
                                                                           index]
                                                                       .books_id
                                                                       .toString(),

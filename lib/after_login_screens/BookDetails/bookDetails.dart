@@ -133,8 +133,6 @@ class _BookDetailsState extends State<BookDetails> {
       );
       initRelatedBooks(widget.popularBooksGetModel.books_id!.toString());
     } else {
-      print('error in small bookmark  ' +
-          _responseAddRelatedBooks.status.toString());
       showToastError(
         _responseAddRelatedBooks.message,
         FToast().init(context),

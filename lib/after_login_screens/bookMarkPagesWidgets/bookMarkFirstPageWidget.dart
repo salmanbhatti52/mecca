@@ -119,7 +119,7 @@ class _BookMarkFirstPageWidgetState extends State<BookMarkFirstPageWidget> {
                                   ? SizedBox(
                                       width: 20.w,
                                       height: 25.h,
-                                      child: CircularProgressIndicator(
+                                      child: const CircularProgressIndicator(
                                         color: Color(0xffE8B55B),
                                         strokeWidth: 0.9,
                                       ),

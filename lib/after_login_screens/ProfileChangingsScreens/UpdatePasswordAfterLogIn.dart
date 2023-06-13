@@ -569,7 +569,7 @@ class _UpdatePasswordState extends State<UpdatePassword> {
                                                           ),
                                                         ),
                                                       ),
-                                                      Spacer(),
+                                                      const Spacer(),
                                                       SizedBox(
                                                         width: 216.w,
                                                         height: 64.w,
@@ -582,13 +582,13 @@ class _UpdatePasswordState extends State<UpdatePassword> {
                                                             fontSize: 18.sp,
                                                             fontWeight:
                                                                 FontWeight.w500,
-                                                            color: Color(
+                                                            color: const Color(
                                                               0xff000000,
                                                             ),
                                                           ),
                                                         ),
                                                       ),
-                                                      Spacer(),
+                                                      const Spacer(),
                                                       Container(
                                                         width: 282.w,
                                                         height: 63.h,
@@ -648,7 +648,7 @@ class _UpdatePasswordState extends State<UpdatePassword> {
                                                           ),
                                                         ),
                                                       ),
-                                                      Spacer(),
+                                                      const Spacer(),
                                                       isDeleting
                                                           ? Container(
                                                               width: double

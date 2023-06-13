@@ -519,7 +519,6 @@ class _LogInState extends State<LogIn> {
   late APIResponse<SignUpLogInClass> _responseLogIn;
   ApiServices get service => GetIt.I<ApiServices>();
   logInButton(BuildContext context) async {
-    print('object welcome');
     if (_logInKey.currentState!.validate()) {
       setState(() {
         isLoading = true;
@@ -530,9 +529,8 @@ class _LogInState extends State<LogIn> {
         "one_signal_id": "123456"
       };
       _responseLogIn = await service.logInAPI(logInData);
-      print('object ' + logInData.toString());
+
       if (_responseLogIn.status!.toLowerCase() == 'success') {
-        print('success09 ' + logInData.toString());
         await prefs.putInt(
           'userID',
           _responseLogIn.data!.users_customers_id!,
@@ -549,7 +547,6 @@ class _LogInState extends State<LogIn> {
           ),
         );
       } else {
-        print('failure ' + logInData.toString());
         showToastError(
           _responseLogIn.message.toString(),
           FToast().init(context),
