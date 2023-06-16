@@ -59,6 +59,14 @@ class _BottomNavigationBarScreensState
     if (isIos) {
       return CupertinoTabScaffold(
           tabBar: CupertinoTabBar(
+            currentIndex: _currentIndex,
+            height: 75.h,
+            iconSize: 18.sp,
+            inactiveColor: const Color(
+              0xffADADAD,
+            ),
+            activeColor: const Color(0xff00B900),
+            backgroundColor: Colors.white,
             items: [
               BottomNavigationBarItem(
                 icon: SvgPicture.asset('assets/icons/home.svg'),
