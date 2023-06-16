@@ -193,17 +193,19 @@ class _FeaturedBooksWidgetState extends State<FeaturedBooksWidget> {
               height: 10.h,
             ),
             Expanded(
+              flex: 2,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Container(
                     // color: Colors.red,
                     width: 110.w,
-                    height: 32.h,
+                    // height: 32.h,
                     child: AutoSizeText(
                       maxLines: 3,
                       minFontSize: 10,
                       widget.popularBooksGetModel.title!,
+                      // ' amin of this app who controls  amin of this app who controls  amin of this app who controls  amin of this app who controls ',
                       style: GoogleFonts.poppins(
                         fontSize: 12.sp,
                         fontWeight: FontWeight.w400,

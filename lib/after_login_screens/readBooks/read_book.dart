@@ -217,7 +217,7 @@ class _ReadBookState extends State<ReadBook> {
                                             Navigator.of(context).pop();
                                           }
                                         },
-                                        keyboardType: TextInputType.number,
+                                        keyboardType: TextInputType.text,
                                         cursorColor: const Color(
                                           0xffE8B55B,
                                         ),

@@ -149,17 +149,19 @@ class _BookMarkFirstPageWidgetState extends State<BookMarkFirstPageWidget> {
               height: 8.h,
             ),
             Expanded(
+              flex: 2,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Container(
                     // color: Colors.red,
-                    width: 110.w,
-                    height: 32.h,
+                    width: 120.w,
+                    height: 50.h,
                     child: AutoSizeText(
                       maxLines: 3,
                       minFontSize: 10,
                       widget.allBooksBookMarked.title!,
+                      // 'amin of this app who controls it  amin of this app who controls ',
                       style: GoogleFonts.poppins(
                         fontSize: 12.sp,
                         fontWeight: FontWeight.w400,
