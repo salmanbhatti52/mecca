@@ -21,21 +21,6 @@ class BottomNavigationBarScreens extends StatefulWidget {
 class _BottomNavigationBarScreensState
     extends State<BottomNavigationBarScreens> {
   final GlobalKey<ScaffoldState> key = GlobalKey<ScaffoldState>();
-  // late TextEditingController searchController;
-
-  // @override
-  // void initState() {
-  //   // TODO: implement initState
-  //   super.initState();
-  //   searchController = TextEditingController();
-  // }
-
-  // @override
-  // void dispose() {
-  //   // TODO: implement dispose
-  //   super.dispose();
-  //   searchController.dispose();
-  // }
 
   final List _pages = [
     const HomePage(),
