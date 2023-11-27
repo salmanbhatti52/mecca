@@ -42,8 +42,8 @@ class _ChangePasswordState extends State<ChangePassword> {
     confirmPasswordController.dispose();
   }
 
-  bool isHidden = false;
-  bool isHiddenConfirm = false;
+  bool isHidden = true;
+  bool isHiddenConfirm = true;
   @override
   Widget build(BuildContext context) {
     return MaterialApp(

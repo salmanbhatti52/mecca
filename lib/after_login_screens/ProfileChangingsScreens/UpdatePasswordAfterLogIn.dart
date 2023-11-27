@@ -23,9 +23,9 @@ class _UpdatePasswordState extends State<UpdatePassword> {
   late TextEditingController newPasswordController;
   late TextEditingController confirmNewPasswordController;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  bool isHiddenOld = false;
-  bool isHiddenNew = false;
-  bool isHiddenNewPassword = false;
+  bool isHiddenOld = true;
+  bool isHiddenNew = true;
+  bool isHiddenNewPassword = true;
 
   late SecureSharedPref secureSharedPref;
   // int userID = -1;

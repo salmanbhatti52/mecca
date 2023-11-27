@@ -26,7 +26,7 @@ class _LogInState extends State<LogIn> {
   late TextEditingController emailController;
   late TextEditingController passwordController;
 
-  bool isHidden = false;
+  bool isHidden = true;
 
   @override
   void initState() {

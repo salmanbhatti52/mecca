@@ -45,7 +45,7 @@ class _SignUpState extends State<SignUp> {
     passwordController.dispose();
   }
 
-  bool isHidden = false;
+  bool isHidden = true;
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
