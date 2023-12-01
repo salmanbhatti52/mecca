@@ -5,6 +5,7 @@ import 'package:MeccaIslamicCenter/APIModels/popular_books_model.dart';
 import 'package:MeccaIslamicCenter/bottomNavigatorBar.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:dio/dio.dart';
+import 'package:path/path.dart' as path;
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -716,7 +717,7 @@ class _BookDetailsState extends State<BookDetails> {
   late APIResponse<BookDownloadModel> _responseDownload;
 
   void _listenForPermissionStatus(BuildContext context, String id) async {
-    final permissionStatus = await Permission.storage.status;
+    final permissionStatus = await Permission.manageExternalStorage.request();
     if (permissionStatus.isDenied) {
       // Here just ask for the permission for the first time
       await Permission.storage.request();
@@ -741,29 +742,38 @@ class _BookDetailsState extends State<BookDetails> {
     setState(() {
       isDownloadStarts = true;
     });
-    //get pdf from link
-    Response response = await dio.get(
-      url,
-      onReceiveProgress: showDownloadProgress,
-      //Received data with List<int>
-      options: Options(
-          responseType: ResponseType.bytes,
-          followRedirects: false,
-          validateStatus: (status) {
-            return status! < 500;
-          }),
-    );
 
-    setState(() {
-      isDownloading = false;
-      isDownloadStarts = false;
-    });
-    showToastSuccess('Book Downloaded Successfully', FToast().init(context));
-    //write in download folder
-    File file = File(savePath);
-    var raf = file.openSync(mode: FileMode.write);
-    raf.writeFromSync(response.data);
-    await raf.close();
+    try {
+      Response response = await dio.get(
+        url,
+        onReceiveProgress: showDownloadProgress,
+        //Received data with List<int>
+        options: Options(
+            responseType: ResponseType.bytes,
+            followRedirects: false,
+            validateStatus: (status) {
+              return status! < 500;
+            }),
+      );
+      showToastSuccess('Book Downloaded Successfully', FToast().init(context));
+      setState(() {
+        isDownloading = false;
+        isDownloadStarts = false;
+      });
+      print(response.headers);
+      File file = File(savePath);
+      var raf = file.openSync(mode: FileMode.write);
+      // response.data is List<int> type
+      raf.writeFromSync(response.data);
+      await raf.close();
+    } catch (e) {
+      print('Error: $e');
+      setState(() {
+        isDownloading = false;
+        isDownloadStarts = false;
+      });
+      showToastError('Failed to download the file', FToast().init(context));
+    }
   }
 
 //progress bar
@@ -789,29 +799,70 @@ class _BookDetailsState extends State<BookDetails> {
     });
     // var path = await ExternalPath.getExternalStoragePublicDirectory(
     //     ExternalPath.DIRECTORY_DOWNLOADS);
-    var path = Platform.isAndroid
-        ? await getExternalStorageDirectory()
-        : await getApplicationSupportDirectory();
+    // Directory path = Platform.isAndroid
+    //     ? await getApplicationDocumentsDirectory()
+    //     : await getApplicationSupportDirectory();
 
-    Map downloadData = {
-      "users_customers_id": userID.toString(),
-      "books_id": id,
-    };
-    _responseDownload = await service.bookDownload(downloadData);
+    // var tempDir = await getTemporaryDirectory();
 
-    if (_responseDownload.status!.toLowerCase() == 'success') {
-      showToastSuccess(
-        'Download has been started',
-        FToast().init(context),
-      );
-      String fullPathName =
-          "$path/${_responseDownload.data!.title!.trim()}.pdf";
+    if(Platform.isAndroid){
+      const downloadsFolderPath = '/storage/emulated/0/Download/';
+      Directory dir = Directory(downloadsFolderPath);
 
-      download2(
-          dio,
-          'https://mecca.eigix.net/public/${_responseDownload.data!.book_url}',
-          fullPathName);
-    } else {
+      Map downloadData = {
+        "users_customers_id": userID.toString(),
+        "books_id": id,
+      };
+      _responseDownload = await service.bookDownload(downloadData);
+
+      if (_responseDownload.status!.toLowerCase() == 'success') {
+        showToastSuccess(
+          'Download has been started',
+          FToast().init(context),
+        );
+
+        // String fileName = "${_responseDownload.data!.title!.trim()}.pdf";
+        // String fullPathName = path.join(tempDir.path, fileName);
+
+        String fullPath = "${dir.path}/${_responseDownload.data!.title!.trim()}.pdf";
+        print('full path $fullPath');
+        print('https://mecca.eigix.net/public/${_responseDownload.data!.book_url}');
+
+        download2(
+            dio,
+            'https://mecca.eigix.net/public/${_responseDownload.data!.book_url}',
+            fullPath);
+      } else {
+
+        final dir = await getApplicationDocumentsDirectory();
+
+        Map downloadData = {
+          "users_customers_id": userID.toString(),
+          "books_id": id,
+        };
+        _responseDownload = await service.bookDownload(downloadData);
+
+        if (_responseDownload.status!.toLowerCase() == 'success') {
+          showToastSuccess(
+            'Download has been started',
+            FToast().init(context),
+          );
+
+          // String fileName = "${_responseDownload.data!.title!.trim()}.pdf";
+          // String fullPathName = path.join(tempDir.path, fileName);
+
+          String fullPath = "${dir.path}/${_responseDownload.data!.title!.trim()}.pdf";
+          print('full path $fullPath');
+          print('https://mecca.eigix.net/public/${_responseDownload.data!.book_url}');
+
+          download2(
+              dio,
+              'https://mecca.eigix.net/public/${_responseDownload.data!.book_url}',
+              fullPath);
+        }
+      }
+    }
+     else {
       showToastError(_responseDownload.message, FToast().init(context));
     }
     setState(() {
