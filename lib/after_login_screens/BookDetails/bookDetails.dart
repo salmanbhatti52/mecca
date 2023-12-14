@@ -716,6 +716,71 @@ class _BookDetailsState extends State<BookDetails> {
   bool isDownloading = false;
   late APIResponse<BookDownloadModel> _responseDownload;
 
+  // void _listenForPermissionStatus(BuildContext context, String id) async {
+  //   final permissionStatus = await Permission.manageExternalStorage.request();
+  //
+  //   if (permissionStatus.isDenied) {
+  //     // Here ask for the permission for the first time
+  //     final newPermissionStatus = await Permission.storage.request();
+  //
+  //     if (newPermissionStatus.isDenied) {
+  //       // Permission is still denied, handle it within the app
+  //       // You can show a dialog or UI to inform the user
+  //       // that permission is required for certain functionality.
+  //       // Optionally, you can provide a button to request the permission again.
+  //
+  //       // Example: Show a dialog
+  //       showDialog(
+  //         context: context,
+  //         builder: (context) => AlertDialog(
+  //           title: Text('Permission Required'),
+  //           content: Text('Please grant the storage permission to use this feature.'),
+  //           actions: [
+  //             TextButton(
+  //               onPressed: () {
+  //                 Navigator.pop(context); // Close the dialog
+  //                 _listenForPermissionStatus(context, id); // Request permission again
+  //               },
+  //               child: Text('Retry'),
+  //             ),
+  //           ],
+  //         ),
+  //       );
+  //
+  //       // Alternatively, you can directly call the function to request permission again.
+  //       // _listenForPermissionStatus(context, id);
+  //     } else {
+  //       // Permission is granted, proceed with your logic
+  //       downloadBook(context, id);
+  //     }
+  //   } else if (permissionStatus.isPermanentlyDenied) {
+  //     // Handle permanently denied state within the app
+  //     // You can show a dialog or UI to inform the user
+  //     // that they need to enable the permission manually in app settings.
+  //
+  //     // Example: Show a dialog
+  //     showDialog(
+  //       context: context,
+  //       builder: (context) => AlertDialog(
+  //         title: Text('Permission Required'),
+  //         content: Text('Please enable the storage permission in app settings to use this feature.'),
+  //         actions: [
+  //           TextButton(
+  //             onPressed: () {
+  //               Navigator.pop(context); // Close the dialog
+  //               openAppSettings(); // Open app settings
+  //             },
+  //             child: Text('Open Settings'),
+  //           ),
+  //         ],
+  //       ),
+  //     );
+  //   } else {
+  //     // Permission is granted, proceed with your logic
+  //     downloadBook(context, id);
+  //   }
+  // }
+
   void _listenForPermissionStatus(BuildContext context, String id) async {
     final permissionStatus = await Permission.manageExternalStorage.request();
     if (permissionStatus.isDenied) {
@@ -833,37 +898,36 @@ class _BookDetailsState extends State<BookDetails> {
             'https://mecca.eigix.net/public/${_responseDownload.data!.book_url}',
             fullPath);
       } else {
-
-        final dir = await getApplicationDocumentsDirectory();
-
-        Map downloadData = {
-          "users_customers_id": userID.toString(),
-          "books_id": id,
-        };
-        _responseDownload = await service.bookDownload(downloadData);
-
-        if (_responseDownload.status!.toLowerCase() == 'success') {
-          showToastSuccess(
-            'Download has been started',
-            FToast().init(context),
-          );
-
-          // String fileName = "${_responseDownload.data!.title!.trim()}.pdf";
-          // String fullPathName = path.join(tempDir.path, fileName);
-
-          String fullPath = "${dir.path}/${_responseDownload.data!.title!.trim()}.pdf";
-          print('full path $fullPath');
-          print('https://mecca.eigix.net/public/${_responseDownload.data!.book_url}');
-
-          download2(
-              dio,
-              'https://mecca.eigix.net/public/${_responseDownload.data!.book_url}',
-              fullPath);
-        }
+        showToastError(_responseDownload.message, FToast().init(context));
       }
+    } else {
+
+      final dir = await getApplicationDocumentsDirectory();
+
+      Map downloadData = {
+        "users_customers_id": userID.toString(),
+        "books_id": id,
+      };
+      _responseDownload = await service.bookDownload(downloadData);
+
+      if (_responseDownload.status!.toLowerCase() == 'success') {
+        showToastSuccess(
+          'Download has been started',
+          FToast().init(context),
+        );
+
+        // String fileName = "${_responseDownload.data!.title!.trim()}.pdf";
+        // String fullPathName = path.join(tempDir.path, fileName);
+
+        String fullPath = "${dir.path}/${_responseDownload.data!.title!.trim()}.pdf";
+        print('full path $fullPath');
+        print('https://mecca.eigix.net/public/${_responseDownload.data!.book_url}');
+
+        download2(
+            dio,
+            'https://mecca.eigix.net/public/${_responseDownload.data!.book_url}',
+            fullPath);
     }
-     else {
-      showToastError(_responseDownload.message, FToast().init(context));
     }
     setState(() {
       isDownloading = false;
