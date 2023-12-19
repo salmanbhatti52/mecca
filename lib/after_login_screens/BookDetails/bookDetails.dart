@@ -782,7 +782,7 @@ class _BookDetailsState extends State<BookDetails> {
   // }
 
   void _listenForPermissionStatus(BuildContext context, String id) async {
-    final permissionStatus = await Permission.manageExternalStorage.request();
+    final permissionStatus = await Permission.storage.request();
     if (permissionStatus.isDenied) {
       // Here just ask for the permission for the first time
       await Permission.storage.request();
