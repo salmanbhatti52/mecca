@@ -870,7 +870,7 @@ class _BookDetailsState extends State<BookDetails> {
 
     // var tempDir = await getTemporaryDirectory();
 
-    if(Platform.isAndroid){
+    if(Platform.isAndroid) {
       const downloadsFolderPath = '/storage/emulated/0/Download/';
       Directory dir = Directory(downloadsFolderPath);
 
@@ -900,9 +900,9 @@ class _BookDetailsState extends State<BookDetails> {
       } else {
         showToastError(_responseDownload.message, FToast().init(context));
       }
-    } else {
+    }  else {
 
-      final dir = await getApplicationDocumentsDirectory();
+      Directory dir = await getApplicationDocumentsDirectory();
 
       Map downloadData = {
         "users_customers_id": userID.toString(),
