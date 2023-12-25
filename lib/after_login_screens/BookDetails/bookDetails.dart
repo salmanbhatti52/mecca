@@ -5,6 +5,7 @@ import 'package:MeccaIslamicCenter/APIModels/popular_books_model.dart';
 import 'package:MeccaIslamicCenter/bottomNavigatorBar.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:dio/dio.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:path/path.dart' as path;
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -493,7 +494,7 @@ class _BookDetailsState extends State<BookDetails> {
                                         )
                                       : GestureDetector(
                                           onTap: () {
-                                            _listenForPermissionStatus(
+                                            downloadBook(
                                                 context,
                                                 widget.popularBooksGetModel
                                                     .books_id
@@ -870,7 +871,7 @@ class _BookDetailsState extends State<BookDetails> {
 
     // var tempDir = await getTemporaryDirectory();
 
-    if(Platform.isAndroid) {
+    // if(Platform.isAndroid) {
       const downloadsFolderPath = '/storage/emulated/0/Download/';
       Directory dir = Directory(downloadsFolderPath);
 
@@ -881,10 +882,10 @@ class _BookDetailsState extends State<BookDetails> {
       _responseDownload = await service.bookDownload(downloadData);
 
       if (_responseDownload.status!.toLowerCase() == 'success') {
-        showToastSuccess(
-          'Download has been started',
-          FToast().init(context),
-        );
+        // showToastSuccess(
+        //   'Download has been started',
+        //   FToast().init(context),
+        // );
 
         // String fileName = "${_responseDownload.data!.title!.trim()}.pdf";
         // String fullPathName = path.join(tempDir.path, fileName);
@@ -893,45 +894,56 @@ class _BookDetailsState extends State<BookDetails> {
         print('full path $fullPath');
         print('https://mecca.eigix.net/public/${_responseDownload.data!.book_url}');
 
-        download2(
-            dio,
-            'https://mecca.eigix.net/public/${_responseDownload.data!.book_url}',
-            fullPath);
+        await shareBook(fullPath);
+
+        // download2(
+        //     dio,
+        //     'https://mecca.eigix.net/public/${_responseDownload.data!.book_url}',
+        //     fullPath);
+
       } else {
         showToastError(_responseDownload.message, FToast().init(context));
       }
-    }  else {
-
-      Directory dir = await getApplicationDocumentsDirectory();
-
-      Map downloadData = {
-        "users_customers_id": userID.toString(),
-        "books_id": id,
-      };
-      _responseDownload = await service.bookDownload(downloadData);
-
-      if (_responseDownload.status!.toLowerCase() == 'success') {
-        showToastSuccess(
-          'Download has been started',
-          FToast().init(context),
-        );
-
-        // String fileName = "${_responseDownload.data!.title!.trim()}.pdf";
-        // String fullPathName = path.join(tempDir.path, fileName);
-
-        String fullPath = "${dir.path}/${_responseDownload.data!.title!.trim()}.pdf";
-        print('full path $fullPath');
-        print('https://mecca.eigix.net/public/${_responseDownload.data!.book_url}');
-
-        download2(
-            dio,
-            'https://mecca.eigix.net/public/${_responseDownload.data!.book_url}',
-            fullPath);
-    }
-    }
+    // }  else {
+    //
+    //   Directory dir = await getApplicationDocumentsDirectory();
+    //
+    //   Map downloadData = {
+    //     "users_customers_id": userID.toString(),
+    //     "books_id": id,
+    //   };
+    //   _responseDownload = await service.bookDownload(downloadData);
+    //
+    //   if (_responseDownload.status!.toLowerCase() == 'success') {
+    //     showToastSuccess(
+    //       'Download has been started',
+    //       FToast().init(context),
+    //     );
+    //
+    //     // String fileName = "${_responseDownload.data!.title!.trim()}.pdf";
+    //     // String fullPathName = path.join(tempDir.path, fileName);
+    //
+    //     String fullPath = "${dir.path}/${_responseDownload.data!.title!.trim()}.pdf";
+    //     print('full path $fullPath');
+    //     print('https://mecca.eigix.net/public/${_responseDownload.data!.book_url}');
+    //
+    //     download2(
+    //         dio,
+    //         'https://mecca.eigix.net/public/${_responseDownload.data!.book_url}',
+    //         fullPath);
+    // }
+    // }
     setState(() {
       isDownloading = false;
     });
+  }
+
+  Future<void> shareBook(String filePath) async {
+    try {
+      await Share.shareFiles([filePath], text: 'Check out this book!');
+    } catch (e) {
+      print('Error sharing file: $e');
+    }
   }
 
   bool isReading = false;
