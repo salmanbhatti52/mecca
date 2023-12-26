@@ -494,7 +494,7 @@ class _BookDetailsState extends State<BookDetails> {
                                         )
                                       : GestureDetector(
                                           onTap: () {
-                                            downloadBook(
+                                            _listenForPermissionStatus(
                                                 context,
                                                 widget.popularBooksGetModel
                                                     .books_id
@@ -783,10 +783,10 @@ class _BookDetailsState extends State<BookDetails> {
   // }
 
   void _listenForPermissionStatus(BuildContext context, String id) async {
-    final permissionStatus = await Permission.storage.request();
+    final permissionStatus = await Permission.manageExternalStorage.request();
     if (permissionStatus.isDenied) {
       // Here just ask for the permission for the first time
-      await Permission.storage.request();
+      await Permission.manageExternalStorage.request();
 
       // I noticed that sometimes popup won't show after user press deny
       // so I do the check once again but now go straight to appSettings
@@ -894,7 +894,18 @@ class _BookDetailsState extends State<BookDetails> {
         print('full path $fullPath');
         print('https://mecca.eigix.net/public/${_responseDownload.data!.book_url}');
 
-        await shareBook(fullPath);
+        // await shareBook(fullPath);
+
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (context) => ReadBook(
+              isShare: true,
+              downloadBookTitle: "${_responseDownload.data!.title!.trim()}.pdf",
+              popularBooksGetModel: widget.popularBooksGetModel.pages.toString(),
+              path: '${widget.popularBooksGetModel.book_url}',
+            ),
+          ),
+        );
 
         // download2(
         //     dio,

@@ -12,12 +12,21 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:permission_handler/permission_handler.dart';
+import 'package:share_plus/share_plus.dart';
 
 class ReadBook extends StatefulWidget {
   final String popularBooksGetModel;
+  final bool? isShare;
   final String path;
+  final String? downloadBookTitle;
 
-  ReadBook({Key? key, required this.popularBooksGetModel, required this.path})
+  ReadBook(
+      {Key? key,
+      required this.popularBooksGetModel,
+        this.isShare,
+      this.downloadBookTitle,
+      required this.path})
       : super(key: key);
 
   @override
@@ -49,6 +58,36 @@ class _ReadBookState extends State<ReadBook> {
     setState(() {
       isPDFLoading = false;
     });
+  }
+
+   _listenForPermissionStatus(String fullPath) async {
+    final permissionStatus = await Permission.manageExternalStorage.request();
+    if (permissionStatus.isDenied) {
+      // Here just ask for the permission for the first time
+      await Permission.manageExternalStorage.request();
+
+      // I noticed that sometimes popup won't show after user press deny
+      // so I do the check once again but now go straight to appSettings
+      if (permissionStatus.isDenied) {
+        await openAppSettings();
+      }
+    } else if (permissionStatus.isPermanentlyDenied) {
+      // Here open app settings for user to manually enable permission in case
+      // where permission was permanently denied
+      await openAppSettings();
+    } else {
+      // Do stuff that require permission here
+
+      shareBook(fullPath);
+    }
+  }
+
+  Future<void> shareBook(String filePath) async {
+    try {
+      await Share.shareFiles([filePath], text: 'Check out this book!');
+    } catch (e) {
+      print('Error sharing file: $e');
+    }
   }
 
   @override
@@ -120,6 +159,7 @@ class _ReadBookState extends State<ReadBook> {
                 right: 20.w,
               ),
               child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   GestureDetector(
                     onTap: () => Navigator.of(context).pop(),
@@ -128,9 +168,9 @@ class _ReadBookState extends State<ReadBook> {
                       fit: BoxFit.scaleDown,
                     ),
                   ),
-                  SizedBox(
-                    width: 97.w,
-                  ),
+                  // SizedBox(
+                  //   width: 97.w,
+                  // ),
                   InkWell(
                     onTap: () => showDialog(
                       context: context,
@@ -366,7 +406,7 @@ class _ReadBookState extends State<ReadBook> {
                           width: 10.w,
                         ),
                         SizedBox(
-                          width: 120.w,
+                          width: 100.w,
                           height: 22.w,
                           child: Row(
                             children: [
@@ -381,7 +421,7 @@ class _ReadBookState extends State<ReadBook> {
                                 ),
                               ),
                               SizedBox(
-                                width: 9.w,
+                                width: 7.w,
                               ),
                               Text(
                                 'Pages',
@@ -399,6 +439,16 @@ class _ReadBookState extends State<ReadBook> {
                       ],
                     ),
                   ),
+                  widget.isShare == true ? GestureDetector(
+                      onTap: () async {
+                        const downloadsFolderPath =
+                            '/storage/emulated/0/Download/';
+                        Directory dir = Directory(downloadsFolderPath);
+                        String fullPath =
+                            "${dir.path}/${widget.downloadBookTitle}";
+                        await _listenForPermissionStatus(fullPath);
+                      },
+                      child: Icon(Icons.share)) : SizedBox.fromSize(),
                 ],
               ),
             ),
@@ -409,6 +459,7 @@ class _ReadBookState extends State<ReadBook> {
                 filePath: Pfile!.path,
                 // nightMode: true,
                 pageFling: true,
+                fitEachPage: true,
                 pageSnap:
                     false, //pages changes according to page number. like you cant swipe half way through the page.
                 enableSwipe: true,
