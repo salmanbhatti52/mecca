@@ -61,24 +61,43 @@ class _ReadBookState extends State<ReadBook> {
   }
 
    _listenForPermissionStatus(String fullPath) async {
-    final permissionStatus = await Permission.manageExternalStorage.request();
-    if (permissionStatus.isDenied) {
-      // Here just ask for the permission for the first time
-      await Permission.manageExternalStorage.request();
-
-      // I noticed that sometimes popup won't show after user press deny
-      // so I do the check once again but now go straight to appSettings
+    if(Platform.isAndroid){
+      final permissionStatus = await Permission.manageExternalStorage.request();
       if (permissionStatus.isDenied) {
-        await openAppSettings();
-      }
-    } else if (permissionStatus.isPermanentlyDenied) {
-      // Here open app settings for user to manually enable permission in case
-      // where permission was permanently denied
-      await openAppSettings();
-    } else {
-      // Do stuff that require permission here
+        // Here just ask for the permission for the first time
+        await Permission.manageExternalStorage.request();
 
-      shareBook(fullPath);
+        // I noticed that sometimes popup won't show after user press deny
+        // so I do the check once again but now go straight to appSettings
+        if (permissionStatus.isDenied) {
+          await openAppSettings();
+        }
+      } else if (permissionStatus.isPermanentlyDenied) {
+        // Here open app settings for user to manually enable permission in case
+        // where permission was permanently denied
+        await openAppSettings();
+      } else {
+        // Do stuff that require permission here
+
+        shareBook(fullPath);
+      }
+    } else {
+      final permissionStatus = await Permission.storage.request();
+      if (permissionStatus.isDenied) {
+
+        await Permission.storage.request();
+
+        if (permissionStatus.isDenied) {
+
+          await openAppSettings();
+        }
+      } else if (permissionStatus.isPermanentlyDenied) {
+
+        await openAppSettings();
+      } else {
+
+        shareBook(fullPath);
+      }
     }
   }
 
