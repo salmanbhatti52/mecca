@@ -24,7 +24,7 @@ class ReadBook extends StatefulWidget {
   ReadBook(
       {Key? key,
       required this.popularBooksGetModel,
-        this.isShare,
+      this.isShare,
       this.downloadBookTitle,
       required this.path})
       : super(key: key);
@@ -60,44 +60,36 @@ class _ReadBookState extends State<ReadBook> {
     });
   }
 
-   _listenForPermissionStatus(String fullPath) async {
-    if(Platform.isAndroid){
-      final permissionStatus = await Permission.manageExternalStorage.request();
-      if (permissionStatus.isDenied) {
-        // Here just ask for the permission for the first time
-        await Permission.manageExternalStorage.request();
+  //  _listenForPermissionStatus(String fullPath) async {
+  //     final permissionStatus = await Permission.storage.request();
+  //     if (permissionStatus.isDenied) {
+  //       // Here just ask for the permission for the first time
+  //       await Permission.storage.request();
 
-        // I noticed that sometimes popup won't show after user press deny
-        // so I do the check once again but now go straight to appSettings
-        if (permissionStatus.isDenied) {
-          await openAppSettings();
-        }
-      } else if (permissionStatus.isPermanentlyDenied) {
-        // Here open app settings for user to manually enable permission in case
-        // where permission was permanently denied
-        await openAppSettings();
-      } else {
-        // Do stuff that require permission here
+  //       // I noticed that sometimes popup won't show after user press deny
+  //       // so I do the check once again but now go straight to appSettings
+  //       if (permissionStatus.isDenied) {
+  //         await openAppSettings();
+  //       }
+  //     } else if (permissionStatus.isPermanentlyDenied) {
+  //       // Here open app settings for user to manually enable permission in case
+  //       // where permission was permanently denied
+  //       await openAppSettings();
+  //     } else {
+  //       // Do stuff that require permission here
 
-        shareBook(fullPath);
-      }
-    } else {
-      final permissionStatus = await Permission.storage.request();
-      if (permissionStatus.isDenied) {
+  //       shareBook(fullPath);
+  //     }
+  // }
 
-        await Permission.storage.request();
+  _listenForPermissionStatus(String fullPath) async {
+    PermissionStatus status = await Permission.storage.request();
 
-        if (permissionStatus.isDenied) {
-
-          await openAppSettings();
-        }
-      } else if (permissionStatus.isPermanentlyDenied) {
-
-        await openAppSettings();
-      } else {
-
-        shareBook(fullPath);
-      }
+    if (status.isGranted) {
+      // Permission granted, navigate to the next screen
+      shareBook(fullPath);
+    } else if (status.isDenied || status.isPermanentlyDenied) {
+      // Permission denied, show a message and provide information
     }
   }
 
@@ -458,16 +450,18 @@ class _ReadBookState extends State<ReadBook> {
                       ],
                     ),
                   ),
-                  widget.isShare == true ? GestureDetector(
-                      onTap: () async {
-                        const downloadsFolderPath =
-                            '/storage/emulated/0/Download/';
-                        Directory dir = Directory(downloadsFolderPath);
-                        String fullPath =
-                            "${dir.path}/${widget.downloadBookTitle}";
-                        await _listenForPermissionStatus(fullPath);
-                      },
-                      child: Icon(Icons.share)) : SizedBox.fromSize(),
+                  widget.isShare == true
+                      ? GestureDetector(
+                          onTap: () async {
+                            const downloadsFolderPath =
+                                '/storage/emulated/0/Download/';
+                            Directory dir = Directory(downloadsFolderPath);
+                            String fullPath =
+                                "${dir.path}/${widget.downloadBookTitle}";
+                            await _listenForPermissionStatus(fullPath);
+                          },
+                          child: Icon(Icons.share))
+                      : SizedBox.fromSize(),
                 ],
               ),
             ),
