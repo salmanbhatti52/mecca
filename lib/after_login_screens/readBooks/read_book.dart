@@ -83,21 +83,34 @@ class _ReadBookState extends State<ReadBook> {
   // }
 
   _listenForPermissionStatus(String fullPath) async {
-    PermissionStatus status = await Permission.storage.request();
-
-    if (status.isGranted) {
-      // Permission granted, navigate to the next screen
-      shareBook(fullPath);
-    } else if (status.isDenied || status.isPermanentlyDenied) {
-      // Permission denied, show a message and provide information
+    PermissionStatus status;
+    if (Platform.isAndroid) {
+      status = await Permission.manageExternalStorage.request();
+      print("status $status");
+      if (status.isGranted) {
+        debugPrint("fullPath $fullPath");
+        shareBook(fullPath);
+      } else if (status.isDenied || status.isPermanentlyDenied) {
+        openAppSettings();
+      }
+    } else if (Platform.isIOS) {
+      status = await Permission.storage.request();
+      print("status $status");
+      if (status.isGranted) {
+        debugPrint("fullPath $fullPath");
+        shareBook(fullPath);
+      } else if (status.isDenied || status.isPermanentlyDenied) {
+        openAppSettings();
+      }
     }
   }
 
   Future<void> shareBook(String filePath) async {
     try {
-      await Share.shareFiles([filePath], text: 'Check out this book!');
+      debugPrint("fullPath $filePath");
+      await Share.shareFiles([filePath]);
     } catch (e) {
-      print('Error sharing file: $e');
+      debugPrint('Error sharing file: $e');
     }
   }
 
@@ -455,12 +468,23 @@ class _ReadBookState extends State<ReadBook> {
                           onTap: () async {
                             const downloadsFolderPath =
                                 '/storage/emulated/0/Download/';
-                            Directory dir = Directory(downloadsFolderPath);
-                            String fullPath =
-                                "${dir.path}/${widget.downloadBookTitle}";
-                            await _listenForPermissionStatus(fullPath);
+                            Directory? dir;
+                            if (Platform.isAndroid) {
+                              dir = Directory(downloadsFolderPath);
+                              String fullPath =
+                                  "${dir.path}/${widget.downloadBookTitle}";
+                              await _listenForPermissionStatus(fullPath);
+                            } else if (Platform.isIOS) {
+                              dir = await getDownloadsDirectory();
+                              String fullPath =
+                                  "${dir?.path}/${widget.downloadBookTitle}";
+                              await _listenForPermissionStatus(fullPath);
+                            }
                           },
-                          child: Icon(Icons.share))
+                          child: const Icon(
+                            Icons.ios_share_rounded,
+                          ),
+                        )
                       : SizedBox.fromSize(),
                 ],
               ),
