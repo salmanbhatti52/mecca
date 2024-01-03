@@ -576,7 +576,7 @@ class _UpdatePasswordState extends State<UpdatePassword> {
                                                         child: Text(
                                                           textAlign:
                                                               TextAlign.center,
-                                                          'Are you sure you want to     delete you account?',
+                                                          'Are you sure you want to delete you account?',
                                                           style: GoogleFonts
                                                               .poppins(
                                                             fontSize: 18.sp,

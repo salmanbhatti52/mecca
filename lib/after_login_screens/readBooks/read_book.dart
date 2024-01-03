@@ -91,7 +91,7 @@ class _ReadBookState extends State<ReadBook> {
         debugPrint("fullPath $fullPath");
         shareBook(fullPath);
       } else if (status.isDenied || status.isPermanentlyDenied) {
-        openAppSettings();
+        // openAppSettings();
       }
     } else if (Platform.isIOS) {
       status = await Permission.storage.request();
@@ -111,6 +111,15 @@ class _ReadBookState extends State<ReadBook> {
       await Share.shareFiles([filePath]);
     } catch (e) {
       debugPrint('Error sharing file: $e');
+    }
+  }
+
+  Future<void> _downloadFile(String url, String savePath) async {
+    var response = await http.get(Uri.parse(url));
+
+    if (response.statusCode == 200) {
+      File file = File(savePath);
+      await file.writeAsBytes(response.bodyBytes);
     }
   }
 
@@ -465,23 +474,45 @@ class _ReadBookState extends State<ReadBook> {
                   ),
                   widget.isShare == true
                       ? GestureDetector(
-                          onTap: () async {
-                            const downloadsFolderPath =
-                                '/storage/emulated/0/Download/';
-                            Directory? dir;
-                            if (Platform.isAndroid) {
-                              dir = Directory(downloadsFolderPath);
-                              String fullPath =
-                                  "${dir.path}/${widget.downloadBookTitle}";
-                              await _listenForPermissionStatus(fullPath);
-                            } else if (Platform.isIOS) {
-                              dir = await getDownloadsDirectory();
-                              String fullPath =
-                                  "${dir?.path}/${widget.downloadBookTitle}";
-                              await _listenForPermissionStatus(fullPath);
-                            }
-                          },
-                          child: const Icon(
+                    onTap: () async {
+                      String downloadsFolderPath = '';
+                      Directory? dir;
+
+                      setState(() {
+                        isLoading = true;
+                      });
+
+                      if (Platform.isAndroid) {
+                        dir = await getExternalStorageDirectory();
+                        downloadsFolderPath = dir?.path ?? '';
+                      } else if (Platform.isIOS) {
+                        dir = await getApplicationDocumentsDirectory();
+                        downloadsFolderPath = dir.path ?? '';
+                      }
+
+                      if (dir != null) {
+                        String fullPath = '$downloadsFolderPath/${widget.downloadBookTitle}';
+
+                        // Check if the file exists
+                        bool fileExists = File(fullPath).existsSync();
+
+                        if (fileExists) {
+                          await _listenForPermissionStatus(fullPath);
+                        } else {
+                          // Handle file creation or download here
+                          // Example: Download the file using http package
+                          await _downloadFile("https://mecca.eigix.net/public/${widget.path}", fullPath);
+
+                          // After downloading, check permissions and share
+                          await _listenForPermissionStatus(fullPath);
+                        }
+                      }
+
+                      setState(() {
+                        isLoading = false;
+                      });
+                    },
+                    child: const Icon(
                             Icons.ios_share_rounded,
                           ),
                         )

@@ -359,7 +359,7 @@ class _BrowseState extends State<Browse> {
                           8.r,
                         ),
                         child: GestureDetector(
-                          onTap: () => showDialog(
+                          onTap: () =>  showDialog(
                             context: context,
                             builder: (context) =>
                                 StatefulBuilder(builder: (context, setState) {
@@ -591,7 +591,7 @@ class _BrowseState extends State<Browse> {
                           ),
                           child: Container(
                             width: 44.w,
-                            height: 50.h,
+                            height: 44.h,
                             decoration: BoxDecoration(
                               color: Colors.white,
                               borderRadius: BorderRadius.circular(
