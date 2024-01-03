@@ -290,6 +290,7 @@ class _HomePageState extends State<HomePage> {
     topBooksData = [];
     if (_responseTopBooks.status!.toLowerCase() == 'success') {
       topBooksData = _responseTopBooks.data;
+      print("Data length ${topBooksData?.length}");
     } else {
       showToastError(
         _responseTopBooks.message,

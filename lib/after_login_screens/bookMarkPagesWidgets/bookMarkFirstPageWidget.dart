@@ -212,7 +212,7 @@ class _BookMarkFirstPageWidgetState extends State<BookMarkFirstPageWidget> {
                     child: AutoSizeText(
                       maxLines: 2,
                       minFontSize: 10,
-                      widget.allBooksBookMarked.author!.name!,
+                      widget.allBooksBookMarked.author?.name ?? "author?.name" ,
                       style: GoogleFonts.poppins(
                         fontSize: 10.sp,
                         fontWeight: FontWeight.w400,

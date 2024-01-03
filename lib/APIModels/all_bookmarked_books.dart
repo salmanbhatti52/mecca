@@ -118,12 +118,8 @@ class AllBooksBookMarked {
       date_added: map['date_added'] ?? '',
       status: map['status'] ?? '',
       cover: map['cover'] ?? '',
-      category: CategoryBook.fromMap(
-        map['category'],
-      ),
-      author: AuthorBook.fromMap(
-        map['author'],
-      ),
+      category:map['category'] != null ? CategoryBook.fromMap(map['category'],) : null,
+      author: map['author'] != null ? AuthorBook.fromMap(map['author'],) : null,
       bookmarked: map['bookmarked'] ?? '',
       pages: map['pages'] ?? -1,
     );

@@ -213,7 +213,8 @@ class _BookDetailsWidgetState extends State<BookDetailsWidget> {
                     child: AutoSizeText(
                       maxLines: 2,
                       minFontSize: 10,
-                      widget.relatedBooksModel.author!.name!,
+                      // widget.relatedBooksModel.author!.name!,
+                      widget.relatedBooksModel.author?.name ?? "author?.name",
                       style: GoogleFonts.poppins(
                         fontSize: 10.sp,
                         fontWeight: FontWeight.w400,

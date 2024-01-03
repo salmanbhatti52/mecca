@@ -317,36 +317,36 @@ class _ReadBookState extends State<ReadBook> {
                                   SizedBox(
                                     height: 15.h,
                                   ),
-                                  MaterialButton(
-                                    onPressed: () {
-                                      setState(() {
-                                        // pdfViewController
-                                        //     .setPage(int.parse(val));
-                                        // print('page jump ' +
-                                        //     currentPage.toString());
-                                        Navigator.of(context).pop();
-                                      });
-                                    },
-                                    child: Container(
-                                      width: 70.w,
-                                      height: 40.h,
-                                      decoration: BoxDecoration(
-                                        color: Colors.red,
-                                        borderRadius:
-                                            BorderRadius.circular(5.r),
-                                      ),
-                                      child: Center(
-                                        child: Text(
-                                          'OK',
-                                          style: GoogleFonts.urbanist(
-                                            fontSize: 22,
-                                            fontWeight: FontWeight.w500,
-                                            color: Colors.white,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
+                                  // MaterialButton(
+                                  //   onPressed: () {
+                                  //     setState(() {
+                                  //       // pdfViewController
+                                  //       //     .setPage(int.parse(val));
+                                  //       // print('page jump ' +
+                                  //       //     currentPage.toString());
+                                  //       Navigator.of(context).pop();
+                                  //     });
+                                  //   },
+                                  //   child: Container(
+                                  //     width: 70.w,
+                                  //     height: 40.h,
+                                  //     decoration: BoxDecoration(
+                                  //       color: Colors.red,
+                                  //       borderRadius:
+                                  //           BorderRadius.circular(5.r),
+                                  //     ),
+                                  //     child: Center(
+                                  //       child: Text(
+                                  //         'OK',
+                                  //         style: GoogleFonts.urbanist(
+                                  //           fontSize: 22,
+                                  //           fontWeight: FontWeight.w500,
+                                  //           color: Colors.white,
+                                  //         ),
+                                  //       ),
+                                  //     ),
+                                  //   ),
+                                  // ),
                                 ],
                               ),
                             ),

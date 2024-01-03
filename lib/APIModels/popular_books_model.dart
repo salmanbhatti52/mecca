@@ -122,12 +122,10 @@ class PoplarBooksModel {
       status: map['status'] ?? '',
       cover: map['cover'] ?? '',
       view_count: map['view_count'] ?? -1,
-      category: CategoryBook.fromMap(
-        map['category'],
-      ),
-      author: AuthorBook.fromMap(
-        map['author'],
-      ),
+      // category: CategoryBook.fromMap(map['category'],),
+      // author: AuthorBook.fromMap(map['author'],),
+      category: map['category'] != null ? CategoryBook.fromMap(map['category']) : null,
+      author: map['author'] != null ? AuthorBook.fromMap(map['author']) : null,
       bookmarked: map['bookmarked'] ?? '',
       pages: map['pages'] ?? -1,
     );

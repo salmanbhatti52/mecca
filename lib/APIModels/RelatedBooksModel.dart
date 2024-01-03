@@ -121,12 +121,10 @@ class RelatedBooksModel {
       downloads: map['downloads'] ?? -1,
       date_added: map['date_added'] ?? '',
       status: map['status'] ?? '',
-      category: CatRelatedBooks.fromMap(
-        map['category'],
-      ),
-      author: AuthorRelatedBooks.fromMap(
-        map['author'],
-      ),
+      // category: map['category'] != null ? CategoryBook.fromMap(map['category']) : null,
+      // author: map['author'] != null ? AuthorBook.fromMap(map['author']) : null,
+      category:  map['category'] != null ? CatRelatedBooks.fromMap(map['category'],) : null,
+      author: map['author'] != null ?AuthorRelatedBooks.fromMap(map['author'],) : null,
       bookmarked: map['bookmarked'] ?? '',
     );
   }

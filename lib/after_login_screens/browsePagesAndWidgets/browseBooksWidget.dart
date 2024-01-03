@@ -245,7 +245,7 @@ class _BrowseBooksWidgetState extends State<BrowseBooksWidget> {
                   child: AutoSizeText(
                     maxLines: 2,
                     minFontSize: 10,
-                    widget.popularBooksGetModel.author!.name!,
+                    widget.popularBooksGetModel.author?.name  ?? "author?.name" ,
                     style: GoogleFonts.poppins(
                       fontSize: 10.sp,
                       fontWeight: FontWeight.w400,
@@ -292,7 +292,7 @@ class _BrowseBooksWidgetState extends State<BrowseBooksWidget> {
                   AutoSizeText(
                     // maxLines: 2,
                     // minFontSize: 10,
-                    widget.popularBooksGetModel.category!.name!,
+                    widget.popularBooksGetModel.category?.name ?? "category?.name",
                     style: GoogleFonts.poppins(
                       fontSize: 10.sp,
                       fontWeight: FontWeight.w400,

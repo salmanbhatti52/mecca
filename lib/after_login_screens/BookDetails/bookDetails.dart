@@ -318,7 +318,7 @@ class _BookDetailsState extends State<BookDetails> {
                                     width: 10.h,
                                   ),
                                   AutoSizeText(
-                                    widget.popularBooksGetModel.author!.name!,
+                                    widget.popularBooksGetModel.author?.name  ?? "author?.name" ,
                                     style: GoogleFonts.poppins(
                                       fontSize: 12.sp,
                                       fontWeight: FontWeight.w400,

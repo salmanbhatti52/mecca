@@ -254,7 +254,7 @@ class _FeaturedBooksWidgetState extends State<FeaturedBooksWidget> {
                     child: AutoSizeText(
                       maxLines: 2,
                       minFontSize: 10,
-                      widget.popularBooksGetModel.author!.name!,
+                      widget.popularBooksGetModel.author?.name  ?? "author?.name" ,
                       style: GoogleFonts.poppins(
                         fontSize: 10.sp,
                         fontWeight: FontWeight.w400,
@@ -301,7 +301,7 @@ class _FeaturedBooksWidgetState extends State<FeaturedBooksWidget> {
                     AutoSizeText(
                       // maxLines: 2,
                       // minFontSize: 10,
-                      widget.popularBooksGetModel.category!.name!,
+                      widget.popularBooksGetModel.category?.name ?? "category?.name",
                       style: GoogleFonts.poppins(
                         fontSize: 10.sp,
                         fontWeight: FontWeight.w400,
