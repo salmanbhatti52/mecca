@@ -189,7 +189,7 @@ class _BookMarkState extends State<BookMark> {
               ),
             ),
             Positioned(
-              bottom: -30,
+              bottom: -20,
               child: SizedBox(
                 width: 343.w,
                 child: Row(

@@ -436,7 +436,7 @@ class _HomePageState extends State<HomePage> {
                     ),
                   )),
               Positioned(
-                bottom: -30,
+                bottom: -20,
                 child: SizedBox(
                   width: 343.w,
                   child: Row(
@@ -737,7 +737,7 @@ class _HomePageState extends State<HomePage> {
                           ),
                           child: Container(
                             width: 44.w,
-                            height: 50.h,
+                            height: 44.h,
                             decoration: BoxDecoration(
                               color: Colors.white,
                               borderRadius: BorderRadius.circular(
